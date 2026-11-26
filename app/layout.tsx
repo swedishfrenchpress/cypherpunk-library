@@ -102,8 +102,8 @@ export const viewport: Viewport = {
 };
 
 // What the page wears is decided before the first paint: this script reads the
-// saved light and the book in hand (from the URL, or this tab's memory) and
-// writes [data-light] and --book-bg/--book-fg onto <html> during parse. It must
+// book in hand (from the URL, or this tab's memory) and writes
+// --book-bg/--book-fg onto <html> during parse. It must
 // run synchronously, so it is a plain inline <script> as the first child of
 // <body>; next/script's beforeInteractive would defer it to the Next runtime.
 // suppressHydrationWarning silences the expected diff between the server's bare

@@ -70,8 +70,7 @@ box, one stroke weight, computed from fixed seeds.
 
 Two colours per screen, never more: a ground and an ink, taken from the book in
 hand. Rules, secondary text and washes are that ink at a lower strength. The
-tokens and the three lights (the book's own colours, day, night) are at the top
-of [`app/globals.css`](app/globals.css); what the page is wearing is managed by
+tokens are at the top of [`app/globals.css`](app/globals.css); what the page is wearing is managed by
 [`lib/surface.ts`](lib/surface.ts).
 
 The typefaces: Swarsh Daisy (MarvaDesign) for titles,

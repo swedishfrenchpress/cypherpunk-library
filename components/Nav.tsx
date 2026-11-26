@@ -2,12 +2,10 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import styles from "./Nav.module.css";
 import Wordmark from "./Wordmark";
-import LightSwitch from "./LightSwitch";
 import LangSwitch from "./LangSwitch";
 import { ui, type Locale } from "@/lib/i18n";
 
-// The banner: the wordmark and the site's links, then the light switch beneath
-// them. No rule and no tagline: the name is enough. A page that has somewhere
+// The banner: the wordmark and the site's links. No rule and no tagline: the name is enough. A page that has somewhere
 // to send you back to (a book, the index) puts that one link under the
 // wordmark; the landing puts nothing there.
 //
@@ -37,10 +35,11 @@ export default function Nav({ locale = "en", altHref, label }: Props) {
           {altHref && <LangSwitch locale={locale} altHref={altHref} />}
         </nav>
       </div>
-      <div className={styles.under}>
-        {label && <div className={`label ${styles.where}`}>{label}</div>}
-        <LightSwitch locale={locale} />
-      </div>
+      {label && (
+        <div className={styles.under}>
+          <div className={`label ${styles.where}`}>{label}</div>
+        </div>
+      )}
     </header>
   );
 }

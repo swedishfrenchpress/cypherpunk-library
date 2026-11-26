@@ -102,9 +102,9 @@
   white-space: nowrap;
   cursor: pointer;
   font-family: var(--display);
+  /* no tracking: any letter-spacing turns off the face’s ligatures (its ff, fi, fl) */
   font-size: var(--mq);
   line-height: 1.12;
-  letter-spacing: -0.012em;
 }
 .titleFaces {
   display: grid;
@@ -178,16 +178,6 @@
 }
 .shelf[data-dragging] .stage {
   cursor: grabbing;
-}
-:root[data-light="day"] .stage {
-  /* on paper the shadow is the paper's own colour gone dark, not grey */
-  --shadow: 92 78 18;
-  --shade: 0.22;
-}
-/* night: no wall to cast on; the books are lit from the middle of the room */
-:root[data-light="night"] .stage {
-  --shade: 0;
-  mask-image: radial-gradient(ellipse 64% 92% at 50% 46%, #000 34%, rgba(0, 0, 0, 0.4) 100%);
 }
 /* held back for the few frames before the shelf turns to a remembered book */
 :root[data-restore] .stage,

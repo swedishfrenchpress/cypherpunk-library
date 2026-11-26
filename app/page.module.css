@@ -21,9 +21,12 @@
   min-height: 0;
 }
 
-/* ---- the colophon: the same ground, one face, two sizes, no rules ---- */
+/* ---- the colophon: the same ground, one face, two sizes, no rules. Centred,
+   on the axis of the open cover above it. The little padding at its foot adds
+   to the footer's own, so the email line stands well clear. ---- */
 .colophon {
-  padding: clamp(72px, 11vw, 168px) var(--pad) 0;
+  padding: clamp(72px, 10vw, 152px) var(--pad) clamp(16px, 2vw, 32px);
+  text-align: center;
 }
 .statement {
   font-size: var(--t-title);
@@ -37,12 +40,13 @@
   text-wrap: balance;
 }
 .note {
-  /* wide enough to hold the footnote on one line beside the statement's two */
-  max-width: 46em;
-  margin-top: 1.5em;
+  /* a short measure, its lines evened out, so the footnote sits as a block
+     under the statement and not as one long line */
+  max-width: 30em;
+  margin: 1.5em auto 0;
   font-size: var(--t-reading);
   line-height: 1.45;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 .statement + .note {
   margin-top: clamp(28px, 3.4vw, 48px);

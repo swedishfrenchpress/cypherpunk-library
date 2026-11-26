@@ -5,16 +5,12 @@
    strength. There are no greys and no accent colour: the colour comes from the
    book in hand.
 
-   Three lights (the [data-light] attribute on <html>, set before first paint by
-   the script in app/layout.tsx):
-     tint   the page wears the book: --bg/--fg are that book's cloth and foil
-     day    paper and ink
-     night  black, with the books lit
+   The page wears the book in hand: --bg/--fg are that book's cloth and foil.
+   There is no other light. --book-bg / --book-fg live on <html> and name the
+   book currently in hand; they are written before first paint by the script in
+   app/layout.tsx, then by lib/surface.ts (the shelf, and the route). */
 
-   --book-bg / --book-fg live on <html> and name the book currently in hand.
-   They are written by lib/surface.ts (the shelf, and the route). */
-
-/* Registered, so a change of book or of light tweens the ground and the ink
+/* Registered, so a change of book tweens the ground and the ink
    together, and everything mixed from them follows on every frame. */
 @property --bg {
   syntax: "<color>";
@@ -33,10 +29,6 @@
   --book-bg: #4a141c;
   --book-fg: #f1d6a4;
 
-  --day-bg: #ffffe1;
-  --day-fg: #1c1b12;
-  --night-bg: #060504;
-  --night-fg: #f1ecd9;
 
   /* Motion. Two curves: a strong ease-out for anything answering the hand, and
      a drawer curve for a large thing travelling across the screen. Colour and
@@ -56,21 +48,12 @@
      label). Fluid steps grow with the window between two fixed ends. */
   --t-note: 16px;
   --t-body: 18px;
-  --t-lead: clamp(18px, 1.42vw, 20px);
   --t-reading: clamp(19px, 1.5vw, 21.5px);
   --t-subhead: clamp(21px, 1.9vw, 26px);
   --t-title: clamp(30px, 3.5vw, 50px);
   --t-headline: clamp(40px, 4.6vw, 64px);
-  --t-display: clamp(56px, 9.6vw, 96px);
 
   color-scheme: dark;
-}
-:root[data-light="day"] {
-  color-scheme: light;
-  scrollbar-color: color-mix(in srgb, var(--day-fg) 45%, transparent) transparent;
-}
-:root[data-light="night"] {
-  scrollbar-color: color-mix(in srgb, var(--night-fg) 45%, transparent) transparent;
 }
 
 * {
@@ -93,14 +76,6 @@ html {
 body {
   --bg: var(--book-bg);
   --fg: var(--book-fg);
-}
-:root[data-light="day"] body {
-  --bg: var(--day-bg);
-  --fg: var(--day-fg);
-}
-:root[data-light="night"] body {
-  --bg: var(--night-bg);
-  --fg: var(--night-fg);
 }
 
 /* Anything that sets its own --bg/--fg re-derives the strengths from them

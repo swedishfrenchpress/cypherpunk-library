@@ -5,6 +5,11 @@
   line-height: 1.5;
   color: var(--muted);
 }
+/* Where a page ends on a centred closing section (the landing), this line is
+   centred under it; everywhere else it stays on the page's left edge. */
+body:has([data-closing="centred"]) .footer {
+  text-align: center;
+}
 .footer a {
   /* a full-size target around a small line */
   display: inline-block;

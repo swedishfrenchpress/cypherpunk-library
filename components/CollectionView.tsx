@@ -59,10 +59,9 @@ export default function CollectionView({
         }
       />
       <main className={styles.page}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>{t.browseView.title}</h1>
-          <p className={styles.lead}>{t.browseView.lead}</p>
-        </header>
+        {/* the name of the page and nothing else: the controls below say what
+            can be done with it */}
+        <h1 className={styles.title}>{t.browseView.title}</h1>
         <CollectionBrowser entries={entries} locale={locale} />
       </main>
     </div>

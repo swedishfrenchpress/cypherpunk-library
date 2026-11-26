@@ -1,4 +1,4 @@
-/* The banner: wordmark and links, the light switch beneath. No rule. */
+/* The banner: wordmark and links. No rule. */
 .nav {
   position: relative;
   z-index: 20;
@@ -8,13 +8,17 @@
 
 .top {
   display: flex;
-  align-items: flex-end;
+  /* on the narrowest phones the links drop under the name rather than crowd it */
+  flex-wrap: wrap;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
+  gap: 4px 16px;
   padding: 14px 0 10px;
 }
 
 .links {
+  /* at the right, also when it has dropped under the name */
+  margin-left: auto;
   display: flex;
   align-items: baseline;
   gap: 18px;
@@ -37,8 +41,7 @@
 /* Small type, full-size targets: the links keep their 11px letters but answer
    to a finger across a 39px-tall band. */
 .links a,
-.where a,
-.light {
+.where a {
   padding-block: 12px;
   margin-block: -12px;
 }
@@ -57,22 +60,6 @@
   color: var(--muted);
 }
 
-/* ---- light ---- */
-.light {
-  flex: none;
-  /* at the right whether or not anything stands to its left */
-  margin-left: auto;
-  white-space: nowrap;
-}
-.lightName {
-  display: none;
-}
-:root:not([data-light]) .lightName[data-for="tint"],
-:root[data-light="tint"] .lightName[data-for="tint"],
-:root[data-light="day"] .lightName[data-for="day"],
-:root[data-light="night"] .lightName[data-for="night"] {
-  display: inline;
-}
 
 /* ---- the wordmark: Alpha Lyrae, static ---- */
 .logo {
@@ -82,12 +69,9 @@
   /* the face's glitch alternates (calt, ss03 to ss05) stay off */
   font-feature-settings: "calt" 0;
   font-size: 22px;
-  line-height: 0.92;
+  line-height: 1;
   letter-spacing: -0.01em;
+  /* one line, always: the name is never broken */
+  white-space: nowrap;
   color: var(--fg);
-}
-
-/* Two-line stacked wordmark — set tight so it reads as one mark. */
-.logoLine {
-  display: block;
 }
