@@ -803,7 +803,6 @@ export default function Shelf({
                 <span className={styles.roman}>{it.title}</span>
                 <span className={styles.italic}>{it.title}</span>
               </span>
-              <span className={styles.year}>({it.year})</span>
             </div>
           ))}
         </div>

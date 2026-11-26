@@ -1,4 +1,4 @@
-/* The banner: wordmark and links over one rule, one line beneath. */
+/* The banner: wordmark and links, the light switch beneath. No rule. */
 .nav {
   position: relative;
   z-index: 20;
@@ -12,7 +12,6 @@
   justify-content: space-between;
   gap: 16px;
   padding: 14px 0 10px;
-  border-bottom: 1px solid var(--fg);
 }
 
 .links {
@@ -61,6 +60,8 @@
 /* ---- light ---- */
 .light {
   flex: none;
+  /* at the right whether or not anything stands to its left */
+  margin-left: auto;
   white-space: nowrap;
 }
 .lightName {

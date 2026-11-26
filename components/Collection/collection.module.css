@@ -183,9 +183,6 @@
   list-style: none;
   padding-top: clamp(20px, 2.6vw, 36px);
 }
-.list li + li {
-  border-top: 1px dotted var(--dots);
-}
 .line {
   display: grid;
   grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em;

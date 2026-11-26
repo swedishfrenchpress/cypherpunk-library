@@ -26,7 +26,6 @@ export const ui = {
     // The chrome: everything set in the small mono capitals. Short, literal,
     // and named for what it does.
     chrome: {
-      tagline: "A personal collection of public-domain reads",
       shelf: "The shelf",
       index: "The index",
       light: "Light",
@@ -86,7 +85,6 @@ export const ui = {
     subtitle:
       "Une collection personnelle d’ouvrages de qualité tombés dans le domaine public. Rien n’est à vendre, rien ne sera retiré.",
     chrome: {
-      tagline: "Une collection personnelle d’œuvres du domaine public",
       shelf: "L’étagère",
       index: "L’index",
       light: "Lumière",

@@ -99,7 +99,6 @@
 .title {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
   white-space: nowrap;
   cursor: pointer;
   font-family: var(--display);
@@ -143,15 +142,6 @@
 .title[data-on] .italic {
   opacity: 0;
   filter: blur(2px);
-}
-.year {
-  margin-top: 0.1em;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 11px;
-  letter-spacing: 0;
-  line-height: 1.5;
-  font-variant-numeric: lining-nums;
-  color: var(--muted);
 }
 
 /* -------------------------------------------------------------------- stage */
@@ -383,12 +373,12 @@
   cursor: default;
 }
 /* the one action on the screen: underlined at rest, where every other label
-   only gains its underline under the pointer */
+   only gains its underline under the pointer. It stands a little apart from
+   the pair before it; space does that, not a line. */
 .actions .open {
   display: inline-block;
-  margin-left: 7px;
-  padding: 15px 0 15px 18px;
-  border-left: 1px dotted var(--dots);
+  margin-left: 9px;
+  padding: 15px 0 15px 9px;
   white-space: nowrap;
   text-decoration-color: currentColor;
 }
@@ -440,8 +430,7 @@
   .titleFaces {
     display: inline;
   }
-  .italic,
-  .year {
+  .italic {
     display: none;
   }
 }

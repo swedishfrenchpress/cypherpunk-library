@@ -107,10 +107,9 @@ body {
    here. */
 body,
 .surface {
-  /* a rule; secondary text; a dotted row line */
+  /* a rule; secondary text */
   --rule: color-mix(in srgb, var(--fg) 45%, transparent);
   --muted: color-mix(in srgb, var(--fg) 78%, transparent);
-  --dots: color-mix(in srgb, var(--fg) 55%, transparent);
   background-color: var(--bg);
   color: var(--fg);
 }

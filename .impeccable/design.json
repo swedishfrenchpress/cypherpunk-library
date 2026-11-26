@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-26T21:33:31.107Z",
+  "generatedAt": "2026-11-26T21:50:40.981Z",
   "title": "Design System: The Cypherpunk Library",
   "extensions": {
     "colorMeta": {
@@ -99,11 +99,6 @@
         "displayName": "Rule (ink at 45%)",
         "canonical": "color-mix(in srgb, var(--fg) 45%, transparent)"
       },
-      "dots": {
-        "role": "neutral",
-        "displayName": "Dots (ink at 55%)",
-        "canonical": "color-mix(in srgb, var(--fg) 55%, transparent)"
-      },
       "muted": {
         "role": "neutral",
         "displayName": "Muted (ink at 78%)",
@@ -145,11 +140,11 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "11px, outside the ramp. Uppercase Fragment Mono, set plain: the banner, the shelf's controls, the index's controls and metadata."
+        "purpose": "11px, outside the ramp. Uppercase Fragment Mono, set plain: the banner's links and switches, the shelf's controls, the index's controls and metadata."
       },
       "wordmark": {
         "displayName": "Wordmark",
-        "purpose": "22px, outside the ramp. Alpha Lyrae with contextual alternates off; the static wordmark and nothing else."
+        "purpose": "22px, outside the ramp. Alpha Lyrae with contextual alternates off; the static wordmark and nothing else. Two stacked lines in the banner, one line on a share image."
       },
       "index-title": {
         "displayName": "Index title",
@@ -157,7 +152,7 @@
       },
       "marquee": {
         "displayName": "Marquee",
-        "purpose": "Swarsh Daisy, sized from the shelf's own width, min(30px, 8.2cqw) on a phone. The shelf's titles: roman for the book in hand, italic for its neighbours."
+        "purpose": "Swarsh Daisy, sized from the shelf's own width, min(30px, 8.2cqw) on a phone. The shelf's titles and nothing beside them: roman for the book in hand, italic for its neighbours."
       }
     },
     "shadows": [
@@ -310,16 +305,16 @@
     {
       "name": "Banner",
       "kind": "nav",
-      "description": "The static wordmark and label links over one full-strength rule; beneath it, where you are and the light switch. The language switch is two slots with a 12px gap: current locale inked, the other muted.",
-      "html": "<header class=\"ds-nav\"><div class=\"ds-nav-top\"><span class=\"ds-logo\"><span>Cypherpunk</span><span>Library</span></span><nav class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-label\">Collection</a><span class=\"ds-nav-label ds-nav-lang\"><span aria-current=\"true\">EN</span><a href=\"#\" class=\"ds-nav-muted\">FR</a></span></nav></div><div class=\"ds-nav-under\"><span class=\"ds-nav-label\">A personal collection of public-domain reads</span><button class=\"ds-nav-label\">Light: Book</button></div></header>",
-      "css": ".ds-nav { padding: 0 var(--pad, 16px); color: var(--fg, #f1d6a4); } .ds-nav-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 14px 0 10px; border-bottom: 1px solid var(--fg, #f1d6a4); } .ds-logo { font-family: var(--font-display, 'Alpha Lyrae'), system-ui, sans-serif; font-weight: 500; font-size: 22px; line-height: 0.92; letter-spacing: -0.01em; font-feature-settings: 'calt' 0; } .ds-logo span { display: block; } .ds-nav-links { display: flex; align-items: baseline; gap: 18px; } .ds-nav-lang { display: inline-flex; gap: 12px; } .ds-nav-under { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 8px; } .ds-nav-label { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: inherit; text-decoration: none; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; } a.ds-nav-label, button.ds-nav-label, .ds-nav-label a { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { a.ds-nav-label:hover, button.ds-nav-label:hover:not(:disabled), .ds-nav-label a:hover { text-decoration-color: currentColor; } } a.ds-nav-label:active, button.ds-nav-label:active, .ds-nav-label a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-nav-muted { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-nav-label:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "description": "The static wordmark and the label links, with the light switch beneath at the right. No rule under it and no tagline. A line under the wordmark appears only when a page passes one, such as a way back.",
+      "html": "<header class=\"ds-nav\"><div class=\"ds-nav-top\"><span class=\"ds-logo\"><span>Cypherpunk</span><span>Library</span></span><nav class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-label\">Collection</a><span class=\"ds-nav-label ds-nav-lang\"><span aria-current=\"true\">EN</span><a href=\"#\" class=\"ds-nav-muted\">FR</a></span></nav></div><div class=\"ds-nav-under\"><span class=\"ds-nav-label\"><a href=\"#\">Back to the shelf</a></span><button class=\"ds-nav-label\">Light: Book</button></div></header>",
+      "css": ".ds-nav { padding: 0 var(--pad, 16px); color: var(--fg, #f1d6a4); } .ds-nav-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 14px 0 10px; } .ds-logo { font-family: var(--font-display, 'Alpha Lyrae'), system-ui, sans-serif; font-weight: 500; font-size: 22px; line-height: 0.92; letter-spacing: -0.01em; font-feature-settings: 'calt' 0; } .ds-logo span { display: block; } .ds-nav-links { display: flex; align-items: baseline; gap: 18px; } .ds-nav-lang { display: inline-flex; gap: 12px; } .ds-nav-under { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 8px; } .ds-nav-label { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: inherit; text-decoration: none; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; } a.ds-nav-label, button.ds-nav-label, .ds-nav-label a { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { a.ds-nav-label:hover, button.ds-nav-label:hover:not(:disabled), .ds-nav-label a:hover { text-decoration-color: currentColor; } } a.ds-nav-label:active, button.ds-nav-label:active, .ds-nav-label a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-nav-muted { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-nav-label:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Shelf strip actions",
       "kind": "button",
-      "description": "All the shelf's strip carries, right-aligned: Previous and Next as words with 45px-tall targets (faded when there is nowhere further to go), then the one primary action behind a dotted divider, the only label underlined at rest.",
+      "description": "All the shelf's strip carries, right-aligned: Previous and Next as words with 45px-tall targets (faded when there is nowhere further to go), then the one primary action standing a little apart by space alone, the only label underlined at rest.",
       "html": "<div class=\"ds-strip-actions\"><button class=\"ds-turn\" disabled>Previous</button><button class=\"ds-turn\">Next</button><a class=\"ds-open\" href=\"#\">Read it</a></div>",
-      "css": ".ds-strip-actions { display: flex; align-items: center; justify-content: flex-end; color: var(--fg, #f1d6a4); } .ds-turn, .ds-open { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 400; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: inherit; white-space: nowrap; text-underline-offset: 4px; } .ds-turn { background: none; border: 0; border-radius: 0; cursor: pointer; padding: 15px 9px; text-decoration: underline 1px transparent; transition: text-decoration-color 0.18s ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-turn:active:not(:disabled), .ds-open:active { transform: scale(0.97); } .ds-open { transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } @media (prefers-reduced-motion: reduce) { .ds-turn:active:not(:disabled), .ds-open:active { transform: none; } } @media (hover: hover) and (pointer: fine) { .ds-turn:hover:not(:disabled) { text-decoration-color: currentColor; } } .ds-turn:disabled { opacity: 0.32; cursor: default; } .ds-open { display: inline-block; margin-left: 7px; padding: 15px 0 15px 18px; border-left: 1px dotted color-mix(in srgb, var(--fg, #f1d6a4) 55%, transparent); text-decoration: underline 1px currentColor; } .ds-turn:focus-visible, .ds-open:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "css": ".ds-strip-actions { display: flex; align-items: center; justify-content: flex-end; color: var(--fg, #f1d6a4); } .ds-turn, .ds-open { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 400; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: inherit; white-space: nowrap; text-underline-offset: 4px; } .ds-turn { background: none; border: 0; border-radius: 0; cursor: pointer; padding: 15px 9px; text-decoration: underline 1px transparent; transition: text-decoration-color 0.18s ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-turn:active:not(:disabled), .ds-open:active { transform: scale(0.97); } .ds-open { transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } @media (prefers-reduced-motion: reduce) { .ds-turn:active:not(:disabled), .ds-open:active { transform: none; } } @media (hover: hover) and (pointer: fine) { .ds-turn:hover:not(:disabled) { text-decoration-color: currentColor; } } .ds-turn:disabled { opacity: 0.32; cursor: default; } .ds-open { display: inline-block; margin-left: 9px; padding: 15px 0 15px 9px; text-decoration: underline 1px currentColor; } .ds-turn:focus-visible, .ds-open:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Text link",
@@ -348,9 +343,9 @@
       "name": "Index line",
       "kind": "custom",
       "refersTo": "list-line",
-      "description": "One book a line in the index list, dotted line between rows. Under the pointer the line takes the two colours swapped.",
+      "description": "One book a line in the index list, rows separated by their own padding with no line between. Under a real pointer the line takes the two colours swapped.",
       "html": "<ol class=\"ds-list\"><li><a class=\"ds-line\" href=\"#\"><span class=\"ds-line-meta\">01</span><span class=\"ds-line-title\">A Cypherpunk’s Manifesto</span><span class=\"ds-line-author\">Eric Hughes</span><span class=\"ds-line-meta\">Text</span><span class=\"ds-line-meta ds-line-year\">1993</span></a></li><li><a class=\"ds-line\" href=\"#\"><span class=\"ds-line-meta\">02</span><span class=\"ds-line-title\">The Crypto Anarchist Manifesto</span><span class=\"ds-line-author\">Timothy C. May</span><span class=\"ds-line-meta\">Text</span><span class=\"ds-line-meta ds-line-year\">1988</span></a></li></ol>",
-      "css": ".ds-list { list-style: none; margin: 0; padding: 0; color: var(--fg, #f1d6a4); } .ds-list li + li { border-top: 1px dotted color-mix(in srgb, var(--fg, #f1d6a4) 55%, transparent); } .ds-line { display: grid; grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em; column-gap: 16px; align-items: baseline; padding: 11px 8px 12px; color: inherit; text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; transition: background-color 0.16s ease, color 0.16s ease; } .ds-line-meta { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); transition: color 0.16s ease; } .ds-line-year { text-align: right; } .ds-line-title { font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-weight: 400; line-height: 1.08; letter-spacing: -0.008em; } .ds-line-author { font-size: var(--t-body, 18px); font-style: italic; line-height: 1.2; } @media (hover: hover) and (pointer: fine) { .ds-line:hover { background-color: var(--fg, #f1d6a4); color: var(--bg, #4a141c); } .ds-line:hover .ds-line-meta { color: var(--bg, #4a141c); } } @media (hover: none), (pointer: coarse) { .ds-line:active { background-color: color-mix(in srgb, var(--fg, #f1d6a4) 12%, transparent); } } .ds-line:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: -1px; }"
+      "css": ".ds-list { list-style: none; margin: 0; padding: 0; color: var(--fg, #f1d6a4); } .ds-line { display: grid; grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em; column-gap: 16px; align-items: baseline; padding: 11px 8px 12px; color: inherit; text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; transition: background-color 0.16s ease, color 0.16s ease; } .ds-line-meta { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); transition: color 0.16s ease; } .ds-line-year { text-align: right; } .ds-line-title { font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-weight: 400; line-height: 1.08; letter-spacing: -0.008em; } .ds-line-author { font-size: var(--t-body, 18px); font-style: italic; line-height: 1.2; } @media (hover: hover) and (pointer: fine) { .ds-line:hover { background-color: var(--fg, #f1d6a4); color: var(--bg, #4a141c); } .ds-line:hover .ds-line-meta { color: var(--bg, #4a141c); } } @media (hover: none), (pointer: coarse) { .ds-line:active { background-color: color-mix(in srgb, var(--fg, #f1d6a4) 12%, transparent); } } .ds-line:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: -1px; }"
     },
     {
       "name": "Cover on a ledge",
@@ -375,7 +370,7 @@
     "rules": [
       {
         "name": "The Two Colours Rule",
-        "body": "An interface surface is one ground and one ink. Rules, secondary text and dotted lines are that same ink at 45%, 78% and 55%. There are no greys, no accent, no third hue anywhere on the interface, the wordmark included. Books are objects standing on the surface and bring their own cloth and foil; they are the only other colour a screen carries.",
+        "body": "An interface surface is one ground and one ink. Rules and secondary text are that same ink at 45% and 78%. There are no greys, no accent, no third hue anywhere on the interface, the wordmark included. Books are objects standing on the surface and bring their own cloth and foil; they are the only other colour a screen carries.",
         "section": "colors"
       },
       {
@@ -392,6 +387,12 @@
         "name": "The Muted Is For Secondary Rule",
         "body": "The 78% strength is for secondary text: a line the page would still make sense without. Nothing a reader must not miss is set in it, and it is never lowered further.",
         "section": "colors"
+      },
+      {
+        "name": "Start with the thing and its name, and add nothing else",
+        "body": "On any surface (a page's banner, a section, a share image, anything new): no rule under or over a name, no tagline, no count and no side label, unless the reader needs it to act. A way back (BACK TO THE SHELF), a control (LIGHT: BOOK) and a link earn their place; a line that only decorates, or a phrase that describes the site, does not. This holds for the site's own banner, which has no rule and no tagline. Why: \"less is more. let's keep it minimal\".",
+        "section": "typography",
+        "source": "2026-11-26: the same correction on two surfaces. The footer: \"no need to the lines. no need for the different fonts\". The share image: \"no underline, and none of that text on the right\". Asked whether the banner's rule and tagline should go too: \"let's remove that too. less is more. let's keep it minimal\". Then, of the year set in parentheses beside each title on the shelf: \"can we also remove the year in the parenthesis next to the titles?\". Then, asked about the dotted divider before Read it and the dotted lines between rows of the index list: \"yeah let's remove them\""
       },
       {
         "name": "Running text is set in Junicode only, with no rules and no mono labels",
@@ -497,6 +498,24 @@
         "section": "motion"
       },
       {
+        "name": "The site's share image is the shelf itself",
+        "body": "The landing's row of books with A Cypherpunk's Manifesto turned cover-forward, on the Manifesto's oxblood. Not a statement, not a single cover, not a list of titles. Why (inferred, and accepted by the owner): it shows the library instead of describing it.",
+        "section": "share image",
+        "source": "2026-11-26: \"i think the first one is the best\" (of five drafts: the shelf, a cover, a stack of spines, a statement, a single book). On the reason: \"idk whatever you think is probably right\""
+      },
+      {
+        "name": "On a share image the wordmark is one line, Cypherpunk Library",
+        "body": "Never the stacked two-line form there; that form is for the banner. Why (inferred, and accepted by the owner): a share image is wide and short, so a second line costs height the books need.",
+        "section": "share image",
+        "source": "2026-11-26: \"do you think we can put Cypherpunk Library in one line? no in two lines?\""
+      },
+      {
+        "name": "A share image carries the picture and the name, and nothing else",
+        "body": "No rule under the name, no tagline, no count, no web address, no label in a corner. Why: \"less is more. let's keep it minimal\".",
+        "section": "share image",
+        "source": "2026-11-26: \"just have the words Cypherpunk Library above it. no underline, and none of that text on the right\""
+      },
+      {
         "name": "Never use square brackets, middle dots or arrows",
         "body": "On any surface, in any language: no square brackets around a label, no middle dot between items, no arrow character and no drawn arrow. This is non-negotiable. Controls are words, links are underlined, items are separated by space, a comma or a colon. Enforced by npm run check (scripts/check-tics.mjs), which also runs at the start of every build. Why: \"that is ai slop\".",
         "section": "copy",
@@ -522,11 +541,12 @@
       }
     ],
     "dos": [
-      "Do keep every interface surface to one ground and one ink, with rules at 45%, dotted lines at 55% and secondary text at 78% of that ink.",
+      "Do keep every interface surface to one ground and one ink, with rules at 45% and secondary text at 78% of that ink.",
       "Do author a new binding as a full object: cloth, foil, page ground, page ink, spine manner, cover layout, weave, device, and check it against the floor (7:1 ink on ground, 4.5:1 muted, 4.5:1 foil on cloth).",
       "Do set running text in Junicode alone and separate its parts with space and position.",
       "Do set a title (a shelf title, a page heading, an index entry) in --display, at 400, with tracking between -0.008em and -0.02em.",
       "Do start everything on a page of running text from one left edge.",
+      "Do start a new surface with the thing and its name, and add only what the reader needs to act.",
       "Do set controls plain in the mono label voice: words, a colon between a name and its value (LIGHT: BOOK), a comma between an author and a year (ERIC HUGHES, 1993), space between separate items.",
       "Do show a selected option as full ink with a 1px underline and an unselected one as muted, and underline at rest only the label that is the one way forward on its screen.",
       "Do make a link to read or browse roman, underlined at rest with a 1px line, thickening to 2px under the pointer.",
@@ -550,9 +570,10 @@
       "Don't introduce a grey, an accent or a third hue on interface. Colour arrives with the book in hand.",
       "Don't put a shadow, a radius, a gradient or a texture on an interface element. Those belong to books.",
       "Don't build cards, pills, chips, filled buttons or boxed inputs. Controls are text; fields are text on a rule.",
-      "Don't put a rule, a dotted line or a band of swapped colour between parts of running text.",
+      "Don't put a rule or a band of swapped colour between parts of running text, and don't use a dotted line anywhere.",
       "Don't set a Fragment Mono label beside or above running text, as a kicker, a caption or a row heading.",
       "Don't print a caption that repeats what the screen already shows.",
+      "Don't put a rule under a name, or a tagline, count or side label beside one, on the banner, a section or a share image.",
       "Don't add a block of facts to a book page, or any text about cloth, foil, devices, bindings or how the site was made.",
       "Don't animate the wordmark or give it a hover effect.",
       "Don't dim text on hover. Opacity is not a hover state in this system.",
