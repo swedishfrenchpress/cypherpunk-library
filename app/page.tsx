@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Celestial from "@/components/Celestial";
-import BookShelf from "@/components/BookShelf";
+import ShelfView from "@/components/ShelfView";
+import Statement from "@/components/Statement";
+import { MASTHEAD_LINES } from "@/lib/i18n";
 import styles from "./page.module.css";
 
 // Point hreflang at the French home; canonical stays "/" (this is the English
@@ -14,19 +14,17 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    // The .page shell carries the paper surface and the full-height flex column;
-    // Nav (the site banner) sits beside <main>, not inside it, matching every other
-    // route's shell → Celestial + Nav + main structure.
-    <div className={styles.page}>
-      <Celestial />
-      <Nav locale="en" altHref="/fr" />
-      {/* Hero (masthead + intro) and the shelf overlap in one cell on desktop;
-          on mobile the hero dissolves to display:contents and `order` stacks them
-          title → shelf → intro, so the signature shelf lands in the first screen. */}
-      <main className={styles.composition}>
-        <Hero locale="en" />
-        <BookShelf />
-      </main>
-    </div>
+    <>
+      {/* The first screen is the shelf and nothing else: the banner, the title of
+          the book in hand, the row of books, and the strip that opens one. */}
+      <div className={styles.first}>
+        <Nav locale="en" altHref="/fr" />
+        <main className={styles.main}>
+          <h1 className="srOnly">{MASTHEAD_LINES.en.join(" ")}</h1>
+          <ShelfView locale="en" />
+        </main>
+      </div>
+      <Statement locale="en" />
+    </>
   );
 }

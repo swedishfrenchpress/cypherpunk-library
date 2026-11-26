@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   // Same shallow-merge caveat as the English route: re-attach the file-based card
   // images, since defining openGraph here replaces the root's wholesale.
   const url = `/fr/book/${slug}`;
-  const ogTitle = `${title} · The Cypherpunk Library`;
+  const ogTitle = `${title} | The Cypherpunk Library`;
   return {
     title,
     description,

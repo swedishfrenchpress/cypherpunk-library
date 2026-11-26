@@ -381,7 +381,25 @@ const DATA: Array<Omit<Book, "series" | "t">> = [
   },
 ];
 
-export const books: Book[] = DATA.map((b) => ({ ...b, series: SERIES, t: SPINE }));
+// The entries above are typed with plain ASCII quotes, which is the easy way
+// to write them. A book face deserves real ones, so they are set here, once,
+// for every surface: apostrophes inside words, then opening single quotes, then
+// whatever is left (closing quotes and trailing apostrophes).
+function typeset(s: string): string {
+  return s
+    .replace(/(\w)'(?=\w)/g, "$1\u2019")
+    .replace(/(^|[\s(\[\u201c])'/g, "$1\u2018")
+    .replace(/'/g, "\u2019");
+}
+
+export const books: Book[] = DATA.map((b) => ({
+  ...b,
+  title: typeset(b.title),
+  author: typeset(b.author),
+  description: typeset(b.description),
+  series: SERIES,
+  t: SPINE,
+}));
 
 /** Look up a book by its URL slug (undefined for unknown slugs). */
 export function getBookBySlug(slug: string): Book | undefined {

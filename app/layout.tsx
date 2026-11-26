@@ -1,19 +1,43 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fragment_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import Colophon from "@/components/Colophon";
 import SiteFooter from "@/components/SiteFooter";
+import SurfaceSync from "@/components/SurfaceSync";
+import { books } from "@/lib/books";
+import { HOUSE, surfacePairs } from "@/lib/designs";
+import { surfaceInit } from "@/lib/surface";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+// Three voices, and only three.
+//
+// Junicode (Peter S. Baker, SIL OFL 1.1) is the library's book face: cut from the
+// seventeenth-century Fell types of the Oxford press, which is the right lineage
+// for a shelf of pamphlets and manifestos. One variable family does both jobs:
+// its condensed width sets the titles, its regular width sets the reading. The
+// files in app/fonts are a Latin subset with the width (75–100) and weight
+// (400–600) axes kept; licence in app/fonts/Junicode-OFL.txt.
+const junicode = localFont({
+  variable: "--font-serif",
+  src: [
+    { path: "./fonts/Junicode-Roman.woff2", style: "normal", weight: "400 600" },
+    { path: "./fonts/Junicode-Italic.woff2", style: "italic", weight: "400 600" },
+  ],
+  declarations: [{ prop: "font-stretch", value: "75% 100%" }],
+  display: "swap",
+});
+
+// Fragment Mono carries all the chrome: labels, counts, controls.
+const fragmentMono = Fragment_Mono({
+  variable: "--font-mono",
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
 
-// Alpha-Lyrae (Vega Protocol, SIL OFL 1.1) — our display / brand face. Single
-// weight (Medium); self-hosted from app/fonts (license: app/fonts/OFL.md).
+// Alpha-Lyrae (Vega Protocol, SIL OFL 1.1) is the wordmark, and nothing else.
+// Single weight (Medium); self-hosted (licence: app/fonts/OFL.md).
 const alphaLyrae = localFont({
   variable: "--font-display",
   src: "./fonts/AlphaLyrae-Medium.woff2",
@@ -32,7 +56,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.cypherpunklibrary.com"),
   title: {
     default: "The Cypherpunk Library",
-    template: "%s · The Cypherpunk Library",
+    template: "%s | The Cypherpunk Library",
   },
   description: DESCRIPTION,
   alternates: { canonical: "/" },
@@ -51,17 +75,15 @@ export const metadata: Metadata = {
   },
 };
 
-// Set the theme on <html> before the first paint so there's no flash of the
-// wrong palette. This must run synchronously during HTML parse — next/script's
-// beforeInteractive defers to the Next runtime (after parse) in the App Router,
-// so a plain inline <script> is the FOUC-free path. It reads a saved choice,
-// else the OS preference, and writes [data-theme] (+ color-scheme) that the
-// tokens in globals.css key off. It also seeds <meta name="theme-color"> so the
-// mobile browser chrome matches the paper (--bg) from the first frame and tracks
-// the real theme, including a manual override — ThemeToggle keeps it in sync.
+// What the page wears is decided before the first paint: this script reads the
+// saved light and the book in hand (from the URL, or this tab's memory) and
+// writes [data-light] and --book-bg/--book-fg onto <html> during parse. It must
+// run synchronously, so it is a plain inline <script> as the first child of
+// <body>; next/script's beforeInteractive would defer it to the Next runtime.
 // suppressHydrationWarning silences the expected diff between the server's bare
-// <html> and the script-mutated one.
-const THEME_INIT = `(function(){try{var e=document.documentElement,s=localStorage.getItem('theme'),t=(s==='dark'||s==='light')?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');e.setAttribute('data-theme',t);e.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement('meta');m.setAttribute('name','theme-color');document.head.appendChild(m);}m.setAttribute('content',t==='dark'?'#14130c':'#ffffe1');}catch(_){}})();`;
+// <html> and the script-dressed one. See lib/surface.ts.
+const PAIRS = surfacePairs(books.map((b) => b.slug));
+const SURFACE_INIT = surfaceInit(PAIRS, [HOUSE.bg, HOUSE.fg]);
 
 export default function RootLayout({
   children,
@@ -71,16 +93,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${alphaLyrae.variable}`}
+      className={`${junicode.variable} ${fragmentMono.variable} ${alphaLyrae.variable}`}
       suppressHydrationWarning
     >
       <body>
         {/* First child of <body>: runs during parse, before any content paints. */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
+        <script dangerouslySetInnerHTML={{ __html: SURFACE_INIT }} />
         {children}
-        {/* Closes every route on the body's paper, just below each page's
-            full-height stage — a short scroll past the landing's shelf. */}
         <SiteFooter />
+        {/* Renders nothing: keeps the page wearing the right book across client
+            navigations (the inline script only runs on a full load). */}
+        <SurfaceSync pairs={PAIRS} />
         {/* Renders nothing — logs a quiet colophon to the console, once. */}
         <Colophon />
         <Analytics />

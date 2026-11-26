@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   // og:title gets the full name spelled out, since the title template only touches
   // <title>, not openGraph.
   const url = `/book/${slug}`;
-  const ogTitle = `${book.title} · The Cypherpunk Library`;
+  const ogTitle = `${book.title} | The Cypherpunk Library`;
   return {
     title: book.title,
     description: book.description,

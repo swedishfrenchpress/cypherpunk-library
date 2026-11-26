@@ -1,16 +1,18 @@
-import Celestial from "./Celestial";
+"use client";
+
+import { usePathname } from "next/navigation";
+import { ui } from "@/lib/i18n";
 import styles from "./SiteFooter.module.css";
 
-// A quiet way to reach the librarian. Rendered once in the root layout, so it
-// closes every route on the same line of paper — below the single-screen
-// landing (a short scroll past the shelf) and at the natural end of the
-// scrolling collection/book pages. It carries its own Celestial grain so the
-// paper texture runs unbroken past the stage's bottom edge, with no flat seam.
+// The last line of every page: what this place is, and how to reach the
+// librarian. Rendered once in the root layout, which does not know the page's
+// language, so it reads it from the path: everything under /fr is French.
 export default function SiteFooter() {
+  const fr = /^\/fr(\/|$)/.test(usePathname());
   return (
-    <footer className={styles.footer}>
-      <Celestial />
-      <a className={styles.email} href="mailto:info@cypherpunklibrary.com">
+    <footer className={styles.footer} lang={fr ? "fr" : undefined}>
+      <p className="label">{ui[fr ? "fr" : "en"].chrome.footer}</p>
+      <a className="label" href="mailto:info@cypherpunklibrary.com">
         info@cypherpunklibrary.com
       </a>
     </footer>
