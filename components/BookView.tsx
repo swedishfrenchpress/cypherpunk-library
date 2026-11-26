@@ -56,10 +56,7 @@ export default function BookView({
   const t = ui[locale].chrome;
   const readsHere = !book.pdf && !book.external && !!Text;
 
-  // Book-length PDFs read badly trapped in a tall inline iframe, so we lead with
-  // open/download and make the inline reader opt-in. Short ones (Finney's 7pp)
-  // stay inline. Unknown page count is treated as long, to be safe.
-  const isLongPdf = !!book.pdf && (book.pages == null || book.pages > 50);
+  // A PDF is opened in its own tab or downloaded, never embedded in the page.
 
   return (
     <div lang={locale === "fr" ? "fr" : undefined}>
@@ -104,9 +101,6 @@ export default function BookView({
                         </a>
                       </li>
                     )}
-                    <li>
-                      <a href="#text">{t.readInline}</a>
-                    </li>
                   </>
                 ) : book.external ? (
                   <li>
@@ -147,70 +141,9 @@ export default function BookView({
           </div>
         </div>
 
-        {(book.pdf || readsHere) && (
+        {readsHere && Text && (
           <section id="text" className={styles.text} aria-label={t.text}>
-            {book.pdf ? (
-              isLongPdf ? (
-                // Long book: open/download is the real action; inline is opt-in.
-                <div className={styles.reader}>
-                  {locale === "fr" ? (
-                    <p className={styles.longNote}>
-                      {book.pages ? `Ce livre fait ${book.pages} pages. ` : ""}
-                      Il se lit mieux{" "}
-                      <a href={book.pdf} target="_blank" rel="noreferrer">
-                        ouvert dans son propre onglet
-                      </a>{" "}
-                      ou téléchargé. Vous pouvez aussi le lire dans la page, ci-dessous.
-                    </p>
-                  ) : (
-                    <p className={styles.longNote}>
-                      {book.pages ? `This is a ${book.pages}-page book. ` : ""}
-                      It reads best{" "}
-                      <a href={book.pdf} target="_blank" rel="noreferrer">
-                        opened in its own tab
-                      </a>{" "}
-                      or downloaded. You can also read it inline below.
-                    </p>
-                  )}
-                  <details className={styles.inline}>
-                    <summary>{t.readInline}</summary>
-                    <iframe
-                      className={styles.frame}
-                      src={`${book.pdf}#view=FitH`}
-                      title={`${title} by ${book.author}`}
-                      loading="lazy"
-                    />
-                  </details>
-                </div>
-              ) : (
-                <div className={styles.reader}>
-                  <iframe
-                    className={styles.frame}
-                    src={`${book.pdf}#view=FitH`}
-                    title={`${title} by ${book.author}`}
-                    loading="lazy"
-                  />
-                  {locale === "fr" ? (
-                    <p className={styles.frameNote}>
-                      Le PDF ne s’affiche pas ?{" "}
-                      <a href={book.pdf} target="_blank" rel="noreferrer">
-                        Ouvrez-le dans un nouvel onglet
-                      </a>{" "}
-                      ou téléchargez-le ci-dessus.
-                    </p>
-                  ) : (
-                    <p className={styles.frameNote}>
-                      Can&rsquo;t see the PDF?{" "}
-                      <a href={book.pdf} target="_blank" rel="noreferrer">
-                        Open it in a new tab
-                      </a>{" "}
-                      or download it above.
-                    </p>
-                  )}
-                </div>
-              )
-            ) : Text ? (
-              <div className={styles.reading}>
+            <div className={styles.reading}>
                 {untranslatedNote && <p className={styles.fallbackNote}>{untranslatedNote}</p>}
                 <article
                   className={styles.prose}
@@ -242,7 +175,6 @@ export default function BookView({
                   </footer>
                 )}
               </div>
-            ) : null}
           </section>
         )}
       </main>

@@ -148,7 +148,7 @@ One ground and one ink, supplied by the book in hand; the palette is the binding
 The house pair is only the default. `--bg` and `--fg` always resolve to `--book-bg` and `--book-fg`, written on `<html>` by the shelf or the route (`lib/surface.ts`) and set before first paint together with the browser's theme colour, so a reload never flashes the wrong cloth. The book in hand is remembered per tab.
 
 ### Neutral
-- **Rule** (`rule`, ink at 45%): the line under the index's search field at rest, the ledge a cover stands on in the index, the frame around an embedded PDF, a section break inside a text, the scrollbar thumb.
+- **Rule** (`rule`, ink at 45%): the line under the index's search field at rest, the ledge a cover stands on in the index, a section break inside a text, the scrollbar thumb.
 - **Muted** (`muted`, ink at 78%): secondary text only (the footer line, source and fallback notes, authors and years in index metadata, unselected options, the other language, placeholders, list markers).
 
 ### The bindings
@@ -186,7 +186,7 @@ A book with no entry gets a sober fallback: its catalogue colour as cloth, cream
 These are deliberate and sit outside the two-colour pair. They belong to an object or a foreign document, never to chrome, and none of them is a palette colour to reach for.
 
 - **The page block** (`#ece5d2` and `#cfc6ae`, alternating 1px): the edges of the leaves, seen only when a book is turned. Paper is paper whatever the cloth.
-- **White backing** (`#fff`): behind the Lightning QR code so it scans on any cloth, and behind the embedded PDF frame, which is someone else's page.
+- **White backing** (`#fff`): behind the Lightning QR code so it scans on any cloth.
 - **Light on cloth** (white at 5 to 8%: `rgba(255, 255, 255, 0.05)`, `0.06`, `0.07`, `0.08`): the warp of the weave, the highlight down the round of the spine, the raking light across a board.
 - **Shade on cloth** (black at 7 to 30%: `rgba(0, 0, 0, 0.07)`, `0.12`, `0.13`, `0.2`, `0.26`, `0.3`, and a `#000` veil at up to 36%, 46% on the back board): the weft, the joints, the groove, boards seen edge-on.
 - **Cast shadow** (black at 26 to 36%): see Elevation & Depth.
@@ -225,9 +225,9 @@ Every font size on the interface is one of six steps, declared once as custom pr
 - **Headline** (`--t-headline`, `clamp(40px, 4.6vw, 64px)`; Swarsh Daisy 400, 1.04, no tracking): a page's name, one role with one setting. The title of a book on its own page (max 11em), the index's heading, The collection, and the missing page's heading all take it. One per page.
 - **Title** (`--t-title`, `clamp(30px, 3.5vw, 50px)`): the landing's statement, one sentence to a line (Junicode 400 at 84% width, 1.08, -0.022em), and the index's empty state (Swarsh Daisy italic, 1.1, no tracking).
 - **Subhead** (`--t-subhead`, `clamp(21px, 1.9vw, 26px)`): the byline under a book's title (Junicode italic, 1.2), and titles in the index list (Swarsh Daisy 400, 1.08, no tracking).
-- **Reading** (`--t-reading`, `clamp(19px, 1.5vw, 21.5px)`; Junicode 400): everything that is read at length or beside it. The text of a book (1.6, max-width 29em, about 72 characters a line, hanging punctuation, paragraphs wrapped so none ends on one word alone); a book's blurb and the ways to read it, the PDF notes and the inline reader's disclosure (1.5), so a blurb is never smaller than the text under it; what is written in the index's search field (1.3, placeholder italic and muted); the landing's footnote and its link into the collection (1.45, max 30em, lines balanced); the missing page's body. Headings inside a text are relative to it: h2 1.5em at 500 and width 84%; h3 1.16em italic 400; h4 0.82em in small caps tracked 0.08em. Code inside a text is Fragment Mono at 0.74em.
+- **Reading** (`--t-reading`, `clamp(19px, 1.5vw, 21.5px)`; Junicode 400): everything that is read at length or beside it. The text of a book (1.6, max-width 29em, about 72 characters a line, hanging punctuation, paragraphs wrapped so none ends on one word alone); a book's blurb and the ways to read it (1.5), so a blurb is never smaller than the text under it; what is written in the index's search field (1.3, placeholder italic and muted); the landing's footnote and its link into the collection (1.45, max 30em, lines balanced); the missing page's body. Headings inside a text are relative to it: h2 1.5em at 500 and width 84%; h3 1.16em italic 400; h4 0.82em in small caps tracked 0.08em. Code inside a text is Fragment Mono at 0.74em.
 - **Body** (`--t-body`, 18px; 400, 1.5, oldstyle numerals): default text, and the author in the index list (italic).
-- **Note** (`--t-note`, 16px; 1.5): the footer line, the source credit, the PDF fallback note and the Lightning address (roman, the first three muted).
+- **Note** (`--t-note`, 16px; 1.5): the footer line, the source credit and the Lightning address (roman, the first two muted).
 
 Outside the ramp, and fixed:
 
@@ -271,11 +271,11 @@ One page margin everywhere, `--pad`: 16px, growing to the left or right safe-are
 
 - **The banner.** The wordmark at left and the label links at right (`COLLECTION`, `EN FR`), on one baseline, and nothing else. The wordmark is one line and never wraps; on the narrowest phones the links drop under it. No rule under it and no tagline. A line under the wordmark appears only when a page passes one: the way back on a book page and on the index (`BACK TO THE SHELF`), the missing page's `ERROR 404`. The landing shows nothing there.
 - **The landing** is one screen of shelf (banner, marquee, stage, strip, filling `100svh`), then the colophon on the same ground, centred on the page's middle axis with `clamp(72px, 10vw, 152px)` of space above: the statement, the footnote with its links in a 30em measure, the way into the collection. The footer's line is centred under it. On a phone the first screen takes only the room it needs and the colophon follows directly.
-- **The book page** is two columns, 52fr and 48fr with a `clamp(24px, 4vw, 72px)` gutter. The object stands sticky in the first; beside it the second is set as a title page as tall as the book (`clamp(430px, 100svh - 132px, 760px)`): title and byline at its head, blurb and the ways to read at its foot, level with the foot of the book, and air between. The text then starts in the same second column, on the same left edge as the title. An embedded PDF spans both columns. One column at 900px, book first.
+- **The book page** is two columns, 52fr and 48fr with a `clamp(24px, 4vw, 72px)` gutter. The object stands sticky in the first; beside it the second is set as a title page as tall as the book (`clamp(430px, 100svh - 132px, 760px)`): title and byline at its head, blurb and the ways to read at its foot, level with the foot of the book, and air between. Where the text is read here, it starts in the same second column, on the same left edge as the title. A PDF book's page ends with its title page: it offers Open the PDF, Download the PDF and, where there is one, Download the EPUB, and nothing below. One column at 900px, book first.
 - **The index** is its name alone at the headline step on the page's left edge, with no paragraph under it; then one row of controls on a single baseline with no rule under it (the search field, the format options All, Text and PDF, the view options Covers and List); then either covers on ledges (`repeat(auto-fill, minmax(min(168px, 42%), 1fr))`) or the list (number, title, author, format, year). No count is printed; it is spoken through a visually hidden live region. At 720px and below the search takes its own row and the two sets of options share the next, the format set at the left and the view set pushed to the right.
 - **The footer** is one line at the foot of every page with `clamp(40px, 6vw, 88px)` above it and no rule. It stands on the page's left edge, except under a centred closing section (the landing), where it is centred too.
 - **Rhythm.** Space between sections is fluid, `clamp(40px, 6vw, 88px)` to `clamp(72px, 10vw, 152px)`. Inside the banner and controls it is tight and fixed (8 to 14px).
-- **Targets.** Labels keep 11px letters but answer across a full-size band: about 39px in the banner (12px block padding cancelled by a -12px margin) and 45px on the shelf's Previous, Next and Read it (15px block padding). Links, buttons and disclosure lines take `touch-action: manipulation`, so a tap fires at once. Buttons and disclosure lines are not selectable and raise no long-press sheet; nor do the shelf's book links, because a book is a thing to drag. Read it stays an ordinary link.
+- **Targets.** Labels keep 11px letters but answer across a full-size band: about 39px in the banner (12px block padding cancelled by a -12px margin) and 45px on the shelf's Previous, Next and Read it (15px block padding). Links and buttons take `touch-action: manipulation`, so a tap fires at once. Buttons are not selectable and raise no long-press sheet; nor do the shelf's book links, because a book is a thing to drag. Read it stays an ordinary link.
 - **Breakpoints.** One phone breakpoint, 720px, shared by the shelf, the landing and the index; 900px for the book page.
 
 ### The book-em
@@ -287,6 +287,10 @@ All book geometry is in em. A full-height book is 31.25em tall, a cover is 0.66 
 **Never print a caption that repeats what the screen already shows.** The shelf's strip carries controls only; the book in hand is named by the title above it and by its cover.
 Why: none given.
 <!-- 2026-11-26: "i don't think we need this too" (the number, title and author line at the shelf's bottom left) -->
+
+**A PDF is opened in its own tab or downloaded, never embedded in a page.** A PDF book's page offers Open the PDF, Download the PDF and, where there is one, Download the EPUB, and ends there. No frame, no inline reader, no disclosure.
+Why: "it makes our site look janky".
+<!-- 2026-11-26: "we should have open the pdf or download the pdf. we don't need to embed the PDF live into our site. it makes our site look janky." -->
 
 **The Same Edge Rule.** On a page of running text everything starts on one left edge. On a book's page the title, the blurb, the ways to read and the first line of the text share the second column's edge; on the index the page's name, the controls and the books share the page margin. The landing's closing section is the one centred exception: the open cover above it is centred with its title over it, and the colophon carries that axis to the foot of the page, the way a book's title page or closing colophon is set. The footer's line follows it there and nowhere else.
 
@@ -310,7 +314,7 @@ The shadows are the same on every book's ground: black, at the strengths above.
 
 Interface is square: radius 0 on every control and field, and no filled containers other than the swap of the two colours on an index line under the pointer.
 
-Lines are few, solid, 1px, and each has a job. They remain in four places only: the line under the index's search field (45% at rest, full ink in use); the ledge under a cover in the index, the frame around an embedded PDF, and a short section break inside a text (45%). Nothing on the site is dotted. Everything else is separated by space alone: the banner, the shelf's strip, the index's row of controls, the rows of the index list, the landing's colophon, the footer, a book's title page and the reading.
+Lines are few, solid, 1px, and each has a job. They remain in three places only: the line under the index's search field (45% at rest, full ink in use); the ledge under a cover in the index, and a short section break inside a text (45%). Nothing on the site is dotted, and nothing is framed. Everything else is separated by space alone: the banner, the shelf's strip, the index's row of controls, the rows of the index list, the landing's colophon, the footer, a book's title page and the reading.
 
 Books carry the only curves: 0.1em on the spine, 0.16em on the fore-edge corners of a board. Their surfaces carry the only texture: a weave of 1px hairlines in real pixels (linen at a 3px pitch, buckram coarser at 4px, paper-over-boards none; flat index covers carry none, since a weave that small would alias).
 
@@ -335,7 +339,7 @@ Small mono capitals, set plain, with no surface. As a link or button it carries 
 - **On a phone:** it asks for a Search return key and leaves names alone (no capitalising, no correcting); at 19px and up the page does not zoom into it.
 
 ### Text links
-Every link in running text is the ink, roman, with a 1px underline set 0.2em below at rest; under the pointer the underline thickens to 2px and nothing else changes. This covers the ways to read a book (Open the PDF, Download the PDF, Read it inline, Read it below, Read at another site), set side by side at the reading step with 1.6em between them; the long-PDF disclosure, a plain underlined summary line; Browse the collection on the landing; and links inside the footnote, notes and the text. Nothing follows the words. The footer's address is the quiet exception: its underline appears only under the pointer.
+Every link in running text is the ink, roman, with a 1px underline set 0.2em below at rest; under the pointer the underline thickens to 2px and nothing else changes. This covers the ways to read a book (Open the PDF, Download the PDF, Download the EPUB, Read it below, Read at another site), set side by side at the reading step with 1.6em between them; Browse the collection on the landing; and links inside the footnote, notes and the text. Nothing follows the words. The footer's address is the quiet exception: its underline appears only under the pointer.
 
 ### The colophon
 The landing's close, on the page's own ground and on its middle axis: the statement at the title step with each sentence on its own line, then the footnote in a 30em measure with its lines evened out, then the link into the collection, both at the reading step. One face, two sizes, centred. The section marks itself as a centred close, and the footer's line centres under it.
@@ -479,6 +483,7 @@ The same check holds Fragment Mono to an allow-list of the places named in the T
 - **Don't** print a caption that repeats what the screen already shows.
 - **Don't** centre running text anywhere but the landing's closing section.
 - **Don't** put a rule under a name, or a tagline, count or side label beside one, on the banner, a section or a share image.
+- **Don't** embed a PDF, or any other site's page, in a frame.
 - **Don't** add a block of facts to a book page, or any text about cloth, foil, devices, bindings or how the site was made.
 - **Don't** animate the wordmark, give it a hover effect, or break it onto two lines.
 - **Don't** dim text on hover. Opacity is not a hover state in this system.

@@ -90,8 +90,6 @@
 }
 .actions a,
 .v4vText a,
-.longNote a,
-.frameNote a,
 .sourceNote a {
   text-decoration: underline 1px;
   text-underline-offset: 0.2em;
@@ -101,16 +99,12 @@
 @media (hover: hover) and (pointer: fine) {
   .actions a:hover,
   .v4vText a:hover,
-  .longNote a:hover,
-  .frameNote a:hover,
   .sourceNote a:hover {
     text-decoration-thickness: 2px;
   }
 }
 .actions a:active,
 .v4vText a:active,
-.longNote a:active,
-.frameNote a:active,
 .sourceNote a:active {
   text-decoration-thickness: 2px;
 }
@@ -151,11 +145,6 @@
 }
 .reading {
   grid-column: 2;
-  min-width: 0;
-}
-/* a PDF wants the whole width */
-.reader {
-  grid-column: 1 / -1;
   min-width: 0;
 }
 
@@ -262,54 +251,6 @@
   color: var(--muted);
 }
 
-/* ---- the PDF reader ---- */
-.longNote {
-  max-width: 34em;
-  font-size: var(--t-reading);
-  line-height: 1.5;
-}
-.frame {
-  display: block;
-  width: 100%;
-  height: 86vh;
-  height: 86svh;
-  border: 1px solid var(--rule);
-  background: #fff;
-}
-.frameNote {
-  margin-top: 14px;
-  font-size: var(--t-note);
-  line-height: 1.5;
-  color: var(--muted);
-}
-.inline {
-  margin-top: 1.2em;
-  font-size: var(--t-reading);
-}
-/* the disclosure is a plain underlined line, like the other ways to read */
-.inline summary {
-  display: inline-block;
-  padding: 6px 0;
-  cursor: pointer;
-  list-style: none;
-  text-decoration: underline 1px;
-  text-underline-offset: 0.2em;
-}
-.inline summary::-webkit-details-marker {
-  display: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .inline summary:hover {
-    text-decoration-thickness: 2px;
-  }
-}
-.inline summary:active {
-  text-decoration-thickness: 2px;
-}
-.inline .frame {
-  margin-top: 14px;
-}
-
 /* ---- one column: the book first, standing free, then its title page ---- */
 @media (max-width: 900px) {
   .head,
@@ -328,8 +269,7 @@
     gap: clamp(28px, 6vw, 44px);
     padding: 0;
   }
-  .reading,
-  .reader {
+  .reading {
     grid-column: 1;
   }
 }

@@ -44,7 +44,6 @@ export const ui = {
       openPdf: "Open the PDF",
       downloadPdf: "Download the PDF",
       downloadEpub: "Download the EPUB",
-      readInline: "Read it inline",
       readAt: "Read at",
       // what follows a label before its value (French sets a space before it)
       colon: ": ",
@@ -98,7 +97,6 @@ export const ui = {
       openPdf: "Ouvrir le PDF",
       downloadPdf: "Télécharger le PDF",
       downloadEpub: "Télécharger l’EPUB",
-      readInline: "Lire dans la page",
       readAt: "À lire sur",
       colon: "\u00a0: ",
       library: "La bibliothèque",
