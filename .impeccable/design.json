@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-26T22:19:42.367Z",
+  "generatedAt": "2026-11-26T22:25:48.340Z",
   "title": "Design System: The Cypherpunk Library",
   "extensions": {
     "colorMeta": {
@@ -60,7 +60,7 @@
       },
       "reading": {
         "displayName": "Reading",
-        "purpose": "--t-reading, clamp(19px, 1.5vw, 21.5px). The text of a book at 29em; a book's blurb and ways to read; the PDF notes and disclosure; the index's search field; the landing's footnote (30em, centred, lines balanced) and link into the collection; the missing page's body."
+        "purpose": "--t-reading, clamp(19px, 1.5vw, 21.5px). The text of a book at 29em; a book's blurb and ways to read; the index's search field; the landing's footnote (30em, centred, lines balanced) and link into the collection; the missing page's body."
       },
       "body": {
         "displayName": "Body",
@@ -68,7 +68,7 @@
       },
       "note": {
         "displayName": "Note",
-        "purpose": "--t-note, 16px. The footer line, the source credit, the PDF fallback note, the Lightning address."
+        "purpose": "--t-note, 16px. The footer line, the source credit, the Lightning address."
       },
       "label": {
         "displayName": "Label",
@@ -247,8 +247,8 @@
       "name": "Text link",
       "kind": "button",
       "refersTo": "text-link",
-      "description": "A link to read or browse: roman Junicode, a 1px underline at rest that thickens to 2px under the pointer. Words only. Shown as the ways to read a book, side by side at the reading step.",
-      "html": "<ul class=\"ds-actions\"><li><a href=\"#\">Open the PDF</a></li><li><a href=\"#\">Download the PDF</a></li><li><a href=\"#\">Read it inline</a></li></ul>",
+      "description": "A link to read or browse: roman Junicode, a 1px underline at rest that thickens to 2px under the pointer. Words only. Shown as all a PDF book's page offers, side by side at the reading step; a PDF is opened in its own tab or downloaded, never embedded.",
+      "html": "<ul class=\"ds-actions\"><li><a href=\"#\">Open the PDF</a></li><li><a href=\"#\">Download the PDF</a></li><li><a href=\"#\">Download the EPUB</a></li></ul>",
       "css": ".ds-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 1.6em; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.5; } .ds-actions a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; } @media (hover: hover) and (pointer: fine) { .ds-actions a:hover { text-decoration-thickness: 2px; } } .ds-actions a:active { text-decoration-thickness: 2px; } .ds-actions a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
@@ -379,6 +379,12 @@
         "body": "The shelf's strip carries controls only; the book in hand is named by the title above it and by its cover. Why: none given.",
         "section": "layout",
         "source": "2026-11-26: \"i don't think we need this too\" (the number, title and author line at the shelf's bottom left)"
+      },
+      {
+        "name": "A PDF is opened in its own tab or downloaded, never embedded in a page",
+        "body": "A PDF book's page offers Open the PDF, Download the PDF and, where there is one, Download the EPUB, and ends there. No frame, no inline reader, no disclosure. Why: \"it makes our site look janky\".",
+        "section": "layout",
+        "source": "2026-11-26: \"we should have open the pdf or download the pdf. we don't need to embed the PDF live into our site. it makes our site look janky.\""
       },
       {
         "name": "The Same Edge Rule",
@@ -515,6 +521,7 @@
       "Don't print a caption that repeats what the screen already shows.",
       "Don't centre running text anywhere but the landing's closing section.",
       "Don't put a rule under a name, or a tagline, count or side label beside one, on the banner, a section or a share image.",
+      "Don't embed a PDF, or any other site's page, in a frame.",
       "Don't add a block of facts to a book page, or any text about cloth, foil, devices, bindings or how the site was made.",
       "Don't animate the wordmark, give it a hover effect, or break it onto two lines.",
       "Don't dim text on hover. Opacity is not a hover state in this system.",
