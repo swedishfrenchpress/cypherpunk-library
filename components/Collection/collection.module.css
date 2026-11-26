@@ -61,6 +61,18 @@
   padding: 9px 0 5px;
   color: var(--muted);
   white-space: nowrap;
+  transition:
+    text-decoration-color 0.18s ease,
+    transform 160ms var(--ease-out);
+}
+/* a press answers at once */
+.opt:active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .opt:active {
+    transform: none;
+  }
 }
 .opt[aria-pressed="true"] {
   color: var(--fg);
@@ -94,7 +106,7 @@
   gap: 14px;
   padding: clamp(48px, 8vw, 104px) 0;
   font-size: var(--t-title);
-  font-stretch: 84%;
+  font-family: var(--display);
   font-style: italic;
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -125,30 +137,40 @@
 }
 .ledge > * {
   transform-origin: 50% 100%;
-  transition:
-    transform 0.5s var(--ease-out-expo),
-    filter 0.5s var(--ease-out-expo);
+  /* only the lift moves, and quickly; the shadow is drawn once and never
+     animated */
+  transition: transform 160ms var(--ease-out);
   filter: drop-shadow(0.5em 0.2em 0.5em rgba(0, 0, 0, 0.26));
 }
 :root[data-light="night"] .ledge > * {
   filter: none;
 }
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card:hover .ledge > * {
     transform: translateY(-0.5em) scale(1.022);
-    filter: drop-shadow(0.9em 0.7em 0.9em rgba(0, 0, 0, 0.3));
   }
-  :root[data-light="night"] .card:hover .ledge > * {
-    filter: none;
+}
+/* a press sets the book back down a touch: on a phone this is the only sign
+   the tap was taken before the page changes */
+@media (prefers-reduced-motion: no-preference) {
+  .card:active .ledge > * {
+    transform: scale(0.98);
+  }
+}
+/* under a real pointer the book is already lifted: a press keeps it there and
+   only takes back the growth, one change rather than two */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card:hover:active .ledge > * {
+    transform: translateY(-0.5em) scale(1);
   }
 }
 .cardTitle {
   margin-top: 11px;
   font-size: 21px;
-  font-weight: 500;
-  font-stretch: 80%;
+  font-weight: 400;
+  font-family: var(--display);
   line-height: 1.1;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.008em;
   text-wrap: balance;
 }
 .cardMeta {
@@ -160,9 +182,6 @@
 .list {
   list-style: none;
   padding-top: clamp(20px, 2.6vw, 36px);
-}
-.list li + li {
-  border-top: 1px dotted var(--dots);
 }
 .line {
   display: grid;
@@ -183,10 +202,10 @@
 }
 .lineTitle {
   font-size: var(--t-subhead);
-  font-weight: 500;
-  font-stretch: 78%;
+  font-weight: 400;
+  font-family: var(--display);
   line-height: 1.08;
-  letter-spacing: -0.018em;
+  letter-spacing: -0.008em;
 }
 .lineAuthor {
   font-size: var(--t-body);
@@ -197,7 +216,7 @@
   text-align: right;
 }
 /* the line under the pointer takes the two colours swapped */
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .line:hover {
     background-color: var(--fg);
     color: var(--bg);
@@ -206,6 +225,12 @@
   .line:hover .lineKind,
   .line:hover .lineYear {
     color: var(--bg);
+  }
+}
+/* touch has no pointer to sit under: a pressed line takes a wash of the ink */
+@media (hover: none), (pointer: coarse) {
+  .line:active {
+    background-color: color-mix(in srgb, var(--fg) 12%, transparent);
   }
 }
 .line:focus-visible {

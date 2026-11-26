@@ -38,12 +38,19 @@
   --night-bg: #060504;
   --night-fg: #f1ecd9;
 
-  /* Motion: exponential ease-out, nothing that bounces. */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  /* Motion. Two curves: a strong ease-out for anything answering the hand, and
+     a drawer curve for a large thing travelling across the screen. Colour and
+     opacity changes use plain `ease`. Nothing bounces. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  /* One page margin, everywhere. */
-  --pad: 16px;
+  /* The title face (Swarsh Daisy), with the book face behind it. */
+  --display: var(--font-title), var(--font-serif), Georgia, serif;
+
+  /* One page margin, everywhere. On a phone held sideways it grows to clear
+     the notch: the page is painted edge to edge (viewport-fit=cover, set in
+     app/layout.tsx) and this keeps what is read out from under it. */
+  --pad: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
 
   /* The type ramp. Every size on the site is one of these (or 11px mono, the
      label). Fluid steps grow with the window between two fixed ends. */
@@ -75,6 +82,10 @@
 html {
   height: 100%;
   -webkit-text-size-adjust: 100%;
+  /* No grey flash over a tapped link or button: on a phone that flash is the
+     browser's own press feedback, and every control here answers a press
+     itself (see :active, below and in each module). */
+  -webkit-tap-highlight-color: transparent;
   scrollbar-color: color-mix(in srgb, var(--book-fg) 45%, transparent) transparent;
   scrollbar-width: thin;
 }
@@ -92,14 +103,13 @@ body {
   --fg: var(--night-fg);
 }
 
-/* Anything that sets its own --bg/--fg (body, an inverted band) re-derives the
-   strengths from them here. */
+/* Anything that sets its own --bg/--fg re-derives the strengths from them
+   here. */
 body,
 .surface {
-  /* a rule; secondary text; a dotted row line */
+  /* a rule; secondary text */
   --rule: color-mix(in srgb, var(--fg) 45%, transparent);
   --muted: color-mix(in srgb, var(--fg) 78%, transparent);
-  --dots: color-mix(in srgb, var(--fg) 55%, transparent);
   background-color: var(--bg);
   color: var(--fg);
 }
@@ -120,18 +130,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
   transition:
-    --bg 0.5s var(--ease-out-quart),
-    --fg 0.5s var(--ease-out-quart);
-}
-
-/* The inverted band: same two colours, swapped. */
-body {
-  --inv-bg: var(--fg);
-  --inv-fg: var(--bg);
-}
-.invert {
-  --bg: var(--inv-bg);
-  --fg: var(--inv-fg);
+    --bg 300ms ease,
+    --fg 300ms ease;
 }
 
 /* A film of grain over everything, books included: dark flecks and light
@@ -162,6 +162,22 @@ button {
   cursor: pointer;
 }
 
+/* A link or a button is never double-tapped to zoom, so the browser need not
+   wait to see whether a second tap is coming before it fires the click. */
+a,
+button,
+summary {
+  touch-action: manipulation;
+}
+/* A control's label is not text to select, and a finger held on one must not
+   raise the copy sheet. Everything that is read stays selectable. */
+button,
+summary {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
 /* The parts the browser draws still belong to the two colours. */
 ::selection {
   background: var(--fg);
@@ -187,8 +203,9 @@ textarea {
   text-transform: uppercase;
   font-variant-numeric: lining-nums tabular-nums;
 }
-/* Under the pointer a label is underlined. It is never dimmed: 11px type has
-   no contrast to spare. */
+/* Under a real pointer a label is underlined; under a press it is underlined
+   at once, on any input. It is never dimmed: 11px type has no contrast to
+   spare. The hover is kept from touch, where a tap would leave it stuck on. */
 a.label,
 button.label,
 .label a,
@@ -197,11 +214,21 @@ button.label,
   text-underline-offset: 4px;
   transition: text-decoration-color 0.18s ease;
 }
-a.label:hover,
-button.label:hover:not(:disabled),
-.label a:hover,
-.label button:hover:not(:disabled) {
+@media (hover: hover) and (pointer: fine) {
+  a.label:hover,
+  button.label:hover:not(:disabled),
+  .label a:hover,
+  .label button:hover:not(:disabled) {
+    text-decoration-color: currentColor;
+  }
+}
+a.label:active,
+button.label:active:not(:disabled),
+.label a:active,
+.label button:active:not(:disabled) {
   text-decoration-color: currentColor;
+  /* in at once as the finger lands; out on the label's own 180ms */
+  transition-duration: 0s;
 }
 
 .srOnly {
@@ -213,37 +240,6 @@ button.label:hover:not(:disabled),
   white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-/* ---- The ledger: a label in the left column, what it names on the right, a
-   dotted line between rows. Used wherever the site lists facts about a thing. */
-.ledger {
-  border-top: 1px solid var(--rule);
-}
-.ledger > .row {
-  display: grid;
-  grid-template-columns: minmax(0, 31fr) minmax(0, 69fr);
-  column-gap: 24px;
-  align-items: start;
-  padding: 13px 0 26px;
-}
-.ledger > .row + .row {
-  border-top: 1px dotted var(--dots);
-}
-.ledger > .row > .label {
-  padding-top: 2px;
-}
-@media (max-width: 720px) {
-  .ledger > .row {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 12px;
-    padding-bottom: 22px;
-  }
-}
+/* Reduced motion is handled where the motion is (the shelf, the index): things
+   that travel or turn stop doing so over time. Changes of colour and opacity
+   are kept, because they carry meaning without moving anything. */

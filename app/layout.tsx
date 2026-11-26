@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fragment_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
@@ -10,12 +10,12 @@ import { HOUSE, surfacePairs } from "@/lib/designs";
 import { surfaceInit } from "@/lib/surface";
 import "./globals.css";
 
-// Three voices, and only three.
+// The faces.
 //
 // Junicode (Peter S. Baker, SIL OFL 1.1) is the library's book face: cut from the
 // seventeenth-century Fell types of the Oxford press, which is the right lineage
-// for a shelf of pamphlets and manifestos. One variable family does both jobs:
-// its condensed width sets the titles, its regular width sets the reading. The
+// for a shelf of pamphlets and manifestos. It sets everything that is read: the
+// texts, the blurbs, the colophon, and the lettering on the books. The
 // files in app/fonts are a Latin subset with the width (75–100) and weight
 // (400–600) axes kept; licence in app/fonts/Junicode-OFL.txt.
 const junicode = localFont({
@@ -25,6 +25,24 @@ const junicode = localFont({
     { path: "./fonts/Junicode-Italic.woff2", style: "italic", weight: "400 600" },
   ],
   declarations: [{ prop: "font-stretch", value: "75% 100%" }],
+  display: "swap",
+});
+
+// Swarsh Daisy (MarvaDesign) is the title face: the shelf's titles, each page's
+// heading, the titles in the index. Regular and italic, one weight. The files in
+// app/fonts are the foundry's own, unmodified; see SwarshDaisy-LICENSE.txt.
+const swarshDaisy = localFont({
+  variable: "--font-title",
+  src: [
+    { path: "./fonts/SwarshDaisy-Regular.otf", style: "normal", weight: "400" },
+    { path: "./fonts/SwarshDaisy-Italic.otf", style: "italic", weight: "400" },
+  ],
+  // The face draws the curly apostrophe and quotation marks as slanted ticks
+  // that read as accents ("Cypherpunk´s"). Leaving those four characters out of
+  // its range hands them to the book face behind it, which draws them properly.
+  declarations: [
+    { prop: "unicode-range", value: "U+0000-2017, U+201A-201B, U+201E-FFFF" },
+  ],
   display: "swap",
 });
 
@@ -75,6 +93,14 @@ export const metadata: Metadata = {
   },
 };
 
+// Paint to the edges of the screen on a phone, under the notch when it is held
+// sideways, the way an installed app does. The page margin (--pad in
+// globals.css) and the footer read the safe-area insets this switches on, and
+// keep everything that is read clear of them. Zoom is left alone.
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
+
 // What the page wears is decided before the first paint: this script reads the
 // saved light and the book in hand (from the URL, or this tab's memory) and
 // writes [data-light] and --book-bg/--book-fg onto <html> during parse. It must
@@ -93,7 +119,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${junicode.variable} ${fragmentMono.variable} ${alphaLyrae.variable}`}
+      className={`${junicode.variable} ${swarshDaisy.variable} ${fragmentMono.variable} ${alphaLyrae.variable}`}
       suppressHydrationWarning
     >
       <body>

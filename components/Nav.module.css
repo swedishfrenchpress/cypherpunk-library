@@ -1,4 +1,4 @@
-/* The banner: wordmark and links over one rule, one line beneath. */
+/* The banner: wordmark and links, the light switch beneath. No rule. */
 .nav {
   position: relative;
   z-index: 20;
@@ -12,7 +12,6 @@
   justify-content: space-between;
   gap: 16px;
   padding: 14px 0 10px;
-  border-bottom: 1px solid var(--fg);
 }
 
 .links {
@@ -61,6 +60,8 @@
 /* ---- light ---- */
 .light {
   flex: none;
+  /* at the right whether or not anything stands to its left */
+  margin-left: auto;
   white-space: nowrap;
 }
 .lightName {
@@ -73,60 +74,20 @@
   display: inline;
 }
 
-/* ---- the wordmark: kept exactly as it was (GlitchLogo.tsx drives it) ---- */
+/* ---- the wordmark: Alpha Lyrae, static ---- */
 .logo {
   display: inline-block;
-  position: relative;
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 500;
-  /* feature-settings are driven inline by GlitchLogo; this is the resting value */
-  font-feature-settings: "calt" 1;
+  /* the face's glitch alternates (calt, ss03 to ss05) stay off */
+  font-feature-settings: "calt" 0;
   font-size: 22px;
   line-height: 0.92;
   letter-spacing: -0.01em;
   color: var(--fg);
-  will-change: transform;
 }
 
 /* Two-line stacked wordmark — set tight so it reads as one mark. */
 .logoLine {
   display: block;
-}
-
-/* short, sharp glitch burst — jitter + a restrained RGB ghost */
-@keyframes logoGlitch {
-  0% {
-    transform: translateX(0);
-    text-shadow: none;
-  }
-  20% {
-    transform: translateX(-1.5px);
-    text-shadow: 1.5px 0 rgba(20, 150, 160, 0.55),
-      -1.5px 0 rgba(200, 40, 50, 0.5);
-  }
-  40% {
-    transform: translateX(1.5px);
-    text-shadow: -1.5px 0 rgba(20, 150, 160, 0.55), 1.5px 0 rgba(200, 40, 50, 0.5);
-  }
-  60% {
-    transform: translateX(-1px) skewX(-3deg);
-    text-shadow: 1px 0 rgba(20, 150, 160, 0.45), -1px 0 rgba(200, 40, 50, 0.4);
-  }
-  80% {
-    transform: translateX(0.5px);
-    text-shadow: -1px 0 rgba(20, 150, 160, 0.35), 1px 0 rgba(200, 40, 50, 0.35);
-  }
-  100% {
-    transform: translateX(0);
-    text-shadow: none;
-  }
-}
-
-.bursting {
-  animation: logoGlitch 0.3s linear 1;
-}
-
-/* hovered: hold a soft RGB ghost behind the displaced-pixel set */
-.held {
-  text-shadow: 1px 0 rgba(20, 150, 160, 0.35), -1px 0 rgba(200, 40, 50, 0.3);
 }

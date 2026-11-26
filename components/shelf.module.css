@@ -5,6 +5,25 @@
    cover is 0.66 of its height wide), so the same rule gives a 480px book on a
    laptop and a 300px-wide cover on a phone. One book-em is --bh / 31.25. */
 
+/* The row's own numbers, written by Shelf.tsx on every frame of a drag. Each is
+   used only by the element it is set on, so it is registered not to inherit:
+   changing one restyles that element and nothing beneath it. */
+@property --c {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --total {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --shift {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
 .shelf {
   position: relative;
   flex: 1 1 auto;
@@ -13,6 +32,36 @@
   min-height: 0;
   /* so the children can size against the shelf's own width (cqw) */
   container-type: inline-size;
+
+  /* Two clocks, for a turn asked for by a click or a key. The turn: a book
+     closing, a book opening, its neighbours standing aside. The slide: the row
+     and the title travelling together, on one duration and one curve so a title
+     arrives with its book. Shelf.tsx sets [data-pace] before each change. */
+  --turn-time: 300ms;
+  --slide-time: 500ms;
+}
+/* from the keyboard (or a notched wheel): short */
+.shelf[data-pace="keys"] {
+  --turn-time: 180ms;
+  --slide-time: 200ms;
+}
+/* a held key: none, or the row never catches up with the hand */
+.shelf[data-pace="repeat"] {
+  --turn-time: 0ms;
+  --slide-time: 0ms;
+}
+/* A hand has the row, or the spring that follows it does: every frame is
+   written directly, so nothing may ease on top of it. */
+.shelf[data-direct] {
+  --turn-time: 0ms;
+  --slide-time: 0ms;
+}
+/* The shade on a cover lifts as it turns. A transition would give it a layer
+   of its own for the length of the turn; under a hand, ask for the same, for
+   the books that are part-way and no others, so a whole cover is not repainted
+   on every frame. Shelf.tsx marks those books. */
+.slot[data-turning] [data-face="front"]::after {
+  will-change: opacity;
 }
 
 /* ------------------------------------------------------------------ marquee */
@@ -25,6 +74,11 @@
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
   user-select: none;
+}
+/* the title's drag layer: carries what the row's does (see .layer) */
+.marqueeLayer {
+  will-change: transform;
+  transition: transform var(--slide-time) var(--ease-drawer);
 }
 .marqueeRow {
   display: flex;
@@ -39,58 +93,55 @@
 .shelf[data-ready] .marqueeRow {
   opacity: 1;
   transition:
-    transform 0.66s var(--ease-out-quart),
-    opacity 0.5s ease;
+    transform var(--slide-time) var(--ease-drawer),
+    opacity 300ms ease;
 }
 .title {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
   white-space: nowrap;
   cursor: pointer;
+  font-family: var(--display);
   font-size: var(--mq);
   line-height: 1.12;
-  letter-spacing: -0.03em;
-  font-stretch: 75%;
+  letter-spacing: -0.012em;
 }
 .titleFaces {
   display: grid;
 }
-/* roman and italic share one cell and cross-fade, so the row never reflows */
+/* Roman and italic share one cell and swap, so the row never reflows. The swap
+   is quick, and the face going out blurs a little as it goes, so the eye sees
+   one title changing rather than two overlapping. */
 .roman,
 .italic {
   grid-area: 1 / 1;
-  transition: opacity 0.42s ease;
+  transition:
+    opacity 200ms ease,
+    filter 200ms ease;
 }
 .roman {
-  font-weight: 500;
   opacity: 0;
+  filter: blur(2px);
 }
 .italic {
   font-style: italic;
-  font-weight: 400;
   opacity: 0.74;
 }
-.title:hover .italic {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .title:hover .italic {
+    opacity: 1;
+  }
 }
 .title[data-on] {
   cursor: default;
 }
 .title[data-on] .roman {
   opacity: 1;
+  filter: none;
 }
 .title[data-on] .italic {
   opacity: 0;
-}
-.year {
-  margin-top: 0.1em;
-  font-size: 11px;
-  font-stretch: 100%;
-  letter-spacing: 0;
-  line-height: 1.5;
-  font-variant-numeric: lining-nums;
-  color: var(--muted);
+  filter: blur(2px);
 }
 
 /* -------------------------------------------------------------------- stage */
@@ -106,7 +157,6 @@
      themselves, widening toward the ends of the row */
   --persp: max(4400px, 430cqw);
   --pull: calc(var(--persp) * 0.045);
-  --turn-time: 0.56s;
   --shade: 0.3;
 
   position: relative;
@@ -119,13 +169,12 @@
   min-height: calc(var(--bh) * 1.22);
   overflow-x: clip;
   perspective: var(--persp);
-  perspective-origin: calc(50% + var(--lean, 0%)) 50%;
-  transition: perspective-origin 0.75s var(--ease-out-quart);
+  perspective-origin: 50% 50%;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
-  animation: arrive 1s var(--ease-out-expo) both;
+  animation: arrive 500ms var(--ease-out) both;
 }
 .shelf[data-dragging] .stage {
   cursor: grabbing;
@@ -157,6 +206,17 @@
   }
 }
 
+/* The drag layer. A hand moves the row by turning its books (see Shelf.tsx);
+   this carries only what is left over: the give past either end of the row, and
+   the rest of a slide that was caught part-way. */
+.layer {
+  flex: none;
+  display: flex;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform var(--slide-time) var(--ease-drawer);
+}
+
 .track {
   flex: none;
   display: flex;
@@ -174,28 +234,26 @@
           min(100cqw - var(--edge) - var(--total), (100cqw - var(--total)) / 2),
           50cqw - var(--c),
           max(var(--edge), (100cqw - var(--total)) / 2)
-        ) + var(--drag, 0px)
+        )
     ),
     0,
     0
   );
-  transition: transform 0.9s var(--ease-out-expo);
-}
-.shelf[data-dragging] .track {
-  transition: none;
+  transition: transform var(--slide-time) var(--ease-drawer);
 }
 
+/* A slot never changes width. When a book opens, the ones after it stand aside
+   by --shift: a transform, so nothing reflows. Shelf.tsx sets a slot's --shift
+   and its --k, the turn (0 spine-on, 1 cover-forward, anything between while a
+   hand is turning it); everything a turn changes is written in terms of --k. */
 .slot {
   --k: 0;
   position: relative;
   flex: none;
   width: calc(var(--st) + var(--gap));
   transform-style: preserve-3d;
-  transition: width var(--turn-time) var(--ease-out-expo);
-}
-.slot[data-on] {
-  --k: 1;
-  width: calc(var(--sw) + var(--m) * 2);
+  transform: translate3d(var(--shift), 0, 0);
+  transition: transform var(--turn-time) var(--ease-out);
 }
 
 /* the shadow each book throws on the wall behind: down and to the right, and
@@ -205,36 +263,63 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  width: var(--st);
+  /* drawn once at the open cover's width; a closed book's is the same shadow
+     squeezed to its spine (--sx), so the blur is never redrawn mid-turn */
+  width: var(--sw);
   height: var(--sh);
   background: rgb(var(--shadow, 0 0 0) / var(--shade));
   filter: blur(0.75em);
-  transform: translate3d(2em, 3.5em, calc(-1 * var(--sw) - 1.5em));
-  transition:
-    transform var(--turn-time) var(--ease-out-expo),
-    width var(--turn-time) var(--ease-out-expo);
+  transform-origin: 0 100%;
+  transform: translate3d(
+      calc(2em + var(--k) * (var(--m) + 2.2em)),
+      calc(3.5em + var(--k) * 1.9em),
+      calc(-1 * var(--sw) - 1.5em)
+    )
+    scaleX(calc(var(--sx, 0.16) + var(--k) * (1 - var(--sx, 0.16))));
+  transition: transform var(--turn-time) var(--ease-out);
   pointer-events: none;
-}
-.slot[data-on]::before {
-  width: var(--sw);
-  transform: translate3d(calc(var(--m) + 4.2em), 5.4em, calc(-1 * var(--sw) - 1.5em));
 }
 
 .book {
   display: block;
   transform-style: preserve-3d;
-  transform: translate3d(0, 0, 0);
-  transition: transform var(--turn-time) var(--ease-out-expo);
+  /* an open book stands a margin clear of the spine before it */
+  transform: translate3d(calc(var(--k) * var(--m)), 0, 0);
+  /* the lift under the pointer has its own property and its own, quicker clock */
+  translate: 0 0 0;
+  transition:
+    transform var(--turn-time) var(--ease-out),
+    translate 160ms var(--ease-out);
   outline: none;
-  -webkit-tap-highlight-color: transparent;
+  /* A book is a thing to drag: a finger resting on one before a swipe must not
+     raise the phone's link preview. Read it, below, is still an ordinary link. */
+  -webkit-touch-callout: none;
 }
-.slot[data-on] .book {
-  transform: translate3d(var(--m), 0, 0);
+/* What a click lands on. A browser does not hit-test the boards of a turned
+   book (they hang off a body seen edge-on), and the link's own box is only a
+   spine wide, so an open cover would otherwise be dead to the pointer: clicks
+   would fall through to the row. This is an invisible sheet the size of the
+   cover, standing where the cover stands and widening with the turn exactly as
+   the shadow does. It belongs to the link, so the whole cover is the link. */
+.book::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--sw);
+  height: 100%;
+  transform-origin: 0 50%;
+  /* no transition: nobody sees it, and a click should land where the book
+     is going to be */
+  transform: translateZ(calc(var(--k) * (var(--pull) + var(--st))))
+    scaleX(calc(var(--sx, 0.16) + var(--k) * (1 - var(--sx, 0.16))));
 }
-/* a closed book comes a little way off the shelf under the pointer */
-@media (hover: hover) {
-  .slot:not([data-on]) .book:hover {
-    --lift: calc(var(--persp) * 0.034);
+/* A closed book comes a little way off the shelf under the pointer: a real
+   pointer only, and not while the row is travelling or in a hand, when books
+   would lift one after another as they pass beneath it. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shelf:not([data-moving]):not([data-direct]) .slot:not([data-on]) .book:hover {
+    translate: 0 0 calc(var(--persp) * 0.034);
   }
 }
 .book:focus-visible [data-face="front"] {
@@ -242,6 +327,8 @@
   outline-offset: 5px;
 }
 
+.shelf[data-instant] .layer,
+.shelf[data-instant] .marqueeLayer,
 .shelf[data-instant] .track,
 .shelf[data-instant] .slot,
 .shelf[data-instant] .slot::before,
@@ -257,31 +344,8 @@
   z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px var(--pad) 12px;
-}
-.nowWrap {
-  min-width: 0;
-}
-.now {
-  display: flex;
-  gap: 10px;
-  min-width: 0;
-  padding-block: 10px;
-}
-.place {
-  flex: none;
-}
-.nowTitle {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nowBy {
-  flex: none;
-  color: var(--muted);
+  justify-content: flex-end;
+  padding: 7px var(--pad) 9px;
 }
 .actions {
   flex: none;
@@ -289,22 +353,42 @@
   align-items: center;
 }
 .turn {
-  /* a full-size target around a small word */
-  padding: 12px 9px;
+  /* a full-size target around a small word: 45px tall */
+  padding: 15px 9px;
   white-space: nowrap;
+}
+/* a press answers at once */
+.turn,
+.actions .open {
+  transition:
+    text-decoration-color 0.18s ease,
+    transform 160ms var(--ease-out);
+}
+.turn:active:not(:disabled),
+.actions .open:active {
+  transform: scale(0.97);
 }
 .turn:disabled {
   opacity: 0.32;
   cursor: default;
 }
 /* the one action on the screen: underlined at rest, where every other label
-   only gains its underline under the pointer */
+   only gains its underline under the pointer. It stands a little apart from
+   the pair before it; space does that, not a line. */
 .actions .open {
-  margin-left: 7px;
-  padding: 10px 0 10px 18px;
-  border-left: 1px dotted var(--dots);
+  display: inline-block;
+  margin-left: 9px;
+  padding: 15px 0 15px 9px;
   white-space: nowrap;
   text-decoration-color: currentColor;
+}
+
+/* Where the strip sits at the foot of the first screen (a phone held sideways
+   included) it stays clear of the home indicator. */
+@media (min-width: 721px) {
+  .strip {
+    padding-bottom: max(9px, env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* On a phone there is no room for a row of titles: the one in hand is set
@@ -314,11 +398,14 @@
     --edge: 50cqw;
   }
   .marquee {
-    --mq: min(36px, 10cqw);
+    --mq: min(30px, 8.2cqw);
     height: calc(var(--mq) * 2.5);
     margin: 10px 0 8px;
     padding: 0 var(--pad);
     mask-image: none;
+  }
+  .marqueeLayer {
+    height: 100%;
   }
   .marqueeRow {
     display: grid;
@@ -335,21 +422,39 @@
     text-align: center;
     text-wrap: balance;
     line-height: 1.08;
-    visibility: hidden;
+    /* Only the one in hand shows: the others' roman face is clear (see .roman).
+       So one title gives way to the next by that face's own swap, the same
+       200ms and 2px of blur as on a wide screen, and by nothing else. */
     pointer-events: none;
-  }
-  .title[data-on] {
-    visibility: visible;
   }
   .titleFaces {
     display: inline;
   }
-  .italic,
-  .year {
+  .italic {
     display: none;
   }
-  .nowTitle,
-  .nowBy {
-    display: none;
+}
+
+/* Reduced motion: nothing travels or turns over time. Books and the row change
+   place at once; the page's colours and the title's swap still fade, which is
+   what says a different book is in hand. */
+@media (prefers-reduced-motion: reduce) {
+  .shelf,
+  .shelf[data-pace] {
+    --turn-time: 0ms;
+    --slide-time: 0ms;
+  }
+  .stage {
+    animation-name: appear;
+    animation-duration: 200ms;
+  }
+  .turn:active:not(:disabled),
+  .actions .open:active {
+    transform: none;
+  }
+}
+@keyframes appear {
+  from {
+    opacity: 0;
   }
 }

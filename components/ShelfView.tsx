@@ -20,7 +20,6 @@ export default function ShelfView({ locale = "en" }: { locale?: Locale }) {
     const d = designFor(book);
     const title = (locale === "fr" && frBooks[book.slug]?.title) || book.title;
     return {
-      n: books.indexOf(book) + 1,
       slug: book.slug,
       href: `${locale === "fr" ? "/fr" : ""}/book/${book.slug}`,
       title,
@@ -39,16 +38,13 @@ export default function ShelfView({ locale = "en" }: { locale?: Locale }) {
     <Shelf
       items={items}
       start={half}
-      indexHref={locale === "fr" ? "/fr/collection" : "/collection"}
       labels={{
         help: t.shelfHelp,
-        no: t.no,
         open: t.open,
         previous: t.previous,
         next: t.next,
         previousWord: t.previousWord,
         nextWord: t.nextWord,
-        index: t.index,
       }}
     />
   );
