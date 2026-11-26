@@ -1,51 +1,70 @@
-.page {
-  position: relative;
+/* The landing: one screen of shelf, then the statement. */
+
+/* The first screen: the banner, then the shelf takes what is left. */
+.first {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(125% 92% at 72% -6%, var(--bg-tint) 0%, var(--bg) 56%),
-    var(--bg);
 }
-
-/* The hero and the shelf share one grid cell and overlap: the oversized type
-   (z-index 2) crosses in front of the full-bleed shelf band (z-index 1), which is
-   pinned to the bottom of the stage. */
-.composition {
+/* On a phone the shelf takes only the room it needs, so the top of the statement
+   shows beneath it and says there is more below. */
+@media (max-width: 720px) {
+  .first {
+    min-height: 0;
+  }
+}
+.main {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
 }
 
-.composition > * {
-  grid-area: 1 / 1;
-  min-width: 0;
+/* ---- the statement, on the two colours swapped ---- */
+.band {
+  padding: clamp(56px, 9vw, 132px) var(--pad) clamp(48px, 7vw, 104px);
+}
+.statement {
+  /* it stands in the ledger's right-hand column with no label: it is the
+     heading of this band, not a row in it */
+  grid-column: 2;
+  max-width: 21ch;
+  font-size: var(--t-title);
+  font-stretch: 84%;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.note {
+  max-width: 44ch;
+  font-size: var(--t-reading);
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+.note a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.note a:hover {
+  text-decoration-thickness: 2px;
+}
+.browse {
+  font-size: var(--t-subhead);
+  font-stretch: 84%;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-decoration: underline 1px;
+  text-underline-offset: 0.2em;
+}
+.browse:hover {
+  text-decoration-thickness: 2px;
 }
 
-/* Below the masthead-over-shelf breakpoint, stop overlapping: the hero dissolves
-   to display:contents (Hero.module.css) so its masthead and intro join this flex
-   column alongside the shelf, and `order` lays them out title (1) → shelf (2) →
-   intro (3). That puts the signature shelf in the first screen with the framing
-   copy following it. The title↔shelf gap stays tight so both clear the fold. */
-@media (max-width: 860px) {
-  .page {
-    overflow-x: hidden;
-  }
-  .composition {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: clamp(16px, 2.4vh, 28px);
-    padding-bottom: clamp(28px, 6vh, 64px);
-  }
-  /* the shelf is the second DOM child (after the hero wrapper) */
-  .composition > *:nth-child(2) {
-    order: 2;
+@media (max-width: 720px) {
+  .statement {
+    grid-column: 1;
   }
 }

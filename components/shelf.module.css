@@ -1,0 +1,355 @@
+/* The shelf. See Shelf.tsx.
+
+   Sizes hang off one length, --bh: the height of a full-height book. It is the
+   smaller of 60% of the viewport's height and what the width allows (an open
+   cover is 0.66 of its height wide), so the same rule gives a 480px book on a
+   laptop and a 300px-wide cover on a phone. One book-em is --bh / 31.25. */
+
+.shelf {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* so the children can size against the shelf's own width (cqw) */
+  container-type: inline-size;
+}
+
+/* ------------------------------------------------------------------ marquee */
+.marquee {
+  --mq: clamp(38px, 3.96cqw, 64px);
+  flex: none;
+  position: relative;
+  height: calc(var(--mq) * 1.62);
+  margin-top: 4px;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  user-select: none;
+}
+.marqueeRow {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--mq) * 1.3);
+  width: max-content;
+  padding-top: calc(var(--mq) * 0.36);
+  opacity: 0;
+  will-change: transform;
+}
+/* shown once the fonts are in and it has been set over the open book */
+.shelf[data-ready] .marqueeRow {
+  opacity: 1;
+  transition:
+    transform 0.66s var(--ease-out-quart),
+    opacity 0.5s ease;
+}
+.title {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: var(--mq);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  font-stretch: 75%;
+}
+.titleFaces {
+  display: grid;
+}
+/* roman and italic share one cell and cross-fade, so the row never reflows */
+.roman,
+.italic {
+  grid-area: 1 / 1;
+  transition: opacity 0.42s ease;
+}
+.roman {
+  font-weight: 500;
+  opacity: 0;
+}
+.italic {
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.74;
+}
+.title:hover .italic {
+  opacity: 1;
+}
+.title[data-on] {
+  cursor: default;
+}
+.title[data-on] .roman {
+  opacity: 1;
+}
+.title[data-on] .italic {
+  opacity: 0;
+}
+.year {
+  margin-top: 0.1em;
+  font-size: 11px;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-variant-numeric: lining-nums;
+  color: var(--muted);
+}
+
+/* -------------------------------------------------------------------- stage */
+.stage {
+  --bh: max(280px, min(60svh, 106cqw, 760px));
+  --gap: 0.34em;
+  --m: 1em;
+  /* how close the row's ends may come to the page edge. Wider than the page
+     margin, because the open cover stands nearer and so looms a little past its
+     slot. On a phone the open cover is simply always centred. */
+  --edge: max(var(--pad), 4.5cqw);
+  /* a long lens: boards seen edge-on show ten to twenty-five pixels of
+     themselves, widening toward the ends of the row */
+  --persp: max(4400px, 430cqw);
+  --pull: calc(var(--persp) * 0.045);
+  --turn-time: 0.56s;
+  --shade: 0.3;
+
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  /* the row hangs just under the title; what is left over is floor, where the
+     shadows fall */
+  align-items: flex-start;
+  padding-top: calc(var(--bh) * 0.045);
+  min-height: calc(var(--bh) * 1.22);
+  overflow-x: clip;
+  perspective: var(--persp);
+  perspective-origin: calc(50% + var(--lean, 0%)) 50%;
+  transition: perspective-origin 0.75s var(--ease-out-quart);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: arrive 1s var(--ease-out-expo) both;
+}
+.shelf[data-dragging] .stage {
+  cursor: grabbing;
+}
+:root[data-light="day"] .stage {
+  /* on paper the shadow is the paper's own colour gone dark, not grey */
+  --shadow: 92 78 18;
+  --shade: 0.22;
+}
+/* night: no wall to cast on; the books are lit from the middle of the room */
+:root[data-light="night"] .stage {
+  --shade: 0;
+  mask-image: radial-gradient(ellipse 64% 92% at 50% 46%, #000 34%, rgba(0, 0, 0, 0.4) 100%);
+}
+/* held back for the few frames before the shelf turns to a remembered book */
+:root[data-restore] .stage,
+:root[data-restore] .marquee {
+  visibility: hidden;
+}
+
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.track {
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  width: max-content;
+  list-style: none;
+  font-size: calc(var(--bh) / 31.25);
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* Centre the open cover, but never pull the row's ends in past the page
+     margin; when the whole row fits, centre the row instead. */
+  transform: translate3d(
+    calc(
+      clamp(
+          min(100cqw - var(--edge) - var(--total), (100cqw - var(--total)) / 2),
+          50cqw - var(--c),
+          max(var(--edge), (100cqw - var(--total)) / 2)
+        ) + var(--drag, 0px)
+    ),
+    0,
+    0
+  );
+  transition: transform 0.9s var(--ease-out-expo);
+}
+.shelf[data-dragging] .track {
+  transition: none;
+}
+
+.slot {
+  --k: 0;
+  position: relative;
+  flex: none;
+  width: calc(var(--st) + var(--gap));
+  transform-style: preserve-3d;
+  transition: width var(--turn-time) var(--ease-out-expo);
+}
+.slot[data-on] {
+  --k: 1;
+  width: calc(var(--sw) + var(--m) * 2);
+}
+
+/* the shadow each book throws on the wall behind: down and to the right, and
+   further for the open book, which stands nearer the light */
+.slot::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--st);
+  height: var(--sh);
+  background: rgb(var(--shadow, 0 0 0) / var(--shade));
+  filter: blur(0.75em);
+  transform: translate3d(2em, 3.5em, calc(-1 * var(--sw) - 1.5em));
+  transition:
+    transform var(--turn-time) var(--ease-out-expo),
+    width var(--turn-time) var(--ease-out-expo);
+  pointer-events: none;
+}
+.slot[data-on]::before {
+  width: var(--sw);
+  transform: translate3d(calc(var(--m) + 4.2em), 5.4em, calc(-1 * var(--sw) - 1.5em));
+}
+
+.book {
+  display: block;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--turn-time) var(--ease-out-expo);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.slot[data-on] .book {
+  transform: translate3d(var(--m), 0, 0);
+}
+/* a closed book comes a little way off the shelf under the pointer */
+@media (hover: hover) {
+  .slot:not([data-on]) .book:hover {
+    --lift: calc(var(--persp) * 0.034);
+  }
+}
+.book:focus-visible [data-face="front"] {
+  outline: 2px solid var(--fg);
+  outline-offset: 5px;
+}
+
+.shelf[data-instant] .track,
+.shelf[data-instant] .slot,
+.shelf[data-instant] .slot::before,
+.shelf[data-instant] .book,
+.shelf[data-instant] .book * {
+  transition: none !important;
+}
+
+/* -------------------------------------------------------------------- strip */
+.strip {
+  flex: none;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px var(--pad) 12px;
+}
+.nowWrap {
+  min-width: 0;
+}
+.now {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  padding-block: 10px;
+}
+.place {
+  flex: none;
+}
+.nowTitle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nowBy {
+  flex: none;
+  color: var(--muted);
+}
+.actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+.turn {
+  /* a full-size target around a small word */
+  padding: 12px 9px;
+  white-space: nowrap;
+}
+.turn:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+/* the one action on the screen: underlined at rest, where every other label
+   only gains its underline under the pointer */
+.actions .open {
+  margin-left: 7px;
+  padding: 10px 0 10px 18px;
+  border-left: 1px dotted var(--dots);
+  white-space: nowrap;
+  text-decoration-color: currentColor;
+}
+
+/* On a phone there is no room for a row of titles: the one in hand is set
+   alone, centred over its book, and allowed two lines so that none is cut. */
+@media (max-width: 720px) {
+  .stage {
+    --edge: 50cqw;
+  }
+  .marquee {
+    --mq: min(36px, 10cqw);
+    height: calc(var(--mq) * 2.5);
+    margin: 10px 0 8px;
+    padding: 0 var(--pad);
+    mask-image: none;
+  }
+  .marqueeRow {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+    align-items: end;
+    transform: none !important;
+  }
+  .title {
+    grid-area: 1 / 1;
+    display: block;
+    white-space: normal;
+    text-align: center;
+    text-wrap: balance;
+    line-height: 1.08;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .title[data-on] {
+    visibility: visible;
+  }
+  .titleFaces {
+    display: inline;
+  }
+  .italic,
+  .year {
+    display: none;
+  }
+  .nowTitle,
+  .nowBy {
+    display: none;
+  }
+}

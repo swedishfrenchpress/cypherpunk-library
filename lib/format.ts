@@ -17,12 +17,12 @@ export type ReadingMode = {
   kind: ReadingKind;
   /** Display tag: "PDF" | "Text" | the host name for link-outs. */
   medium: string;
-  /** Reading chip: "Read here" | "External ↗". */
+  /** Reading chip: "Read here" | "External". */
   label: string;
 };
 
 const READ_HERE = "Read here";
-const EXTERNAL = "External ↗";
+const EXTERNAL = "External";
 
 // Mirrors the book page's format priority (app/book/[slug]/page.tsx):
 // pdf, then external, then reproduced text. Classifying in the same order

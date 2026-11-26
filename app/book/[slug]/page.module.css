@@ -1,565 +1,331 @@
-/* paper stage, matching the landing surface so the two pages feel like one place */
-.shell {
-  position: relative;
-  isolation: isolate;
-  min-height: 100vh;
-  min-height: 100svh;
-  overflow-x: hidden;
-  background:
-    radial-gradient(125% 70% at 78% -4%, var(--bg-tint) 0%, var(--bg) 52%),
-    var(--bg);
-}
+/* The book page: the object and its facts, then the text. See BookView.tsx. */
 
 .page {
-  position: relative;
-  z-index: 1;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: clamp(8px, 2vh, 28px) clamp(20px, 5vw, 56px) clamp(80px, 12vh, 140px);
+  padding: 0 var(--pad) clamp(64px, 9vw, 128px);
 }
 
-.back {
-  display: inline-block;
-  margin-bottom: clamp(28px, 6vh, 64px);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.16s ease;
-  animation: rise 0.6s var(--ease-out-expo) both;
-}
-.back:hover {
-  color: var(--fg);
-}
-
-/* ---- cover-hero: cover left, meta right, set low so the title can run big.
-   The cover rises first; the meta column cascades line by line just behind it
-   (see .meta below), the same staggered entrance the landing masthead uses. ---- */
-.hero {
+/* ---- the head: the book standing beside its ledger ---- */
+.head {
   display: grid;
-  grid-template-columns: minmax(200px, 300px) 1fr;
-  gap: clamp(28px, 5vw, 72px);
-  align-items: end;
+  grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
+  column-gap: clamp(24px, 4vw, 72px);
+  align-items: start;
+  padding-top: clamp(16px, 2.4vw, 36px);
 }
 
-/* The meta column rises line by line — series, title, author, details, blurb,
-   then the action(s). `backwards` keeps each line hidden only through its delay,
-   then releases transform so the download button's hover lift still works (it can
-   be a direct child of .meta on link-out books). nth-child past the actions just
-   shares the last beat, so the stagger holds whichever lines a book actually has. */
-.meta > * {
-  animation: rise 0.7s var(--ease-out-expo) backwards;
+/* The book at three-quarters: enough spine to read it as an object, enough
+   cover to read its face. It stays put while the ledger scrolls beside it, and
+   turns square-on under the pointer. */
+.stand {
+  --k: 0.64;
+  --turn-time: 0.8s;
+  position: sticky;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  height: min(100svh - 132px, 760px);
+  min-height: 430px;
+  font-size: min(2.02svh, 1.5vw);
+  perspective: 2600px;
+  filter: drop-shadow(1.7em 2.3em 1.5em rgba(0, 0, 0, 0.36));
 }
-.meta > *:nth-child(1) {
-  animation-delay: 0.08s;
+:root[data-light="day"] .stand {
+  filter: drop-shadow(1.7em 2.3em 1.5em rgba(0, 0, 0, 0.2));
 }
-.meta > *:nth-child(2) {
-  animation-delay: 0.14s;
+:root[data-light="night"] .stand {
+  filter: none;
 }
-.meta > *:nth-child(3) {
-  animation-delay: 0.2s;
+@media (hover: hover) {
+  .stand:hover {
+    --k: 1;
+  }
 }
-.meta > *:nth-child(4) {
-  animation-delay: 0.26s;
-}
-.meta > *:nth-child(5) {
-  animation-delay: 0.32s;
-}
-.meta > *:nth-child(n + 6) {
-  animation-delay: 0.38s;
+.pose {
+  display: flex;
+  align-items: flex-end;
+  width: 19.4em;
+  height: 31.25em;
+  transform-style: preserve-3d;
 }
 
-.series {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
+.facts {
+  min-width: 0;
+  padding-top: clamp(4px, 1.2vw, 20px);
 }
-
 .title {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
+  max-width: 13em;
+  font-size: var(--t-headline);
   font-weight: 500;
-  font-size: clamp(2.25rem, 4.6vw, 4rem);
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  color: var(--fg);
+  font-stretch: 75%;
+  line-height: 1.03;
+  letter-spacing: -0.03em;
   text-wrap: balance;
 }
-
-.author {
-  margin-top: 16px;
-  font-size: 18px;
-  color: var(--fg);
+.byline {
+  margin-top: 0.5em;
+  font-size: var(--t-subhead);
+  font-style: italic;
+  line-height: 1.2;
+}
+.ledger {
+  margin-top: clamp(28px, 3.4vw, 48px);
 }
 
-.details {
-  margin-top: 6px;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-}
-
-.blurb {
-  margin-top: 22px;
-  max-width: 48ch;
-  font-size: 16px;
-  line-height: 1.68;
-  color: var(--muted);
+.about {
+  max-width: 34em;
+  font-size: var(--t-lead);
+  line-height: 1.48;
   text-wrap: pretty;
 }
 
-/* Download — the landing CTA's dimensional dark face. */
-.download {
-  display: inline-flex;
-  align-items: center;
-  height: 50px;
-  margin-top: 30px;
-  padding: 0 26px;
-  border-radius: 5px;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--cta-fg);
-  background: var(--cta-bg);
-  border: 1px solid var(--cta-border);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
-    0 1px 1px rgba(40, 36, 18, 0.2),
-    0 6px 14px rgba(40, 36, 18, 0.24);
-  transition: transform 0.16s var(--ease-out-expo),
-    box-shadow 0.16s ease;
-}
-.download:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
-    0 12px 24px rgba(40, 36, 18, 0.28);
-}
-.download:active {
-  transform: translateY(1px);
-  box-shadow:
-    inset 0 2px 7px rgba(0, 0, 0, 0.55),
-    0 1px 2px rgba(40, 36, 18, 0.2);
-}
-.download:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
-}
-
-/* PDF action row: primary "Open" + a quiet "Download" */
+/* the ways to read it: plain underlined lines, one to a way */
 .actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 30px;
+  list-style: none;
+  display: grid;
+  gap: 5px;
 }
-.actions .download {
-  margin-top: 0;
+.actions a {
+  font-size: var(--t-subhead);
+  font-style: italic;
+  font-stretch: 84%;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  text-decoration: underline 1px;
+  text-underline-offset: 0.2em;
 }
-.altLink {
-  font-size: 14px;
-  color: var(--muted);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.altLink:hover {
-  color: var(--fg);
-}
-.altLink:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
+.actions a:hover {
+  text-decoration-thickness: 2px;
 }
 
-/* ---- value-for-value: the author's Lightning address + a scannable QR ---- */
+.list {
+  list-style: none;
+  font-size: var(--t-lead);
+  line-height: 1.46;
+}
+.list li {
+  padding-left: 1.05em;
+  text-indent: -1.05em;
+  text-wrap: pretty;
+}
+.list li::before {
+  content: "–";
+  display: inline-block;
+  width: 1.05em;
+  text-indent: 0;
+}
+.list a,
+.longNote a,
+.sourceNote a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.list a:hover,
+.longNote a:hover,
+.sourceNote a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* value for value */
 .v4v {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 18px;
-  margin-top: 30px;
-  padding-top: 26px;
-  border-top: 1px solid var(--line);
+  align-items: flex-end;
+  gap: 16px;
 }
-/* white-backed card so the dark-module QR stays scannable in dark mode too */
 .v4vQr {
   flex: none;
   display: block;
-  padding: 8px;
-  line-height: 0;
+  width: 104px;
+  padding: 6px;
   background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  transition: transform 0.16s var(--ease-out-expo), box-shadow 0.16s ease;
-}
-.v4vQr:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(40, 36, 18, 0.18);
-}
-.v4vQr:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
 }
 .v4vQr img {
   display: block;
-  width: 104px;
-  height: 104px;
-}
-.v4vBody {
-  min-width: 0;
-}
-.v4vLabel {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
+  width: 100%;
+  height: auto;
 }
 .v4vAddr {
-  display: inline-block;
-  margin-top: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 14px;
-  color: var(--fg);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 3px;
-  word-break: break-all;
-}
-.v4vAddr:hover {
-  text-decoration-color: currentColor;
-}
-.v4vAddr:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
+  text-transform: none;
+  overflow-wrap: anywhere;
 }
 
-/* ---- embedded reader ---- */
+/* ---- the text ---- */
+.text {
+  margin-top: clamp(56px, 8vw, 120px);
+  /* a jump from "Read it below" lands with the rule in view */
+  scroll-margin-top: 12px;
+}
+.textLabel {
+  position: sticky;
+  top: 12px;
+}
+.reading,
 .reader {
-  margin-top: clamp(40px, 7vh, 80px);
-  animation: rise 0.8s var(--ease-out-expo) 0.2s backwards;
+  min-width: 0;
 }
 
-.frame {
-  width: 100%;
-  height: min(140vh, 1400px); /* tall enough for 7 portrait pages */
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg-tint);
-  box-shadow: 0 18px 48px rgba(40, 36, 18, 0.12);
-}
-
-.fallback {
-  margin-top: 14px;
-  font-size: 13px;
-  color: var(--muted);
-  text-align: center;
-}
-.fallback a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* book-length PDF: a lead-in note, then an opt-in inline reader */
-.longNote {
-  max-width: 60ch;
-  margin: 0 auto;
-  font-size: 15px;
-  line-height: 1.65;
-  text-align: center;
-  color: var(--muted);
-}
-.longNote a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.inline {
-  margin-top: 24px;
-  text-align: center;
-}
-.inlineSummary {
-  display: inline-block;
-  padding: 11px 18px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--fg);
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  cursor: pointer;
-  list-style: none;
-  transition: border-color 0.16s ease;
-}
-.inlineSummary::-webkit-details-marker {
-  display: none;
-}
-.inlineSummary:hover {
-  border-color: var(--muted);
-}
-.inlineSummary:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
-}
-.inline .frame {
-  margin-top: 18px;
-}
-
-/* ---- typographic plate: the no-cover hero fallback ---- */
-/* Reuses the cover's proportions + grounded shadow so the layout is identical
-   to a real cover; the title is set in the display face, echoing the shelf spine
-   until real art lands. */
-.plate {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  aspect-ratio: 1368 / 2000;
-  padding: clamp(18px, 3vw, 34px);
-  border-radius: 2px 7px 7px 2px;
-  box-shadow:
-    0 1px 1px rgba(40, 36, 18, 0.16),
-    0 26px 56px rgba(40, 36, 18, 0.26),
-    inset 7px 0 16px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  /* mirrors the real cover's entrance so the no-art hero lands the same way */
-  animation: rise 0.75s var(--ease-out-expo) 0.05s backwards;
-}
-/* a soft dark scrim behind the centred title, so white type stays legible on
-   ANY slot colour (light cream/blush slots included), not just the dark ones */
-.plate::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 120% 80% at 50% 52%,
-    rgba(8, 7, 3, 0.5),
-    rgba(8, 7, 3, 0.18) 60%,
-    rgba(8, 7, 3, 0) 100%
-  );
-}
-/* the same sheen + binding shadow the shelf covers carry */
-.plate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      105deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0) 26%,
-      rgba(0, 0, 0, 0.14) 100%
-    ),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0 7px, transparent 7px);
-}
-.plateTitle {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
-  font-weight: 500;
-  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
-  line-height: 1.06;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-wrap: balance;
-  color: rgba(255, 255, 255, 0.94);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* ---- in-site prose reader (the reproduced manifestos) ---- */
+/* The reading itself: the book face at a book measure. */
 .prose {
-  max-width: 68ch;
-  margin: clamp(40px, 7vh, 80px) auto 0;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: clamp(1.0625rem, 1.05vw + 0.9rem, 1.1875rem);
-  line-height: 1.75;
-  color: var(--fg);
-  text-wrap: pretty;
-  /* one gentle rise for the whole article — a reading surface shouldn't reveal
-     paragraph by paragraph (the next line you want is never hidden) */
-  animation: rise 0.8s var(--ease-out-expo) 0.15s backwards;
+  /* Junicode sets narrow: 29em is about 72 characters a line */
+  max-width: 29em;
+  font-size: var(--t-reading);
+  line-height: 1.6;
+  hanging-punctuation: first;
+  overflow-wrap: break-word;
 }
 .prose > * + * {
-  margin-top: 1.25em;
+  margin-top: 1.05em;
 }
-.prose em {
-  font-style: italic;
-}
-
-/* On a French page with no translation yet: a quiet lead-in above the English
-   prose. When present it carries the reader's top spacing, so the prose tucks in
-   just beneath it rather than opening a second large gap. */
-.fallbackNote {
-  max-width: 68ch;
-  margin: clamp(40px, 7vh, 80px) auto 0;
-  padding: 12px 16px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--muted);
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  animation: fadeIn 0.7s var(--ease-out-quart) 0.12s backwards;
-}
-.fallbackNote + .prose {
-  margin-top: 1.6em;
-}
-
 .prose h2,
 .prose h3,
-.prose h4,
-.prose h5 {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
+.prose h4 {
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  margin-top: 1.8em;
+  line-height: 1.14;
+  text-wrap: balance;
 }
 .prose h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-top: 2.1em;
+  font-size: 1.5em;
+  font-stretch: 84%;
+  letter-spacing: -0.015em;
 }
 .prose h3 {
-  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  margin-top: 1.9em;
+  font-size: 1.16em;
+  font-style: italic;
+  font-weight: 400;
 }
-/* deeper subheads in longer reproduced texts (e.g. Fog of CryptoWar) — smaller,
-   and h5 set in the body face so the hierarchy stays legible past three levels. */
 .prose h4 {
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-  margin-top: 1.5em;
+  margin-top: 1.7em;
+  font-size: 0.82em;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
 }
-.prose h5 {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  margin-top: 1.4em;
+.prose h2 + *,
+.prose h3 + *,
+.prose h4 + * {
+  margin-top: 0.6em;
 }
-
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
 .prose blockquote {
-  margin-inline: 0;
-  padding-left: 1.2em;
-  border-left: 2px solid var(--line);
-  color: var(--muted);
+  margin-left: 0;
+  padding-left: 1.4em;
   font-style: italic;
 }
-.prose blockquote > * + * {
-  margin-top: 1em;
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
 }
-
-.prose ol,
-.prose ul {
-  margin-top: 1.25em;
-  padding-left: 1.5em;
-}
-.prose li {
-  margin-top: 0.5em;
+.prose li + li {
+  margin-top: 0.35em;
 }
 .prose li::marker {
   color: var(--muted);
 }
-.prose strong {
-  font-weight: 600;
-}
-
 .prose hr {
-  width: 38%;
-  margin: 2.5em auto;
+  width: 3em;
+  height: 0;
+  margin: 2em 0;
   border: 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--rule);
 }
-
-.prose a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 2px;
+.prose pre,
+.prose code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.74em;
+  font-variant-numeric: lining-nums;
 }
-.prose a:hover {
-  text-decoration-color: currentColor;
-}
-
-/* monospace artifacts kept verbatim (e.g. May's .signature) — a tinted panel */
 .prose pre {
-  margin-top: 2em;
-  padding: clamp(14px, 2.4vw, 22px);
+  padding: 1em 0;
+  border-top: 1px dotted var(--dots);
+  border-bottom: 1px dotted var(--dots);
+  line-height: 1.5;
   overflow-x: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13px;
+}
+.prose sup {
+  font-size: 0.7em;
+  line-height: 0;
+}
+
+.fallbackNote {
+  max-width: 29em;
+  margin-bottom: 2em;
+  font-style: italic;
+  color: var(--muted);
+}
+.sourceNote {
+  max-width: 35em;
+  margin-top: 3.4em;
+  padding-top: 1em;
+  border-top: 1px dotted var(--dots);
+  font-size: var(--t-note);
+  font-style: italic;
   line-height: 1.5;
   color: var(--muted);
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: 8px;
 }
 
-/* literal classnames authored inside the reproduced texts (content/texts) */
-.prose :global(.epigraph) {
-  color: var(--muted);
-  font-size: 0.95em;
+/* ---- the PDF reader ---- */
+.longNote {
+  max-width: 34em;
+  font-size: var(--t-lead);
+  line-height: 1.48;
 }
-.prose :global(.indent) {
+.frame {
+  display: block;
+  width: 100%;
+  height: 86vh;
+  height: 86svh;
+  border: 1px solid var(--rule);
+  background: #fff;
+}
+.reader .frame + .longNote {
+  margin-top: 14px;
+  font-size: var(--t-note);
+  font-style: italic;
+  color: var(--muted);
+}
+.inline {
+  margin-top: 22px;
+}
+.inline summary {
   display: inline-block;
-  padding-left: 2.4em;
+  padding: 8px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.inline summary::-webkit-details-marker {
+  display: none;
+}
+.inline .opened,
+.inline[open] .closed {
+  display: none;
+}
+.inline[open] .opened {
+  display: inline;
+}
+.inline .frame {
+  margin-top: 12px;
 }
 
-/* source credit beneath the prose */
-.sourceNote {
-  max-width: 68ch;
-  margin: 2.6em auto 0;
-  padding-top: 1.4em;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted);
-  animation: fadeIn 0.7s var(--ease-out-quart) 0.25s backwards;
-}
-.sourceNote a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-@media (max-width: 760px) {
-  .hero {
-    grid-template-columns: 1fr;
-    align-items: start;
+/* ---- one column: the book first, standing free, then its facts ---- */
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
   }
-  .plate {
-    max-width: 240px;
+  .stand {
+    position: relative;
+    top: 0;
+    height: auto;
+    min-height: 0;
+    padding: 2.4em 0 3.6em;
+    font-size: min(1.9svh, 3.4vw);
   }
-  .frame {
-    height: 86vh;
-  }
-}
-
-/* Keyframes live with their module (Turbopack scopes animation names per file),
-   matching how heroRise / shelfRise sit with their owners on the landing. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+  .textLabel {
+    position: static;
   }
 }

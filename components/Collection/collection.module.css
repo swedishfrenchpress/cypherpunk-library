@@ -1,498 +1,245 @@
-/* The browse view: search + a Format filter + a grid/list of every real book.
-   Colours come from the theme tokens only (the lone literal is each plate's
-   per-book background, set inline as --plate-bg, exactly as the book page does). */
+/* The index browser. See CollectionBrowser.tsx. */
 
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* ---------------------------------------------------------------- controls -- */
+/* ---- controls: search, then the two sets of options, on one rule ---- */
 .controls {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  /* Search + filters arrive just after the header, once per visit (this block
-     never remounts), so they stay still while results below re-stagger. */
-  animation: rise 0.7s var(--ease-out-expo) 0.22s backwards;
+  align-items: flex-end;
+  gap: 12px 32px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--fg);
 }
-
 .search {
-  position: relative;
-  flex: 1 1 280px;
+  flex: 1 1 260px;
   min-width: 0;
 }
-.searchIcon {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 17px;
-  height: 17px;
-  color: var(--muted);
-  pointer-events: none;
-}
 .searchInput {
+  display: block;
   width: 100%;
-  height: 46px;
-  padding: 0 16px 0 42px;
-  font: inherit;
-  font-size: 15px;
+  padding: 6px 0 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--fg);
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  transition: border-color 0.16s ease, box-shadow 0.16s ease;
-  -webkit-appearance: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  /* the note step; 16px also keeps iOS from zooming the page on focus */
+  font-size: var(--t-note);
+  line-height: 24px;
+  letter-spacing: -0.01em;
   appearance: none;
+  -webkit-appearance: none;
 }
 .searchInput::placeholder {
   color: var(--muted);
+  opacity: 1;
 }
-.searchInput:focus-visible {
+.searchInput:focus {
   outline: none;
-  border-color: var(--fg);
-  box-shadow: 0 0 0 1px var(--fg);
+}
+/* focus shows on the rule the field sits on, not as a box around bare text */
+.search:focus-within {
+  box-shadow: 0 11px 0 -10px var(--fg);
+}
+.searchInput::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  margin-left: 12px;
+  cursor: pointer;
+  background:
+    linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%);
 }
 
-.toolbar {
+.set {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0 20px;
 }
-
-/* Format filter: three always-visible pills (Text / PDF / External). */
-.formats {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-.fmtPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: 36px;
-  padding: 0 14px;
-  font-size: 13px;
-  color: var(--fg);
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  transition: border-color 0.16s ease, background-color 0.16s ease,
-    color 0.16s ease;
-}
-.fmtPill:hover {
-  border-color: var(--muted);
-}
-.fmtPill:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
-}
-.fmtPillOn {
-  color: var(--cta-fg);
-  background: var(--cta-bg);
-  border-color: var(--cta-border);
-}
-.fmtCount {
-  font-size: 12px;
+/* An option: muted while it is off; inked and underlined when it is on. */
+.opt {
+  padding: 9px 0 5px;
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-.fmtPillOn .fmtCount {
-  color: inherit;
-  opacity: 0.7;
-}
-
-/* Segmented grid / list toggle */
-.viewToggle {
-  display: inline-flex;
-  gap: 3px;
-  padding: 3px;
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: 9px;
-}
-.viewBtn {
-  display: inline-grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  color: var(--muted);
-  background: transparent;
-  border: 0;
-  border-radius: 6px;
-  transition: color 0.16s ease, background-color 0.16s ease;
-}
-.viewBtn svg {
-  width: 18px;
-  height: 18px;
-}
-.viewBtn:hover {
+.opt[aria-pressed="true"] {
   color: var(--fg);
-}
-.viewBtnOn {
-  color: var(--fg);
-  background: var(--bg);
-  box-shadow: 0 1px 2px rgba(40, 36, 18, 0.16);
-}
-.viewBtn:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
-}
-@media (pointer: coarse) {
-  .viewBtn {
-    width: 42px;
-    height: 42px;
-  }
+  text-decoration-color: currentColor;
 }
 
 .count {
-  margin-bottom: 20px;
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  display: flex;
+  gap: 18px;
+  padding: 10px 0 0;
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  animation: fadeIn 0.6s var(--ease-out-quart) 0.3s backwards;
 }
+/* "Clear" is an action, so it is inked and underlined at rest */
 .clear {
-  padding: 0;
+  color: var(--fg);
+  text-decoration-color: currentColor;
+}
+.count .clear {
   font: inherit;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  background: transparent;
-  border: 0;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  letter-spacing: inherit;
+  text-transform: inherit;
 }
-.clear:hover {
-  color: var(--fg);
-}
-.clear:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
+/* a small mark after a book's line: it has a French edition */
+.flag {
+  margin-left: 1.2em;
 }
 
-/* -------------------------------------------------------------------- grid -- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
-  gap: clamp(20px, 3vw, 36px) clamp(16px, 2.4vw, 28px);
-}
-/* Each card/row rises in on a per-item delay set inline (by index) in
-   CollectionBrowser. The grid/list container is keyed on layout + format filter,
-   so toggling a view or a filter remounts it and the whole set re-staggers; plain
-   search-as-you-type leaves the container in place, so matches resolve smoothly
-   instead of thrashing on every keystroke. `backwards` holds the hidden state
-   only through the delay, then hands transform back so the cover hover lift works. */
-.card {
-  display: flex;
-  flex-direction: column;
-  color: inherit;
-  animation: rise 0.5s var(--ease-out-expo) backwards;
-}
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-top: 12px;
-}
-.cardTitle {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--fg);
-}
-.cardAuthor {
-  font-size: 13px;
-  color: var(--muted);
-}
-.card:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-/* -------------------------------------------------------------------- list -- */
-.list {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--line);
-}
-.row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 13px 6px;
-  color: inherit;
-  border-bottom: 1px solid var(--line);
-  transition: background-color 0.16s ease;
-  animation: rise 0.5s var(--ease-out-expo) backwards;
-}
-.row:hover {
-  background: var(--bg-tint);
-}
-.row:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: -2px;
-  border-radius: 4px;
-}
-.rowMain {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-.rowTitle {
-  font-size: 15.5px;
-  font-weight: 500;
-  color: var(--fg);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.rowAuthor {
-  font-size: 13px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.rowYear {
-  flex-shrink: 0;
-  font-size: 13px;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-
-/* ------------------------------------------------------------------ empty -- */
 .empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: clamp(48px, 12vh, 96px) 20px;
-  text-align: center;
-  color: var(--muted);
-  animation: rise 0.5s var(--ease-out-expo) both;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding: clamp(48px, 8vw, 104px) 0;
+  font-size: var(--t-title);
+  font-stretch: 84%;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 
-/* ------------------------------------------------------------------ cover -- */
-.cover {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 1368 / 2000;
-  background: var(--bg-tint);
-  border-radius: 2px 6px 6px 2px;
-  overflow: hidden;
-  box-shadow:
-    0 1px 1px rgba(40, 36, 18, 0.16),
-    0 14px 30px rgba(40, 36, 18, 0.2);
-  transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s ease;
+/* ---- covers: every book face-out, standing on a ledge ---- */
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(168px, 42%), 1fr));
+  gap: clamp(36px, 4.4vw, 64px) clamp(16px, 2.4vw, 36px);
+  padding-top: clamp(32px, 4vw, 56px);
 }
-/* binding shadow + sheen, painted over the plate */
-.cover::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 6px, transparent 6px),
-    linear-gradient(
-      105deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0) 30%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
+.card {
+  display: grid;
+  /* so the cover's own em can follow the card's width */
+  container-type: inline-size;
 }
-.coverCard {
-  width: 100%;
-}
-.card:hover .coverCard {
-  transform: translateY(-4px);
-  box-shadow:
-    0 2px 2px rgba(40, 36, 18, 0.2),
-    0 22px 44px rgba(40, 36, 18, 0.26);
-}
-.coverRow {
-  width: 40px;
-  flex-shrink: 0;
-  border-radius: 1px 3px 3px 1px;
-  box-shadow: 0 1px 1px rgba(40, 36, 18, 0.18);
-}
-
-/* typographic plate: the no-cover fallback, composed like a real cover */
-.plate {
-  background: var(--plate-bg);
-}
-/* card plate: a poster lower-third. The slot colour fills the cover; a dark
-   scrim sits behind the text block so white type is legible on ANY slot. */
-.coverCard.plate {
+.ledge {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
+  /* a full-height book is 31.25em tall and 20.625em wide; the card is 23em */
+  font-size: calc(100cqw / 23);
+  height: 32.6em;
+  padding-bottom: 0;
+  border-bottom: 1px solid var(--rule);
 }
-.plateInner {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  width: 100%;
-  padding: 30px 13px 13px;
-  background: linear-gradient(
-    to top,
-    rgba(8, 7, 3, 0.74) 0%,
-    rgba(8, 7, 3, 0.34) 48%,
-    rgba(8, 7, 3, 0) 100%
-  );
+.ledge > * {
+  transform-origin: 50% 100%;
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    filter 0.5s var(--ease-out-expo);
+  filter: drop-shadow(0.5em 0.2em 0.5em rgba(0, 0, 0, 0.26));
 }
-.plateSeries {
-  font-size: 8.5px;
+:root[data-light="night"] .ledge > * {
+  filter: none;
+}
+@media (hover: hover) {
+  .card:hover .ledge > * {
+    transform: translateY(-0.5em) scale(1.022);
+    filter: drop-shadow(0.9em 0.7em 0.9em rgba(0, 0, 0, 0.3));
+  }
+  :root[data-light="night"] .card:hover .ledge > * {
+    filter: none;
+  }
+}
+.cardTitle {
+  margin-top: 11px;
+  font-size: 21px;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-.plateTitle {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-feature-settings: "calt" 1;
-  font-weight: 500;
-  font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+  font-stretch: 80%;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   text-wrap: balance;
-  color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
-.plateAuthor {
-  margin-top: 2px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.84);
-}
-.plateYear {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
-  font-variant-numeric: tabular-nums;
-}
-/* row plate: a small monogram on a uniformly darkened slot, legible at 40px */
-.coverRow.plate {
-  display: grid;
-  place-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    var(--plate-bg);
-}
-.plateMonogram {
-  position: relative;
-  z-index: 2;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.94);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-/* external link-out marker: a quiet dark chip with an arrow, top-right */
-.extBadge {
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  font-size: 11px;
-  line-height: 1;
-  color: #fff;
-  background: rgba(8, 7, 3, 0.58);
-  border-radius: 999px;
-}
-.coverRow .extBadge {
-  top: 2px;
-  right: 2px;
-  width: 15px;
-  height: 15px;
-  font-size: 9px;
-}
-
-/* French-edition marker. On a grid cover it's a small corner chip (top-left, so
-   it never meets the external badge); in the list it's a quiet inline tag beside
-   the year (the 40px thumb is too small to read a chip). */
-.frBadge {
-  position: absolute;
-  top: 7px;
-  left: 7px;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  height: 18px;
-  padding: 0 6px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  color: #fff;
-  background: rgba(8, 7, 3, 0.58);
-  border-radius: 999px;
-}
-.frTag {
-  flex-shrink: 0;
-  padding: 2px 6px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1;
+.cardMeta {
+  margin-top: 5px;
   color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 999px;
 }
 
-/* ---------------------------------------------------------------- keyframes -- */
-/* Defined locally: Turbopack scopes animation names per module, so the shared
-   rise / fadeIn entrance is declared in each file that uses it. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
+/* ---- list: the catalogue, one line a book ---- */
+.list {
+  list-style: none;
+  padding-top: clamp(20px, 2.6vw, 36px);
+}
+.list li + li {
+  border-top: 1px dotted var(--dots);
+}
+.line {
+  display: grid;
+  grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em;
+  column-gap: 16px;
+  align-items: baseline;
+  padding: 11px 8px 12px;
+  margin: 0 -8px;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+.lineNo,
+.lineKind,
+.lineYear {
+  color: var(--muted);
+  transition: color 0.16s ease;
+}
+.lineTitle {
+  font-size: var(--t-subhead);
+  font-weight: 500;
+  font-stretch: 78%;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+}
+.lineAuthor {
+  font-size: var(--t-body);
+  font-style: italic;
+  line-height: 1.2;
+}
+.lineYear {
+  text-align: right;
+}
+/* the line under the pointer takes the two colours swapped */
+@media (hover: hover) {
+  .line:hover {
+    background-color: var(--fg);
+    color: var(--bg);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .line:hover .lineNo,
+  .line:hover .lineKind,
+  .line:hover .lineYear {
+    color: var(--bg);
   }
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.line:focus-visible {
+  outline-offset: -1px;
 }
 
-/* --------------------------------------------------------------- responsive -- */
-@media (max-width: 520px) {
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+@media (max-width: 720px) {
+  .controls {
+    gap: 6px 20px;
   }
-  .toolbar {
-    flex: 1 1 auto;
-    justify-content: space-between;
+  .search {
+    flex-basis: 100%;
+  }
+  .line {
+    grid-template-columns: 2.6em minmax(0, 1fr) auto;
+    grid-template-areas:
+      "no title year"
+      ".  author kind";
+    row-gap: 3px;
+  }
+  .lineNo {
+    grid-area: no;
+  }
+  .lineTitle {
+    grid-area: title;
+  }
+  .lineAuthor {
+    grid-area: author;
+  }
+  .lineKind {
+    grid-area: kind;
+    text-align: right;
+  }
+  .lineYear {
+    grid-area: year;
   }
 }

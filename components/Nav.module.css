@@ -1,27 +1,79 @@
+/* The banner: wordmark and links over one rule, one line beneath. */
 .nav {
   position: relative;
   z-index: 20;
+  flex: none;
+  padding: 0 var(--pad);
+}
+
+.top {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
-  padding: 22px clamp(20px, 4vw, 56px);
-  /* The chrome settles in first and stays put — a plain fade, no rise, so it
-     reads as the frame the page rises into rather than another moving part. */
-  animation: fadeIn 0.7s var(--ease-out-quart) both;
+  gap: 16px;
+  padding: 14px 0 10px;
+  border-bottom: 1px solid var(--fg);
 }
 
-/* Keyframes live with their module: Turbopack scopes animation names per file,
-   so a global definition wouldn't resolve here. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.links {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
 }
 
+.under {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+/* where you are; allowed to wrap on a phone rather than push the switch out */
+.where {
+  min-width: 0;
+  text-wrap: balance;
+}
+
+/* Small type, full-size targets: the links keep their 11px letters but answer
+   to a finger across a 39px-tall band. */
+.links a,
+.where a,
+.light {
+  padding-block: 12px;
+  margin-block: -12px;
+}
+.links a {
+  display: inline-block;
+}
+
+/* ---- language ---- */
+.lang {
+  display: inline-flex;
+  gap: 12px;
+}
+.links .langOther {
+  padding-inline: 8px;
+  margin-inline: -8px;
+  color: var(--muted);
+}
+
+/* ---- light ---- */
+.light {
+  flex: none;
+  white-space: nowrap;
+}
+.lightName {
+  display: none;
+}
+:root:not([data-light]) .lightName[data-for="tint"],
+:root[data-light="tint"] .lightName[data-for="tint"],
+:root[data-light="day"] .lightName[data-for="day"],
+:root[data-light="night"] .lightName[data-for="night"] {
+  display: inline;
+}
+
+/* ---- the wordmark: kept exactly as it was (GlitchLogo.tsx drives it) ---- */
 .logo {
   display: inline-block;
   position: relative;
@@ -77,66 +129,4 @@
 /* hovered: hold a soft RGB ghost behind the displaced-pixel set */
 .held {
   text-shadow: 1px 0 rgba(20, 150, 160, 0.35), -1px 0 rgba(200, 40, 50, 0.3);
-}
-
-.links {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-/* quiet chrome link to the browse page, on every route */
-.link {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.16s ease;
-}
-.link:hover {
-  color: var(--fg);
-}
-.link:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* Language toggle — EN·FR, sharing the chrome links' muted-uppercase treatment.
-   The active locale holds at --fg; the other stays a quiet link until hovered. */
-.langSwitch {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.langCurrent {
-  color: var(--fg);
-}
-.langLink {
-  color: var(--muted);
-  transition: color 0.16s ease;
-}
-.langLink:hover {
-  color: var(--fg);
-}
-.langLink:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-.langSep {
-  color: var(--muted);
-  opacity: 0.55;
-}
-
-/* Mobile: trim the masthead's top room so the shelf clears the fold sooner. */
-@media (max-width: 860px) {
-  .nav {
-    padding: 16px clamp(20px, 6vw, 30px);
-  }
 }

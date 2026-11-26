@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     languages: { en: "/collection", fr: "/fr/collection" },
   },
   openGraph: {
-    title: "Browse the collection · The Cypherpunk Library",
+    title: "Browse the collection | The Cypherpunk Library",
     description: DESCRIPTION,
     url: "/collection",
     type: "website",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Browse the collection · The Cypherpunk Library",
+    title: "Browse the collection | The Cypherpunk Library",
     description: DESCRIPTION,
     images: [TWITTER_IMAGE],
   },

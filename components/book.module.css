@@ -1,0 +1,407 @@
+/* A bound book in CSS 3D. See Book.tsx for the anatomy.
+
+   Everything is in em: 1em is the book-em its holder sets through font-size, so
+   the same object stands 500px tall on the shelf and 120px tall in the index.
+   The holder also sets --k, the turn: 0 spine-on, 1 cover-forward. */
+
+.body,
+.flat {
+  --w: calc(var(--h) * 0.66);
+  position: relative;
+  display: block;
+  color: var(--foil);
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.1;
+  text-align: left;
+  /* The weave: warp and weft as hairlines, in real pixels so cloth stays fine
+     at any book size. Paper-over-boards carries none. */
+  --weave:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px);
+}
+.body[data-weave="buckram"] {
+  --weave:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 4px);
+}
+/* Small, in the index, a weave would only alias into stripes: a cover there is
+   its cloth colour and its light. */
+.body[data-weave="paper"],
+.flat {
+  --weave: linear-gradient(transparent, transparent);
+}
+
+.body {
+  width: var(--t);
+  height: var(--h);
+  transform-style: preserve-3d;
+  transform-origin: 0 50%;
+  /* The turn hinges on the spine's near-left edge, so a cover-forward book sits
+     exactly in its own slot, one spine-depth nearer than its neighbours; --pull
+     brings it nearer still. */
+  transform: translateZ(calc(var(--k, 0) * var(--pull, 0px) + var(--lift, 0px)))
+    rotateY(calc(var(--k, 0) * -90deg));
+  transition: transform var(--turn-time, 0.56s) var(--ease-out-expo, ease-out);
+}
+
+.flat {
+  width: var(--w);
+  height: var(--h);
+}
+
+.face {
+  position: absolute;
+  top: 0;
+  display: block;
+  height: var(--h);
+  background-color: var(--cloth);
+  background-image: var(--weave);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* ---- spine ---- */
+.spine {
+  left: 0;
+  width: var(--t);
+  border-radius: 0.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em 0 1.6em;
+}
+/* the round of the spine: dark toward both joints, a soft light down the middle */
+.spine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.3) 0,
+    rgba(0, 0, 0, 0) 22%,
+    rgba(255, 255, 255, 0.08) 46%,
+    rgba(0, 0, 0, 0) 72%,
+    rgba(0, 0, 0, 0.26) 100%
+  );
+}
+
+.spineAuthor,
+.spineTitle {
+  writing-mode: vertical-rl;
+  /* every glyph lies on its side, punctuation included: left to itself the
+     browser stands a curly apostrophe upright and it floats off its word */
+  text-orientation: sideways;
+  text-wrap: balance;
+  overflow: hidden;
+}
+.spineAuthor {
+  flex: 0 0 auto;
+  max-height: 8.6em;
+  font-size: 0.78em;
+  font-style: italic;
+  line-height: 1.15;
+}
+.spineTitle {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 17.4em;
+  max-width: calc(var(--t) - 0.5em);
+  margin: 0.8em 0;
+  font-size: 1.13em;
+  font-weight: 500;
+  font-stretch: 75%;
+  letter-spacing: -0.012em;
+  line-height: 1.06;
+  text-align: center;
+}
+.spineMark {
+  flex: 0 0 auto;
+  display: block;
+  width: 1.16em;
+  height: 1.16em;
+}
+
+.body[data-spine="italic"] .spineTitle {
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 84%;
+  font-size: 1.16em;
+  letter-spacing: 0;
+}
+.body[data-spine="italic"] .spineAuthor {
+  font-style: normal;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+  font-size: 0.8em;
+}
+.body[data-spine="caps"] .spineTitle {
+  text-transform: uppercase;
+  font-stretch: 88%;
+  font-size: 0.8em;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+}
+.body[data-spine="caps"] .spineAuthor {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 0.58em;
+  letter-spacing: 0.16em;
+  line-height: 1.35;
+}
+.body[data-spine="mono"] .spineTitle,
+.body[data-spine="monoLower"] .spineTitle,
+.body[data-spine="mono"] .spineAuthor,
+.body[data-spine="monoLower"] .spineAuthor {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+.body[data-spine="mono"] .spineTitle {
+  text-transform: uppercase;
+  font-size: 0.66em;
+  letter-spacing: 0.05em;
+}
+.body[data-spine="mono"] .spineAuthor {
+  text-transform: uppercase;
+  font-size: 0.52em;
+  letter-spacing: 0.05em;
+}
+.body[data-spine="monoLower"] .spineTitle {
+  font-size: 0.72em;
+}
+.body[data-spine="monoLower"] .spineAuthor {
+  font-size: 0.56em;
+}
+
+/* ---- boards ---- */
+.front {
+  left: var(--t);
+  width: var(--w);
+  transform-origin: 0 50%;
+  transform: rotateY(90deg);
+  border-radius: 0 0.16em 0.16em 0;
+}
+.flat .front {
+  left: 0;
+  transform: none;
+  border-radius: 0.1em 0.16em 0.16em 0.1em;
+}
+.back {
+  left: calc(-1 * var(--w));
+  width: var(--w);
+  transform-origin: 100% 50%;
+  transform: rotateY(-90deg);
+}
+
+/* the joint (the groove a hardback folds on) and a low raking light */
+.front::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.2) 0,
+      rgba(0, 0, 0, 0) 0.45em,
+      rgba(0, 0, 0, 0) 0.85em,
+      rgba(0, 0, 0, 0.2) 1.08em,
+      rgba(255, 255, 255, 0.06) 1.36em,
+      rgba(255, 255, 255, 0) 2em
+    ),
+    linear-gradient(100deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.13));
+}
+/* a board seen edge-on sits in its neighbours' shade; it comes into the light
+   as the book turns to face you */
+.body .front::after,
+.back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #000;
+  opacity: calc((1 - var(--k, 0)) * 0.36);
+  transition: opacity var(--turn-time, 0.56s) var(--ease-out-expo, ease-out);
+}
+.back::after {
+  opacity: 0.46;
+}
+
+/* the page block, seen only when the book is turned */
+.fore {
+  position: absolute;
+  left: 0.12em;
+  top: 0.3em;
+  display: block;
+  width: calc(var(--t) - 0.24em);
+  height: calc(var(--h) - 0.6em);
+  transform: translateZ(calc(-1 * var(--w) + 0.2em)) rotateY(180deg);
+  backface-visibility: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.2)),
+    repeating-linear-gradient(90deg, #ece5d2 0 1px, #cfc6ae 1px 2px);
+}
+
+/* ---- what is stamped on the front board ---- */
+.board {
+  position: absolute;
+  inset: 0;
+  display: block;
+  padding: 2.15em 1.9em 1.95em 2.7em;
+}
+.device {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11.8em;
+  height: auto;
+  transform: translate(-46%, -50%);
+  overflow: visible;
+}
+.coverTitle {
+  position: absolute;
+  left: 2.7em;
+  top: 2.15em;
+  display: block;
+  max-width: 9.4em;
+}
+.coverName {
+  display: block;
+  font-size: 1em;
+  font-weight: 500;
+  font-stretch: 88%;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.coverRule {
+  display: block;
+  width: 0.9em;
+  height: 0;
+  margin: 0.56em 0 0.42em;
+  border-top: 1px solid currentColor;
+}
+.coverYear {
+  display: block;
+  font-size: 0.86em;
+  font-variant-numeric: oldstyle-nums;
+}
+.coverAuthor {
+  position: absolute;
+  left: 2.7em;
+  bottom: 1.95em;
+  display: block;
+  max-width: 11em;
+  font-size: 0.98em;
+  font-style: italic;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+[data-cover="center"] .coverTitle {
+  left: 2.4em;
+  right: 1.6em;
+  max-width: none;
+  text-align: center;
+}
+[data-cover="center"] .coverRule {
+  margin-inline: auto;
+}
+[data-cover="center"] .coverAuthor {
+  left: 2.4em;
+  right: 1.6em;
+  max-width: none;
+  text-align: center;
+}
+[data-cover="foot"] .device {
+  top: 41%;
+}
+/* Not every device sits politely in the middle. Some run board edge to board
+   edge; one is too big for its cover and goes off the fore-edge. */
+[data-fit="bleed"] .device {
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+[data-fit="edge"] .device {
+  left: auto;
+  right: -5.4em;
+  width: 18.8em;
+  transform: translateY(-50%);
+}
+[data-cover="foot"] .coverTitle {
+  top: auto;
+  bottom: 1.95em;
+  max-width: 8.6em;
+}
+[data-cover="foot"] .coverAuthor {
+  left: auto;
+  right: 1.9em;
+  max-width: 6.6em;
+  text-align: right;
+}
+
+[data-spine="caps"] .coverName {
+  text-transform: uppercase;
+  font-size: 0.74em;
+  letter-spacing: 0.14em;
+  line-height: 1.34;
+  font-stretch: 100%;
+}
+[data-spine="caps"] .coverTitle {
+  max-width: 10.4em;
+}
+[data-spine="caps"] .coverAuthor {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 0.62em;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+}
+[data-spine="italic"] .coverName {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+}
+[data-spine="italic"] .coverAuthor {
+  font-style: normal;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.09em;
+}
+[data-spine="mono"] .coverName,
+[data-spine="monoLower"] .coverName,
+[data-spine="mono"] .coverYear,
+[data-spine="monoLower"] .coverYear,
+[data-spine="mono"] .coverAuthor,
+[data-spine="monoLower"] .coverAuthor {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-size: 0.66em;
+  line-height: 1.36;
+}
+[data-spine="mono"] .coverName,
+[data-spine="mono"] .coverAuthor {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+[data-spine="mono"] .coverTitle,
+[data-spine="monoLower"] .coverTitle {
+  max-width: 8.4em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body,
+  .body .front::after {
+    transition: none;
+  }
+}

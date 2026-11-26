@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Celestial from "@/components/Celestial";
-import BookShelf from "@/components/BookShelf";
-import { ui } from "@/lib/i18n";
+import ShelfView from "@/components/ShelfView";
+import Statement from "@/components/Statement";
+import { ui, MASTHEAD_LINES } from "@/lib/i18n";
 import { OG_IMAGE, TWITTER_IMAGE } from "@/lib/og";
 import styles from "@/app/page.module.css";
 
@@ -34,13 +33,15 @@ export const metadata: Metadata = {
 export default function HomeFr() {
   return (
     // Mirrors the English landing; lang="fr" marks the subtree.
-    <div className={styles.page} lang="fr">
-      <Celestial />
-      <Nav locale="fr" altHref="/" />
-      <main className={styles.composition}>
-        <Hero locale="fr" />
-        <BookShelf />
-      </main>
+    <div lang="fr">
+      <div className={styles.first}>
+        <Nav locale="fr" altHref="/" />
+        <main className={styles.main}>
+          <h1 className="srOnly">{MASTHEAD_LINES.fr.join(" ")}</h1>
+          <ShelfView locale="fr" />
+        </main>
+      </div>
+      <Statement locale="fr" />
     </div>
   );
 }
