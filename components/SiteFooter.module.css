@@ -1,15 +1,24 @@
 .footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 24px;
-  margin: 0 var(--pad);
-  padding: 12px 0 18px;
-  border-top: 1px solid var(--rule);
+  /* the last line clears the home indicator on a phone */
+  padding: clamp(40px, 6vw, 88px) var(--pad) calc(28px + env(safe-area-inset-bottom, 0px));
+  font-size: var(--t-note);
+  line-height: 1.5;
+  color: var(--muted);
 }
 .footer a {
+  /* a full-size target around a small line */
   display: inline-block;
-  padding: 12px 0;
-  margin: -12px 0;
+  padding: 10px 0;
+  text-decoration: underline 1px transparent;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.18s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .footer a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+.footer a:active {
+  text-decoration-color: currentColor;
+  transition-duration: 0s;
 }

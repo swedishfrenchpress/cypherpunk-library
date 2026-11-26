@@ -13,11 +13,11 @@
   padding: clamp(48px, 9vw, 120px) var(--pad);
 }
 .title {
+  font-family: var(--display);
   font-size: var(--t-display);
   font-weight: 400;
-  font-stretch: 75%;
-  line-height: 0.96;
-  letter-spacing: -0.035em;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
 }
 .body {
   max-width: 30em;
@@ -26,10 +26,20 @@
   line-height: 1.45;
   text-wrap: pretty;
 }
-/* the one way out: underlined at rest */
-.page .back {
+/* the one way out: a plain underlined line in the same face as the rest */
+.back {
   display: inline-block;
   margin-top: clamp(28px, 3vw, 44px);
   padding: 8px 0;
-  text-decoration-color: currentColor;
+  font-size: var(--t-reading);
+  text-decoration: underline 1px;
+  text-underline-offset: 0.2em;
+}
+@media (hover: hover) and (pointer: fine) {
+  .back:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+.back:active {
+  text-decoration-thickness: 2px;
 }

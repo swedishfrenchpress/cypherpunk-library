@@ -3,9 +3,10 @@
 > A cypherpunk's library — a personal collection of good public-domain reads.
 
 A shelf of bound books. The landing is a row of upright spines with one book
-turned cover-forward; turn to another (arrow keys, a click, a sideways scroll or
-a drag) and the old one closes, the new one swings open, its title sets large
-above it, and the whole page changes into that book's cloth and foil. Every text
+turned cover-forward; turn to another (arrow keys, a click, a swipe or a drag,
+which turns the books under your hand) and the old one closes, the new one
+swings open, its title sets large above it, and the whole page changes into that
+book's cloth and foil. Every text
 has its own binding: a cloth, a foil, a spine set in its own manner, and a
 stamped device drawn from its subject.
 
@@ -56,7 +57,7 @@ from its `color`. To give it its own, add an entry under its slug in
   cover,                 // where the title sits on the front: tl | center | foot
   weave,                 // linen | buckram | paper
   device,                // the stamped drawing: an id from components/Device.tsx
-  deviceNote, materials, // one line each, shown in the book page's Binding ledger
+  fit,                   // optional: "bleed" runs it edge to edge, "edge" lets it run off the cover
 }
 ```
 
@@ -73,10 +74,12 @@ tokens and the three lights (the book's own colours, day, night) are at the top
 of [`app/globals.css`](app/globals.css); what the page is wearing is managed by
 [`lib/surface.ts`](lib/surface.ts).
 
-Three typefaces: [Junicode](https://github.com/psb1558/Junicode-font) for titles
-(condensed) and reading (regular width), Fragment Mono for all chrome, and
-Alpha-Lyrae for the wordmark only. Junicode and Alpha-Lyrae are self-hosted from
-`app/fonts` under the SIL Open Font License.
+The typefaces: Swarsh Daisy (MarvaDesign) for titles,
+[Junicode](https://github.com/psb1558/Junicode-font) for everything that is read
+and for the lettering on the books, Fragment Mono for the controls, and
+Alpha-Lyrae for the wordmark only. All are self-hosted from `app/fonts`; Junicode
+and Alpha-Lyrae are under the SIL Open Font License, Swarsh Daisy under its
+foundry's own terms (see `app/fonts/SwarshDaisy-LICENSE.txt`).
 
 ## Tuning the shelf
 

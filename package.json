@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "check": "node scripts/check-tics.mjs",
+    "build": "node scripts/check-tics.mjs && next build",
     "start": "next start"
   },
   "dependencies": {

@@ -1,30 +1,37 @@
-/* The book page: the object and its facts, then the text. See BookView.tsx. */
+/* The book page: the object beside its title page, then the text. See
+   BookView.tsx. One face throughout; no labels, no rules. */
 
 .page {
-  padding: 0 var(--pad) clamp(64px, 9vw, 128px);
+  /* the two columns everything on this page hangs from: the book's, and the
+     text's. The title, the blurb and the reading all start on the second
+     column's left edge. */
+  --cols: minmax(0, 52fr) minmax(0, 48fr);
+  --gutter: clamp(24px, 4vw, 72px);
+  /* how tall the book stands, and so how tall the title page beside it is */
+  --stand: clamp(430px, 100svh - 132px, 760px);
+  padding: 0 var(--pad) clamp(40px, 6vw, 88px);
 }
 
-/* ---- the head: the book standing beside its ledger ---- */
+/* ---- the head: the book standing beside its title page ---- */
 .head {
   display: grid;
-  grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
-  column-gap: clamp(24px, 4vw, 72px);
+  grid-template-columns: var(--cols);
+  column-gap: var(--gutter);
   align-items: start;
   padding-top: clamp(16px, 2.4vw, 36px);
 }
 
 /* The book at three-quarters: enough spine to read it as an object, enough
-   cover to read its face. It stays put while the ledger scrolls beside it, and
-   turns square-on under the pointer. */
+   cover to read its face. It stays put while the column scrolls beside it. It
+   does not move: it fills half the screen, and anything it did under the
+   pointer would happen every time the pointer crossed the page. */
 .stand {
   --k: 0.64;
-  --turn-time: 0.8s;
   position: sticky;
   top: 12px;
   display: grid;
   place-items: center;
-  height: min(100svh - 132px, 760px);
-  min-height: 430px;
+  height: var(--stand);
   font-size: min(2.02svh, 1.5vw);
   perspective: 2600px;
   filter: drop-shadow(1.7em 2.3em 1.5em rgba(0, 0, 0, 0.36));
@@ -35,11 +42,6 @@
 :root[data-light="night"] .stand {
   filter: none;
 }
-@media (hover: hover) {
-  .stand:hover {
-    --k: 1;
-  }
-}
 .pose {
   display: flex;
   align-items: flex-end;
@@ -48,81 +50,74 @@
   transform-style: preserve-3d;
 }
 
-.facts {
+/* The title page: the title at the head of the column, the blurb and the ways
+   to read at its foot, level with the foot of the book, and air between. */
+.titlePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(40px, 6vw, 88px);
   min-width: 0;
-  padding-top: clamp(4px, 1.2vw, 20px);
+  min-height: var(--stand);
+  padding: clamp(8px, 2.2vw, 36px) 0 clamp(8px, 3.2vw, 52px);
 }
 .title {
-  max-width: 13em;
+  max-width: 11em;
+  font-family: var(--display);
   font-size: var(--t-headline);
-  font-weight: 500;
-  font-stretch: 75%;
-  line-height: 1.03;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 .byline {
-  margin-top: 0.5em;
+  margin-top: 0.55em;
   font-size: var(--t-subhead);
   font-style: italic;
   line-height: 1.2;
 }
-.ledger {
-  margin-top: clamp(28px, 3.4vw, 48px);
-}
 
 .about {
-  max-width: 34em;
+  max-width: 31em;
   font-size: var(--t-lead);
-  line-height: 1.48;
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
-/* the ways to read it: plain underlined lines, one to a way */
+/* the ways to read it: plain underlined words, side by side */
 .actions {
   list-style: none;
-  display: grid;
-  gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 1.6em;
+  margin-top: 1.5em;
+  font-size: var(--t-lead);
+  line-height: 1.5;
 }
-.actions a {
-  font-size: var(--t-subhead);
-  font-style: italic;
-  font-stretch: 84%;
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+.actions a,
+.v4vText a,
+.longNote a,
+.frameNote a,
+.sourceNote a {
   text-decoration: underline 1px;
   text-underline-offset: 0.2em;
 }
-.actions a:hover {
-  text-decoration-thickness: 2px;
+/* thicker under a real pointer, and under a press on any input; the hover is
+   kept from touch, where a tap would leave it stuck on */
+@media (hover: hover) and (pointer: fine) {
+  .actions a:hover,
+  .v4vText a:hover,
+  .longNote a:hover,
+  .frameNote a:hover,
+  .sourceNote a:hover {
+    text-decoration-thickness: 2px;
+  }
 }
-
-.list {
-  list-style: none;
-  font-size: var(--t-lead);
-  line-height: 1.46;
-}
-.list li {
-  padding-left: 1.05em;
-  text-indent: -1.05em;
-  text-wrap: pretty;
-}
-.list li::before {
-  content: "–";
-  display: inline-block;
-  width: 1.05em;
-  text-indent: 0;
-}
-.list a,
-.longNote a,
-.sourceNote a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-}
-.list a:hover,
-.longNote a:hover,
-.sourceNote a:hover {
+.actions a:active,
+.v4vText a:active,
+.longNote a:active,
+.frameNote a:active,
+.sourceNote a:active {
   text-decoration-thickness: 2px;
 }
 
@@ -130,12 +125,13 @@
 .v4v {
   display: flex;
   align-items: flex-end;
-  gap: 16px;
+  gap: 18px;
+  margin-top: 1.8em;
 }
 .v4vQr {
   flex: none;
   display: block;
-  width: 104px;
+  width: 96px;
   padding: 6px;
   background: #fff;
 }
@@ -144,23 +140,28 @@
   width: 100%;
   height: auto;
 }
-.v4vAddr {
-  text-transform: none;
+.v4vText {
+  font-size: var(--t-note);
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
-/* ---- the text ---- */
+/* ---- the text: on the title's left edge, under it ---- */
 .text {
-  margin-top: clamp(56px, 8vw, 120px);
-  /* a jump from "Read it below" lands with the rule in view */
-  scroll-margin-top: 12px;
+  display: grid;
+  grid-template-columns: var(--cols);
+  column-gap: var(--gutter);
+  margin-top: clamp(48px, 7vw, 104px);
+  /* a jump from "Read it below" lands with a little air above the first line */
+  scroll-margin-top: 28px;
 }
-.textLabel {
-  position: sticky;
-  top: 12px;
+.reading {
+  grid-column: 2;
+  min-width: 0;
 }
-.reading,
+/* a PDF wants the whole width */
 .reader {
+  grid-column: 1 / -1;
   min-width: 0;
 }
 
@@ -240,9 +241,6 @@
   font-variant-numeric: lining-nums;
 }
 .prose pre {
-  padding: 1em 0;
-  border-top: 1px dotted var(--dots);
-  border-bottom: 1px dotted var(--dots);
   line-height: 1.5;
   overflow-x: auto;
 }
@@ -254,16 +252,12 @@
 .fallbackNote {
   max-width: 29em;
   margin-bottom: 2em;
-  font-style: italic;
   color: var(--muted);
 }
 .sourceNote {
   max-width: 35em;
   margin-top: 3.4em;
-  padding-top: 1em;
-  border-top: 1px dotted var(--dots);
   font-size: var(--t-note);
-  font-style: italic;
   line-height: 1.5;
   color: var(--muted);
 }
@@ -272,7 +266,7 @@
 .longNote {
   max-width: 34em;
   font-size: var(--t-lead);
-  line-height: 1.48;
+  line-height: 1.5;
 }
 .frame {
   display: block;
@@ -282,50 +276,60 @@
   border: 1px solid var(--rule);
   background: #fff;
 }
-.reader .frame + .longNote {
+.frameNote {
   margin-top: 14px;
   font-size: var(--t-note);
-  font-style: italic;
+  line-height: 1.5;
   color: var(--muted);
 }
 .inline {
-  margin-top: 22px;
+  margin-top: 1.2em;
+  font-size: var(--t-lead);
 }
+/* the disclosure is a plain underlined line, like the other ways to read */
 .inline summary {
   display: inline-block;
-  padding: 8px 0;
+  padding: 6px 0;
   cursor: pointer;
   list-style: none;
+  text-decoration: underline 1px;
+  text-underline-offset: 0.2em;
 }
 .inline summary::-webkit-details-marker {
   display: none;
 }
-.inline .opened,
-.inline[open] .closed {
-  display: none;
+@media (hover: hover) and (pointer: fine) {
+  .inline summary:hover {
+    text-decoration-thickness: 2px;
+  }
 }
-.inline[open] .opened {
-  display: inline;
+.inline summary:active {
+  text-decoration-thickness: 2px;
 }
 .inline .frame {
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
-/* ---- one column: the book first, standing free, then its facts ---- */
+/* ---- one column: the book first, standing free, then its title page ---- */
 @media (max-width: 900px) {
-  .head {
+  .head,
+  .text {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: 12px;
   }
   .stand {
     position: relative;
     top: 0;
     height: auto;
-    min-height: 0;
     padding: 2.4em 0 3.6em;
     font-size: min(1.9svh, 3.4vw);
   }
-  .textLabel {
-    position: static;
+  .titlePage {
+    min-height: 0;
+    gap: clamp(28px, 6vw, 44px);
+    padding: 0;
+  }
+  .reading,
+  .reader {
+    grid-column: 1;
   }
 }

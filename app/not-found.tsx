@@ -17,7 +17,7 @@ export default function NotFound() {
           to take down. This one page is the exception: genuinely gone,
           misfiled or never written.
         </p>
-        <Link href="/" className={`label ${styles.back}`}>
+        <Link href="/" className={styles.back}>
           Back to the shelf
         </Link>
       </main>

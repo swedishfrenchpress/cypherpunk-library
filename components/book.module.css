@@ -43,9 +43,8 @@
   /* The turn hinges on the spine's near-left edge, so a cover-forward book sits
      exactly in its own slot, one spine-depth nearer than its neighbours; --pull
      brings it nearer still. */
-  transform: translateZ(calc(var(--k, 0) * var(--pull, 0px) + var(--lift, 0px)))
-    rotateY(calc(var(--k, 0) * -90deg));
-  transition: transform var(--turn-time, 0.56s) var(--ease-out-expo, ease-out);
+  transform: translateZ(calc(var(--k, 0) * var(--pull, 0px))) rotateY(calc(var(--k, 0) * -90deg));
+  transition: transform var(--turn-time, 300ms) var(--ease-out);
 }
 
 .flat {
@@ -230,7 +229,7 @@
   pointer-events: none;
   background: #000;
   opacity: calc((1 - var(--k, 0)) * 0.36);
-  transition: opacity var(--turn-time, 0.56s) var(--ease-out-expo, ease-out);
+  transition: opacity var(--turn-time, 300ms) var(--ease-out);
 }
 .back::after {
   opacity: 0.46;
@@ -397,11 +396,4 @@
 [data-spine="mono"] .coverTitle,
 [data-spine="monoLower"] .coverTitle {
   max-width: 8.4em;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .body,
-  .body .front::after {
-    transition: none;
-  }
 }

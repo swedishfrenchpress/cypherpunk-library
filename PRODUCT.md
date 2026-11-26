@@ -14,7 +14,7 @@ The Cypherpunk Library is a curated collection of good public-domain reads. The 
 
 ## Brand Personality
 
-Quiet, literary, calm. A hushed private library, not a marketing push. Voice is first-person, understated, and principled, with a dry cypherpunk wink rather than a shout. Restraint over spectacle: a book face (Junicode) for titles and reading, small mono capitals (Fragment Mono) for the chrome, and the technical display face (Alpha-Lyrae) for the wordmark only, where its glitch burst is the one cypherpunk wink on an otherwise calm surface. The freedom-of-information conviction is present but worn lightly, expressed through what the collection *is* rather than through loud rhetoric. Three words: literate, principled, unhurried.
+Quiet, literary, calm. A hushed private library, not a marketing push. Voice is first-person, understated, and principled, with a dry cypherpunk wink rather than a shout. Restraint over spectacle: a book face (Junicode) for titles and reading, small mono capitals (Fragment Mono) for the chrome, and the technical display face (Alpha-Lyrae) for the wordmark only, set static with its glitch alternates off. The freedom-of-information conviction is present but worn lightly, expressed through what the collection *is* rather than through loud rhetoric. Three words: literate, principled, unhurried.
 
 ## Anti-references
 

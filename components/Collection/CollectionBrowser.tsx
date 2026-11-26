@@ -106,7 +106,10 @@ export default function CollectionBrowser({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoComplete="off"
+            autoCapitalize="none"
+            autoCorrect="off"
             spellCheck={false}
+            enterKeyHint="search"
           />
         </div>
 

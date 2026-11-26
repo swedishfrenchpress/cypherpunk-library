@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import styles from "./Nav.module.css";
-import GlitchLogo from "./GlitchLogo";
+import Wordmark from "./Wordmark";
 import LightSwitch from "./LightSwitch";
 import LangSwitch from "./LangSwitch";
 import { ui, type Locale } from "@/lib/i18n";
@@ -25,7 +25,7 @@ export default function Nav({ locale = "en", altHref, label }: Props) {
   return (
     <header className={styles.nav}>
       <div className={styles.top}>
-        <GlitchLogo />
+        <Wordmark />
         <nav className={styles.links} aria-label={t.chrome.index}>
           <Link
             href={locale === "fr" ? "/fr/collection" : "/collection"}

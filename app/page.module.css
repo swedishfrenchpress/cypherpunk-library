@@ -1,4 +1,4 @@
-/* The landing: one screen of shelf, then the statement. */
+/* The landing: one screen of shelf, then the colophon. */
 
 /* The first screen: the banner, then the shelf takes what is left. */
 .first {
@@ -7,8 +7,8 @@
   min-height: 100vh;
   min-height: 100svh;
 }
-/* On a phone the shelf takes only the room it needs, so the top of the statement
-   shows beneath it and says there is more below. */
+/* On a phone the shelf takes only the room it needs, and the colophon follows
+   it directly. */
 @media (max-width: 720px) {
   .first {
     min-height: 0;
@@ -21,50 +21,44 @@
   min-height: 0;
 }
 
-/* ---- the statement, on the two colours swapped ---- */
-.band {
-  padding: clamp(56px, 9vw, 132px) var(--pad) clamp(48px, 7vw, 104px);
+/* ---- the colophon: the same ground, one face, two sizes, no rules ---- */
+.colophon {
+  padding: clamp(72px, 11vw, 168px) var(--pad) 0;
 }
 .statement {
-  /* it stands in the ledger's right-hand column with no label: it is the
-     heading of this band, not a row in it */
-  grid-column: 2;
-  max-width: 21ch;
   font-size: var(--t-title);
   font-stretch: 84%;
   line-height: 1.08;
   letter-spacing: -0.022em;
+}
+/* a sentence to a line, where the line is long enough to hold it */
+.statement span {
+  display: block;
   text-wrap: balance;
 }
 .note {
-  max-width: 44ch;
+  /* wide enough to hold the footnote on one line beside the statement's two */
+  max-width: 46em;
+  margin-top: 1.5em;
   font-size: var(--t-reading);
-  line-height: 1.42;
+  line-height: 1.45;
   text-wrap: pretty;
 }
+.statement + .note {
+  margin-top: clamp(28px, 3.4vw, 48px);
+}
 .note a {
+  /* a name is never broken across two lines */
+  white-space: nowrap;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
-.note a:hover {
-  text-decoration-thickness: 2px;
-}
-.browse {
-  font-size: var(--t-subhead);
-  font-stretch: 84%;
-  font-style: italic;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  text-decoration: underline 1px;
-  text-underline-offset: 0.2em;
-}
-.browse:hover {
-  text-decoration-thickness: 2px;
-}
-
-@media (max-width: 720px) {
-  .statement {
-    grid-column: 1;
+@media (hover: hover) and (pointer: fine) {
+  .note a:hover {
+    text-decoration-thickness: 2px;
   }
+}
+.note a:active {
+  text-decoration-thickness: 2px;
 }
