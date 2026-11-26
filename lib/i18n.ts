@@ -28,9 +28,6 @@ export const ui = {
     chrome: {
       shelf: "The shelf",
       index: "The index",
-      light: "Light",
-      lights: { tint: "Book", day: "Day", night: "Night" },
-      lightHint: "Change the light: the book’s own colours, day, or night",
       language: "Language",
       open: "Read it",
       previous: "Previous book",
@@ -67,7 +64,6 @@ export const ui = {
       listView: "List",
       one: "book",
       many: "books",
-      clear: "Clear",
       clearAll: "Clear search and filter",
       noMatch: "No books match your search",
       andFilter: " and filter",
@@ -87,10 +83,6 @@ export const ui = {
     chrome: {
       shelf: "L’étagère",
       index: "L’index",
-      light: "Lumière",
-      lights: { tint: "Livre", day: "Jour", night: "Nuit" },
-      lightHint:
-        "Changer la lumière : les couleurs du livre, le jour ou la nuit",
       language: "Langue",
       open: "Le lire",
       previous: "Livre précédent",
@@ -126,7 +118,6 @@ export const ui = {
       listView: "Liste",
       one: "livre",
       many: "livres",
-      clear: "Effacer",
       clearAll: "Effacer la recherche et le filtre",
       noMatch: "Aucun livre ne correspond à votre recherche",
       andFilter: " et au filtre",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-26T21:50:40.981Z",
+  "generatedAt": "2026-11-26T22:19:42.367Z",
   "title": "Design System: The Cypherpunk Library",
   "extensions": {
     "colorMeta": {
@@ -34,66 +34,6 @@
           "oklch(95% 0.03 85)"
         ]
       },
-      "day-paper": {
-        "role": "neutral",
-        "displayName": "Day Paper",
-        "canonical": "#ffffe1",
-        "tonalRamp": [
-          "oklch(15% 0.02 107)",
-          "oklch(27% 0.03 107)",
-          "oklch(38% 0.04 107)",
-          "oklch(50% 0.05 107)",
-          "oklch(62% 0.06 107)",
-          "oklch(74% 0.06 107)",
-          "oklch(86% 0.05 107)",
-          "oklch(99% 0.04 107)"
-        ]
-      },
-      "day-ink": {
-        "role": "neutral",
-        "displayName": "Day Ink",
-        "canonical": "#1c1b12",
-        "tonalRamp": [
-          "oklch(15% 0.012 100)",
-          "oklch(22% 0.015 100)",
-          "oklch(38% 0.018 100)",
-          "oklch(50% 0.018 100)",
-          "oklch(62% 0.016 100)",
-          "oklch(74% 0.014 100)",
-          "oklch(86% 0.01 100)",
-          "oklch(95% 0.006 100)"
-        ]
-      },
-      "night-black": {
-        "role": "neutral",
-        "displayName": "Night Black",
-        "canonical": "#060504",
-        "tonalRamp": [
-          "oklch(12% 0.004 70)",
-          "oklch(27% 0.006 70)",
-          "oklch(38% 0.008 70)",
-          "oklch(50% 0.008 70)",
-          "oklch(62% 0.008 70)",
-          "oklch(74% 0.006 70)",
-          "oklch(86% 0.005 70)",
-          "oklch(95% 0.003 70)"
-        ]
-      },
-      "night-ivory": {
-        "role": "neutral",
-        "displayName": "Night Ivory",
-        "canonical": "#f1ecd9",
-        "tonalRamp": [
-          "oklch(15% 0.01 95)",
-          "oklch(27% 0.015 95)",
-          "oklch(38% 0.02 95)",
-          "oklch(50% 0.025 95)",
-          "oklch(62% 0.028 95)",
-          "oklch(74% 0.028 95)",
-          "oklch(86% 0.026 95)",
-          "oklch(94% 0.025 95)"
-        ]
-      },
       "rule": {
         "role": "neutral",
         "displayName": "Rule (ink at 45%)",
@@ -106,17 +46,13 @@
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display",
-        "purpose": "--t-display, clamp(56px, 9.6vw, 96px). Swarsh Daisy. The page heading of the index and of the missing page. One per page."
-      },
       "headline": {
         "displayName": "Headline",
-        "purpose": "--t-headline, clamp(40px, 4.6vw, 64px). Swarsh Daisy. The title of a book on its own page."
+        "purpose": "--t-headline, clamp(40px, 4.6vw, 64px). Swarsh Daisy, no tracking. A page's name, one role: the title of a book on its own page, the index's heading, the missing page's heading."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "--t-title, clamp(30px, 3.5vw, 50px). The landing's statement in Junicode at 84% width, one sentence to a line; the index's empty state in Swarsh Daisy italic."
+        "purpose": "--t-title, clamp(30px, 3.5vw, 50px). The landing's statement in Junicode at 84% width, one sentence to a line; the index's empty state in Swarsh Daisy italic, no tracking."
       },
       "subhead": {
         "displayName": "Subhead",
@@ -124,11 +60,7 @@
       },
       "reading": {
         "displayName": "Reading",
-        "purpose": "--t-reading, clamp(19px, 1.5vw, 21.5px). The text of a book at 29em, about 72 characters a line; the landing's footnote and link into the collection; the missing page's body."
-      },
-      "lead": {
-        "displayName": "Lead",
-        "purpose": "--t-lead, clamp(18px, 1.42vw, 20px). A book's blurb, the ways to read it, the long-PDF note and disclosure, the index's lead."
+        "purpose": "--t-reading, clamp(19px, 1.5vw, 21.5px). The text of a book at 29em; a book's blurb and ways to read; the PDF notes and disclosure; the index's search field; the landing's footnote (30em, centred, lines balanced) and link into the collection; the missing page's body."
       },
       "body": {
         "displayName": "Body",
@@ -136,7 +68,7 @@
       },
       "note": {
         "displayName": "Note",
-        "purpose": "--t-note, 16px. The footer line, the source credit, the PDF fallback note, the Lightning address, the search field."
+        "purpose": "--t-note, 16px. The footer line, the source credit, the PDF fallback note, the Lightning address."
       },
       "label": {
         "displayName": "Label",
@@ -144,15 +76,15 @@
       },
       "wordmark": {
         "displayName": "Wordmark",
-        "purpose": "22px, outside the ramp. Alpha Lyrae with contextual alternates off; the static wordmark and nothing else. Two stacked lines in the banner, one line on a share image."
+        "purpose": "22px, outside the ramp. Alpha Lyrae with contextual alternates off; the static wordmark and nothing else. One line everywhere, never wrapped."
       },
       "index-title": {
         "displayName": "Index title",
-        "purpose": "The subhead step in Swarsh Daisy: titles in the index list; held at 21px for the card title under a cover."
+        "purpose": "The subhead step in Swarsh Daisy, no tracking: titles in the index list; held at 21px for the card title under a cover."
       },
       "marquee": {
         "displayName": "Marquee",
-        "purpose": "Swarsh Daisy, sized from the shelf's own width, min(30px, 8.2cqw) on a phone. The shelf's titles and nothing beside them: roman for the book in hand, italic for its neighbours."
+        "purpose": "Swarsh Daisy with no tracking, sized from the shelf's own width, min(30px, 8.2cqw) on a phone. The shelf's titles and nothing beside them: roman for the book in hand, italic for its neighbours."
       }
     },
     "shadows": [
@@ -162,24 +94,14 @@
         "purpose": "The shadow each shelved book throws on the wall behind it. A closed book's is the open one's squeezed with scaleX, so the blur is not redrawn; the open book's falls further (4.2em, 5.4em)."
       },
       {
-        "name": "wall-day",
-        "value": "rgb(92 78 18 / 0.22)",
-        "purpose": "Day light: the wall shadow is the paper's own colour gone dark."
-      },
-      {
         "name": "standing",
         "value": "drop-shadow(1.7em 2.3em 1.5em rgba(0, 0, 0, 0.36))",
-        "purpose": "The book standing on its own page. 0.2 alpha in Day."
+        "purpose": "The book standing on its own page."
       },
       {
         "name": "ledge",
         "value": "drop-shadow(0.5em 0.2em 0.5em rgba(0, 0, 0, 0.26))",
         "purpose": "A cover standing on a ledge in the index. Fixed: it does not change when the cover lifts."
-      },
-      {
-        "name": "night",
-        "value": "none",
-        "purpose": "Night light: books cast nothing; the shelf is vignetted instead."
       }
     ],
     "motion": [
@@ -211,12 +133,17 @@
       {
         "name": "surface",
         "value": "300ms ease",
-        "purpose": "--bg and --fg changing to a new book or light."
+        "purpose": "--bg and --fg changing to a new book's pair."
       },
       {
         "name": "face-swap",
         "value": "200ms ease",
         "purpose": "A marquee title's roman and italic faces cross-fading, the outgoing one blurring by 2px."
+      },
+      {
+        "name": "search-line",
+        "value": "clip-path wipe, 240ms in and 160ms out, on ease-out",
+        "purpose": "The index search field's one line drawn over in full ink from the left while the field is in use. Under reduced motion it fades in over 160ms without travelling."
       },
       {
         "name": "hover-lift",
@@ -291,23 +218,23 @@
       "kind": "chip",
       "refersTo": "option",
       "description": "A set of options: off is muted, on is full ink with a 1px underline. Nothing shifts between the two.",
-      "html": "<div class=\"ds-set\" role=\"group\"><button class=\"ds-opt\" aria-pressed=\"false\">All 21</button><button class=\"ds-opt\" aria-pressed=\"true\">PDF 9</button><button class=\"ds-opt\" aria-pressed=\"false\">Text 10</button></div>",
+      "html": "<div class=\"ds-set\" role=\"group\"><button class=\"ds-opt\" aria-pressed=\"true\">All 21</button><button class=\"ds-opt\" aria-pressed=\"false\">Text 10</button><button class=\"ds-opt\" aria-pressed=\"false\">PDF 9</button></div>",
       "css": ".ds-set { display: flex; flex-wrap: wrap; gap: 0 20px; } .ds-opt { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 400; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; background: none; border: 0; border-radius: 0; cursor: pointer; padding: 9px 0 5px; white-space: nowrap; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color 0.18s ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-opt:active { transform: scale(0.97); } @media (prefers-reduced-motion: reduce) { .ds-opt:active { transform: none; } } .ds-opt[aria-pressed='true'] { color: var(--fg, #f1d6a4); text-decoration-color: currentColor; } @media (hover: hover) and (pointer: fine) { .ds-opt:hover:not(:disabled) { text-decoration-color: currentColor; } } .ds-opt:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Search field",
       "kind": "input",
       "refersTo": "search-input",
-      "description": "Bare mono text on the control rule; focus draws a 1px line on that rule.",
-      "html": "<div class=\"ds-controls\"><div class=\"ds-search\"><input class=\"ds-search-input\" type=\"search\" enterkeyhint=\"search\" autocapitalize=\"none\" autocorrect=\"off\" placeholder=\"Search titles and authors\"></div></div>",
-      "css": ".ds-controls { display: flex; align-items: flex-end; padding-bottom: 10px; border-bottom: 1px solid var(--fg, #f1d6a4); } .ds-search { flex: 1 1 260px; min-width: 0; } .ds-search-input { display: block; width: 100%; padding: 6px 0 4px; border: 0; border-radius: 0; background: transparent; color: var(--fg, #f1d6a4); caret-color: var(--fg, #f1d6a4); font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: var(--t-note, 16px); line-height: 24px; letter-spacing: -0.01em; appearance: none; -webkit-appearance: none; } .ds-search-input::placeholder { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); opacity: 1; } .ds-search-input:focus { outline: none; } .ds-search:focus-within { box-shadow: 0 11px 0 -10px var(--fg, #f1d6a4); }"
+      "description": "A line to write on: Junicode at the reading step, italic muted placeholder, and exactly one line. A hairline at rest, drawn over in full ink from the left while the field is in use. No box, no second line, no outline.",
+      "html": "<div class=\"ds-search\"><input class=\"ds-search-input\" type=\"search\" enterkeyhint=\"search\" autocapitalize=\"none\" autocorrect=\"off\" placeholder=\"Search titles and authors\"></div>",
+      "css": ".ds-search { position: relative; min-width: 0; } .ds-search::before, .ds-search::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; pointer-events: none; } .ds-search::before { background: color-mix(in srgb, var(--fg, #f1d6a4) 45%, transparent); } .ds-search::after { background: var(--fg, #f1d6a4); clip-path: inset(0 100% 0 0); transition: clip-path 160ms cubic-bezier(0.23, 1, 0.32, 1); } .ds-search:focus-within::after, .ds-search:has(.ds-search-input:not(:placeholder-shown))::after { clip-path: inset(0); transition-duration: 240ms; } @media (prefers-reduced-motion: reduce) { .ds-search::after { clip-path: none; opacity: 0; transition: opacity 160ms ease; } .ds-search:focus-within::after, .ds-search:has(.ds-search-input:not(:placeholder-shown))::after { opacity: 1; } } .ds-search-input { display: block; width: 100%; padding: 2px 0 9px; border: 0; border-radius: 0; background: transparent; color: var(--fg, #f1d6a4); caret-color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.3; appearance: none; -webkit-appearance: none; } .ds-search-input::placeholder { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); font-style: italic; opacity: 1; } .ds-search-input:focus { outline: none; }"
     },
     {
       "name": "Banner",
       "kind": "nav",
-      "description": "The static wordmark and the label links, with the light switch beneath at the right. No rule under it and no tagline. A line under the wordmark appears only when a page passes one, such as a way back.",
-      "html": "<header class=\"ds-nav\"><div class=\"ds-nav-top\"><span class=\"ds-logo\"><span>Cypherpunk</span><span>Library</span></span><nav class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-label\">Collection</a><span class=\"ds-nav-label ds-nav-lang\"><span aria-current=\"true\">EN</span><a href=\"#\" class=\"ds-nav-muted\">FR</a></span></nav></div><div class=\"ds-nav-under\"><span class=\"ds-nav-label\"><a href=\"#\">Back to the shelf</a></span><button class=\"ds-nav-label\">Light: Book</button></div></header>",
-      "css": ".ds-nav { padding: 0 var(--pad, 16px); color: var(--fg, #f1d6a4); } .ds-nav-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 14px 0 10px; } .ds-logo { font-family: var(--font-display, 'Alpha Lyrae'), system-ui, sans-serif; font-weight: 500; font-size: 22px; line-height: 0.92; letter-spacing: -0.01em; font-feature-settings: 'calt' 0; } .ds-logo span { display: block; } .ds-nav-links { display: flex; align-items: baseline; gap: 18px; } .ds-nav-lang { display: inline-flex; gap: 12px; } .ds-nav-under { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 8px; } .ds-nav-label { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: inherit; text-decoration: none; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; } a.ds-nav-label, button.ds-nav-label, .ds-nav-label a { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { a.ds-nav-label:hover, button.ds-nav-label:hover:not(:disabled), .ds-nav-label a:hover { text-decoration-color: currentColor; } } a.ds-nav-label:active, button.ds-nav-label:active, .ds-nav-label a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-nav-muted { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-nav-label:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "description": "The static one-line wordmark and its label links on one baseline, and nothing else. No rule under it and no tagline. A line under the wordmark appears only when a page passes one, such as a way back.",
+      "html": "<header class=\"ds-nav\"><div class=\"ds-nav-top\"><span class=\"ds-logo\">Cypherpunk Library</span><nav class=\"ds-nav-links\"><a href=\"#\" class=\"ds-nav-label\">Collection</a><span class=\"ds-nav-label ds-nav-lang\"><span aria-current=\"true\">EN</span><a href=\"#\" class=\"ds-nav-muted\">FR</a></span></nav></div><div class=\"ds-nav-under\"><span class=\"ds-nav-label\"><a href=\"#\">Back to the shelf</a></span></div></header>",
+      "css": ".ds-nav { padding: 0 var(--pad, 16px); color: var(--fg, #f1d6a4); } .ds-nav-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding: 14px 0 10px; } .ds-logo { font-family: var(--font-display, 'Alpha Lyrae'), system-ui, sans-serif; font-weight: 500; font-size: 22px; line-height: 1; letter-spacing: -0.01em; white-space: nowrap; font-feature-settings: 'calt' 0; } .ds-nav-links { display: flex; align-items: baseline; gap: 18px; } .ds-nav-lang { display: inline-flex; gap: 12px; } .ds-nav-under { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 8px; } .ds-nav-label { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: inherit; text-decoration: none; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; } a.ds-nav-label, button.ds-nav-label, .ds-nav-label a { text-decoration: underline 1px transparent; text-underline-offset: 4px; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { a.ds-nav-label:hover, button.ds-nav-label:hover:not(:disabled), .ds-nav-label a:hover { text-decoration-color: currentColor; } } a.ds-nav-label:active, button.ds-nav-label:active, .ds-nav-label a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-nav-muted { color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-nav-label:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Shelf strip actions",
@@ -320,24 +247,24 @@
       "name": "Text link",
       "kind": "button",
       "refersTo": "text-link",
-      "description": "A link to read or browse: roman Junicode, a 1px underline at rest that thickens to 2px under the pointer. Words only. Shown as the ways to read a book, side by side at the lead step.",
+      "description": "A link to read or browse: roman Junicode, a 1px underline at rest that thickens to 2px under the pointer. Words only. Shown as the ways to read a book, side by side at the reading step.",
       "html": "<ul class=\"ds-actions\"><li><a href=\"#\">Open the PDF</a></li><li><a href=\"#\">Download the PDF</a></li><li><a href=\"#\">Read it inline</a></li></ul>",
-      "css": ".ds-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 1.6em; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-lead, clamp(18px, 1.42vw, 20px)); line-height: 1.5; } .ds-actions a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; } @media (hover: hover) and (pointer: fine) { .ds-actions a:hover { text-decoration-thickness: 2px; } } .ds-actions a:active { text-decoration-thickness: 2px; } .ds-actions a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "css": ".ds-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 1.6em; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.5; } .ds-actions a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; } @media (hover: hover) and (pointer: fine) { .ds-actions a:hover { text-decoration-thickness: 2px; } } .ds-actions a:active { text-decoration-thickness: 2px; } .ds-actions a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Title page",
       "kind": "custom",
       "description": "A book's page beside its standing object: the title in Swarsh Daisy and an italic Junicode byline at the head of the column, blurb and the ways to read at its foot, air between. No rules, no labels.",
       "html": "<div class=\"ds-titlepage\"><header><h1 class=\"ds-tp-title\">A Cypherpunk’s Manifesto</h1><p class=\"ds-tp-byline\">by Eric Hughes, 1993</p></header><div><p class=\"ds-tp-about\">Privacy is necessary for an open society in the electronic age.</p><p class=\"ds-tp-actions\"><a href=\"#\">Read it below</a></p></div></div>",
-      "css": ".ds-titlepage { display: flex; flex-direction: column; justify-content: space-between; gap: clamp(40px, 6vw, 88px); min-height: 430px; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-variant-numeric: oldstyle-nums; } .ds-tp-title { margin: 0; max-width: 11em; font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-size: var(--t-headline, clamp(40px, 4.6vw, 64px)); font-weight: 400; line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; } .ds-tp-byline { margin: 0.55em 0 0; font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-style: italic; line-height: 1.2; } .ds-tp-about { margin: 0; max-width: 31em; font-size: var(--t-lead, clamp(18px, 1.42vw, 20px)); line-height: 1.5; text-wrap: pretty; } .ds-tp-actions { margin: 1.5em 0 0; font-size: var(--t-lead, clamp(18px, 1.42vw, 20px)); line-height: 1.5; } .ds-tp-actions a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; } @media (hover: hover) and (pointer: fine) { .ds-tp-actions a:hover { text-decoration-thickness: 2px; } } .ds-tp-actions a:active { text-decoration-thickness: 2px; } .ds-tp-actions a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "css": ".ds-titlepage { display: flex; flex-direction: column; justify-content: space-between; gap: clamp(40px, 6vw, 88px); min-height: 430px; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-variant-numeric: oldstyle-nums; } .ds-tp-title { margin: 0; max-width: 11em; font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-size: var(--t-headline, clamp(40px, 4.6vw, 64px)); font-weight: 400; line-height: 1.04; text-wrap: balance; } .ds-tp-byline { margin: 0.55em 0 0; font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-style: italic; line-height: 1.2; } .ds-tp-about { margin: 0; max-width: 31em; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.5; text-wrap: pretty; } .ds-tp-actions { margin: 1.5em 0 0; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.5; } .ds-tp-actions a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; } @media (hover: hover) and (pointer: fine) { .ds-tp-actions a:hover { text-decoration-thickness: 2px; } } .ds-tp-actions a:active { text-decoration-thickness: 2px; } .ds-tp-actions a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Colophon and footer",
       "kind": "custom",
       "refersTo": "footer-line",
-      "description": "The landing's close on the page's own ground (statement, footnote with links, the way into the collection) and the one-line footer. Junicode only, separated by space.",
+      "description": "The landing's close on the page's own ground and middle axis (statement, footnote with links in a 30em measure, the way into the collection) and the one-line footer centred under it. Junicode only, separated by space. On every other page the footer line stands on the left edge.",
       "html": "<aside class=\"ds-colophon\"><p class=\"ds-statement\"><span>A personal collection of good public-domain reads.</span><span>Nothing for sale, nothing to take down.</span></p><p class=\"ds-note\">This shelf is public domain end to end. For everything else, there’s <a href=\"#\">Anna’s Archive</a>, <a href=\"#\">LibGen</a>, and the torrents.</p><p class=\"ds-note\"><a href=\"#\">Browse the collection</a></p></aside><footer class=\"ds-footer\"><a href=\"#\">info@cypherpunklibrary.com</a></footer>",
-      "css": ".ds-colophon { padding: 72px var(--pad, 16px) 0; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-variant-numeric: oldstyle-nums; } .ds-statement { margin: 0; font-size: var(--t-title, clamp(30px, 3.5vw, 50px)); font-stretch: 84%; line-height: 1.08; letter-spacing: -0.022em; } .ds-statement span { display: block; text-wrap: balance; } .ds-note { margin: 1.5em 0 0; max-width: 46em; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.45; text-wrap: pretty; } .ds-statement + .ds-note { margin-top: clamp(28px, 3.4vw, 48px); } .ds-note a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; white-space: nowrap; } @media (hover: hover) and (pointer: fine) { .ds-note a:hover { text-decoration-thickness: 2px; } } .ds-note a:active { text-decoration-thickness: 2px; } .ds-footer { padding: clamp(40px, 6vw, 88px) var(--pad, 16px) calc(28px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-note, 16px); line-height: 1.5; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-footer a { display: inline-block; padding: 10px 0; color: inherit; text-decoration: underline 1px transparent; text-underline-offset: 0.2em; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { .ds-footer a:hover { text-decoration-color: currentColor; } } .ds-footer a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-note a:focus-visible, .ds-footer a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
+      "css": ".ds-colophon { padding: clamp(72px, 10vw, 152px) var(--pad, 16px) clamp(16px, 2vw, 32px); text-align: center; color: var(--fg, #f1d6a4); font-family: var(--font-serif, Junicode), Georgia, serif; font-variant-numeric: oldstyle-nums; } .ds-statement { margin: 0; font-size: var(--t-title, clamp(30px, 3.5vw, 50px)); font-stretch: 84%; line-height: 1.08; letter-spacing: -0.022em; } .ds-statement span { display: block; text-wrap: balance; } .ds-note { margin: 1.5em auto 0; max-width: 30em; font-size: var(--t-reading, clamp(19px, 1.5vw, 21.5px)); line-height: 1.45; text-wrap: balance; } .ds-statement + .ds-note { margin-top: clamp(28px, 3.4vw, 48px); } .ds-note a { color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; white-space: nowrap; } @media (hover: hover) and (pointer: fine) { .ds-note a:hover { text-decoration-thickness: 2px; } } .ds-note a:active { text-decoration-thickness: 2px; } .ds-footer { padding: clamp(40px, 6vw, 88px) var(--pad, 16px) calc(28px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-serif, Junicode), Georgia, serif; font-size: var(--t-note, 16px); line-height: 1.5; text-align: center; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-footer a { display: inline-block; padding: 10px 0; color: inherit; text-decoration: underline 1px transparent; text-underline-offset: 0.2em; transition: text-decoration-color 0.18s ease; } @media (hover: hover) and (pointer: fine) { .ds-footer a:hover { text-decoration-color: currentColor; } } .ds-footer a:active { text-decoration-color: currentColor; transition-duration: 0s; } .ds-note a:focus-visible, .ds-footer a:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; }"
     },
     {
       "name": "Index line",
@@ -345,19 +272,19 @@
       "refersTo": "list-line",
       "description": "One book a line in the index list, rows separated by their own padding with no line between. Under a real pointer the line takes the two colours swapped.",
       "html": "<ol class=\"ds-list\"><li><a class=\"ds-line\" href=\"#\"><span class=\"ds-line-meta\">01</span><span class=\"ds-line-title\">A Cypherpunk’s Manifesto</span><span class=\"ds-line-author\">Eric Hughes</span><span class=\"ds-line-meta\">Text</span><span class=\"ds-line-meta ds-line-year\">1993</span></a></li><li><a class=\"ds-line\" href=\"#\"><span class=\"ds-line-meta\">02</span><span class=\"ds-line-title\">The Crypto Anarchist Manifesto</span><span class=\"ds-line-author\">Timothy C. May</span><span class=\"ds-line-meta\">Text</span><span class=\"ds-line-meta ds-line-year\">1988</span></a></li></ol>",
-      "css": ".ds-list { list-style: none; margin: 0; padding: 0; color: var(--fg, #f1d6a4); } .ds-line { display: grid; grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em; column-gap: 16px; align-items: baseline; padding: 11px 8px 12px; color: inherit; text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; transition: background-color 0.16s ease, color 0.16s ease; } .ds-line-meta { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); transition: color 0.16s ease; } .ds-line-year { text-align: right; } .ds-line-title { font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-weight: 400; line-height: 1.08; letter-spacing: -0.008em; } .ds-line-author { font-size: var(--t-body, 18px); font-style: italic; line-height: 1.2; } @media (hover: hover) and (pointer: fine) { .ds-line:hover { background-color: var(--fg, #f1d6a4); color: var(--bg, #4a141c); } .ds-line:hover .ds-line-meta { color: var(--bg, #4a141c); } } @media (hover: none), (pointer: coarse) { .ds-line:active { background-color: color-mix(in srgb, var(--fg, #f1d6a4) 12%, transparent); } } .ds-line:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: -1px; }"
+      "css": ".ds-list { list-style: none; margin: 0; padding: 0; color: var(--fg, #f1d6a4); } .ds-line { display: grid; grid-template-columns: 3.4em minmax(0, 46fr) minmax(0, 30fr) minmax(0, 16fr) 4em; column-gap: 16px; align-items: baseline; padding: 11px 8px 12px; color: inherit; text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; transition: background-color 0.16s ease, color 0.16s ease; } .ds-line-meta { font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; font-variant-numeric: lining-nums tabular-nums; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); transition: color 0.16s ease; } .ds-line-year { text-align: right; } .ds-line-title { font-size: var(--t-subhead, clamp(21px, 1.9vw, 26px)); font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-weight: 400; line-height: 1.08; } .ds-line-author { font-size: var(--t-body, 18px); font-style: italic; line-height: 1.2; } @media (hover: hover) and (pointer: fine) { .ds-line:hover { background-color: var(--fg, #f1d6a4); color: var(--bg, #4a141c); } .ds-line:hover .ds-line-meta { color: var(--bg, #4a141c); } } @media (hover: none), (pointer: coarse) { .ds-line:active { background-color: color-mix(in srgb, var(--fg, #f1d6a4) 12%, transparent); } } .ds-line:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: -1px; }"
     },
     {
       "name": "Cover on a ledge",
       "kind": "custom",
       "description": "A flat front board (cloth, foil, stamped device, real lettering) standing on a hairline, its title and metadata beneath. No card surface. This snippet uses the Manifesto's cloth and foil with a stand-in line device (the real one is its SHA-256 digest as a 16 by 16 dot grid).",
       "html": "<a class=\"ds-cover-card\" href=\"#\"><span class=\"ds-ledge\"><span class=\"ds-cover\"><span class=\"ds-cover-title\"><span class=\"ds-cover-name\">A Cypherpunk’s Manifesto</span><span class=\"ds-cover-rule\"></span><span class=\"ds-cover-year\">1993</span></span><svg class=\"ds-cover-device\" viewBox=\"0 0 200 240\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"100\" cy=\"120\" r=\"62\"/><circle cx=\"100\" cy=\"120\" r=\"40\"/><path d=\"M38 120h124M100 58v124\"/></svg><span class=\"ds-cover-author\">Eric Hughes</span></span></span><span class=\"ds-cover-card-title\">A Cypherpunk’s Manifesto</span><span class=\"ds-cover-card-meta\">Eric Hughes, 1993</span></a>",
-      "css": ".ds-cover-card { display: grid; width: 184px; color: var(--fg, #f1d6a4); text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; } .ds-ledge { display: flex; align-items: flex-end; justify-content: center; font-size: calc(184px / 23); height: 32.6em; border-bottom: 1px solid color-mix(in srgb, var(--fg, #f1d6a4) 45%, transparent); } .ds-cover { position: relative; display: block; width: 20.2em; height: 30.6em; background: #7b2530 linear-gradient(100deg, rgba(255,255,255,0.07), rgba(255,255,255,0) 44%, rgba(0,0,0,0.13)); color: #e9cf96; border-radius: 0.1em 0.16em 0.16em 0.1em; overflow: hidden; transform-origin: 50% 100%; filter: drop-shadow(0.5em 0.2em 0.5em rgba(0,0,0,0.26)); transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .ds-cover-card:hover .ds-cover { transform: translateY(-0.5em) scale(1.022); } } @media (prefers-reduced-motion: no-preference) { .ds-cover-card:active .ds-cover { transform: scale(0.98); } } @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .ds-cover-card:hover:active .ds-cover { transform: translateY(-0.5em) scale(1); } } .ds-cover-title { position: absolute; left: 2.7em; top: 2.15em; max-width: 9.4em; line-height: 1.08; } .ds-cover-name { display: block; font-size: 1em; font-weight: 500; font-stretch: 88%; } .ds-cover-rule { display: block; width: 0.9em; margin: 0.56em 0 0.42em; border-top: 1px solid currentColor; } .ds-cover-year { display: block; font-size: 0.86em; } .ds-cover-device { position: absolute; left: 50%; top: 50%; width: 11.8em; transform: translate(-46%, -50%); } .ds-cover-author { position: absolute; left: 2.7em; bottom: 1.95em; font-size: 0.98em; font-style: italic; } .ds-cover-card-title { margin-top: 11px; font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-size: 21px; font-weight: 400; line-height: 1.1; letter-spacing: -0.008em; } .ds-cover-card-meta { margin-top: 5px; font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-cover-card:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .ds-cover { transition: none; } }"
+      "css": ".ds-cover-card { display: grid; width: 184px; color: var(--fg, #f1d6a4); text-decoration: none; font-family: var(--font-serif, Junicode), Georgia, serif; } .ds-ledge { display: flex; align-items: flex-end; justify-content: center; font-size: calc(184px / 23); height: 32.6em; border-bottom: 1px solid color-mix(in srgb, var(--fg, #f1d6a4) 45%, transparent); } .ds-cover { position: relative; display: block; width: 20.2em; height: 30.6em; background: #7b2530 linear-gradient(100deg, rgba(255,255,255,0.07), rgba(255,255,255,0) 44%, rgba(0,0,0,0.13)); color: #e9cf96; border-radius: 0.1em 0.16em 0.16em 0.1em; overflow: hidden; transform-origin: 50% 100%; filter: drop-shadow(0.5em 0.2em 0.5em rgba(0,0,0,0.26)); transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); } @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .ds-cover-card:hover .ds-cover { transform: translateY(-0.5em) scale(1.022); } } @media (prefers-reduced-motion: no-preference) { .ds-cover-card:active .ds-cover { transform: scale(0.98); } } @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .ds-cover-card:hover:active .ds-cover { transform: translateY(-0.5em) scale(1); } } .ds-cover-title { position: absolute; left: 2.7em; top: 2.15em; max-width: 9.4em; line-height: 1.08; } .ds-cover-name { display: block; font-size: 1em; font-weight: 500; font-stretch: 88%; } .ds-cover-rule { display: block; width: 0.9em; margin: 0.56em 0 0.42em; border-top: 1px solid currentColor; } .ds-cover-year { display: block; font-size: 0.86em; } .ds-cover-device { position: absolute; left: 50%; top: 50%; width: 11.8em; transform: translate(-46%, -50%); } .ds-cover-author { position: absolute; left: 2.7em; bottom: 1.95em; font-size: 0.98em; font-style: italic; } .ds-cover-card-title { margin-top: 11px; font-family: var(--display, 'Swarsh Daisy', Junicode, Georgia, serif); font-size: 21px; font-weight: 400; line-height: 1.1; } .ds-cover-card-meta { margin-top: 5px; text-wrap: balance; font-family: var(--font-mono, 'Fragment Mono'), ui-monospace, monospace; font-size: 11px; line-height: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: color-mix(in srgb, var(--fg, #f1d6a4) 78%, transparent); } .ds-cover-card:focus-visible { outline: 1px solid var(--fg, #f1d6a4); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .ds-cover { transition: none; } }"
     }
   ],
   "narrative": {
     "northStar": "The Book in Hand",
-    "overview": "The library is a shelf of 21 individually bound objects, and the page wears whichever one you are holding. Each text has its own cloth, its own foil, its own spine lettering and a device stamped on its front board; turning to a book repaints the whole surface in that book's ground and ink in 300ms. Nothing is a template recoloured 21 times, and nothing on the interface competes with the books.\n\nThe interface itself is flat, square, two-coloured and quiet. Running text is one book face with space around it and nothing else: no rules, no labels, no marks. The few controls are plain mono capitals. Depth, texture, shadow and rounded corners exist only on the books, which are real 3D objects built in CSS with real text lettering and SVG line devices (no image files, no WebGL). A film of grain lies over everything so cloth and page share one material.\n\nThree lights are one click apart: Book (the page takes the book's own pair), Day (paper and ink) and Night (black, with the books lit and no wall to cast on). The system rejects the neon-terminal cypherpunk reflex, storefront clutter, SaaS feature cards and database chrome.",
+    "overview": "The library is a shelf of 21 individually bound objects, and the page wears whichever one you are holding. Each text has its own cloth, its own foil, its own spine lettering and a device stamped on its front board; turning to a book repaints the whole surface in that book's ground and ink in 300ms. Nothing is a template recoloured 21 times, and nothing on the interface competes with the books.\n\nThe interface itself is flat, square, two-coloured and quiet. Running text is one book face with space around it and nothing else: no rules, no labels, no marks. The few controls are plain mono capitals. Depth, texture, shadow and rounded corners exist only on the books, which are real 3D objects built in CSS with real text lettering and SVG line devices (no image files, no WebGL). A film of grain lies over everything so cloth and page share one material.\n\nThere is one light, the book in hand: the page always wears that book's pair, and there is no light or dark mode beside it. The system rejects the neon-terminal cypherpunk reflex, storefront clutter, SaaS feature cards and database chrome.",
     "keyCharacteristics": [
       "Two interface colours per screen: one ground, one ink. Everything else on the interface is that ink at a lower strength.",
       "Every book is its own binding (cloth, foil, page pair, spine style, cover layout, weave, device, fit).",
@@ -369,13 +296,19 @@
     ],
     "rules": [
       {
+        "name": "There is one light: the book in hand",
+        "body": "The page always wears the book's cloth and foil; there is no day, night, light or dark mode and no switch for one. Why: \"let's just keep book so it changes color depending on the book\".",
+        "section": "colors",
+        "source": "2026-11-26: \"let's get rid of light/dark mode. let's just keep \"book\" so it changes color depending on the book\""
+      },
+      {
         "name": "The Two Colours Rule",
         "body": "An interface surface is one ground and one ink. Rules and secondary text are that same ink at 45% and 78%. There are no greys, no accent, no third hue anywhere on the interface, the wordmark included. Books are objects standing on the surface and bring their own cloth and foil; they are the only other colour a screen carries.",
         "section": "colors"
       },
       {
         "name": "The Contrast Floor Rule",
-        "body": "Every pair, in every light: ink on ground at least 7:1, the muted strength at least 4.5:1, foil on cloth at least 4.5:1. Measured across the 21 bindings plus Day and Night, the shipped minimums are 7.28:1, 4.78:1 and 4.68:1. A new binding is not finished until it clears all three.",
+        "body": "Every book's pair: ink on ground at least 7:1, the muted strength at least 4.5:1, foil on cloth at least 4.5:1. Measured across the 21 bindings, the shipped minimums are 7.28:1, 4.78:1 and 4.68:1. A new binding is not finished until it clears all three.",
         "section": "colors"
       },
       {
@@ -402,13 +335,13 @@
       },
       {
         "name": "The wordmark is static",
-        "body": "The two-line Alpha Lyrae \"Cypherpunk Library\" mark never animates: no glitch burst, no hover effect, no alternate glyph sets. Why: none given.",
+        "body": "The one-line Alpha Lyrae \"Cypherpunk Library\" mark never animates: no glitch burst, no hover effect, no alternate glyph sets. Why: none given.",
         "section": "typography",
         "source": "2026-11-26: \"let's remove the glitch then\", reversing the same day's earlier choice to keep it"
       },
       {
         "name": "The One Ramp Rule",
-        "body": "A new piece of interface text takes one of the eight steps by name. No literal font size is written outside the ramp's declaration; the only fixed sizes are the 11px label, the 22px wordmark and the 21px card title.",
+        "body": "A new piece of interface text takes one of the six steps by name. Two steps that sit within a pixel or two of each other are one step: a blurb set a shade smaller than the text beneath it reads as a mistake. Every page's name is the headline step. No literal font size is written outside the ramp's declaration; the only fixed sizes are the 11px label, the 22px wordmark and the 21px card title.",
         "section": "typography"
       },
       {
@@ -418,7 +351,17 @@
       },
       {
         "name": "The Width Is The Weight Rule",
-        "body": "Within Junicode, hierarchy comes from the width axis and size, not from boldness: 75 to 88% on a book's spine and cover, 84% for the colophon's statement and for headings inside a text, 100% for reading. Weight stays between 400 and 500. Titles are outside this rule: Swarsh Daisy has no width axis and one weight, 400, and its hierarchy is size alone, with tracking between -0.008em and -0.02em.",
+        "body": "Within Junicode, hierarchy comes from the width axis and size, not from boldness: 75 to 88% on a book's spine and cover, 84% for the colophon's statement and for headings inside a text, 100% for reading. Weight stays between 400 and 500. Titles are outside this rule: Swarsh Daisy has no width axis and one weight, 400, and its hierarchy is size alone.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Tracking Rule",
+        "body": "Swarsh Daisy is never tracked. Any letter-spacing other than zero makes a browser turn off optional ligatures, and the face's ff, fi and fl ligatures are lost, so a title sets its letters loose. Junicode's tracking is unaffected.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Line Rule",
+        "body": "A field has exactly one line, and its states are that line changing, never a second line or a box added beside it. A page's name is the headline step on the left edge, and a row of controls sits on one baseline.",
         "section": "typography"
       },
       {
@@ -439,17 +382,12 @@
       },
       {
         "name": "The Same Edge Rule",
-        "body": "On a page of running text everything starts on one left edge: on the book page the title, the blurb, the ways to read and the first line of the text share the second column's edge; on the landing the statement, the footnote and the link share the page margin.",
+        "body": "On a page of running text everything starts on one left edge. On a book's page the title, the blurb, the ways to read and the first line of the text share the second column's edge; on the index the page's name, the controls and the books share the page margin. The landing's closing section is the one centred exception: the open cover above it is centred with its title over it, and the colophon carries that axis to the foot of the page, the way a book's title page or closing colophon is set. The footer's line follows it there and nowhere else.",
         "section": "layout"
       },
       {
         "name": "The Shadows Belong To Books Rule",
-        "body": "A shadow means a physical book is casting it. No interface element (control, list line, field) has one. Focus on the search field is a 1px line on the rule it sits on, not a glow.",
-        "section": "elevation"
-      },
-      {
-        "name": "The No Wall At Night Rule",
-        "body": "In the Night light books cast nothing. Do not reintroduce shadows there with a lighter colour.",
+        "body": "A shadow means a physical book is casting it. No interface element (control, list line, field) has one. Focus on the search field is its own one line drawn over in ink, not a glow and not a box.",
         "section": "elevation"
       },
       {
@@ -505,7 +443,7 @@
       },
       {
         "name": "On a share image the wordmark is one line, Cypherpunk Library",
-        "body": "Never the stacked two-line form there; that form is for the banner. Why (inferred, and accepted by the owner): a share image is wide and short, so a second line costs height the books need.",
+        "body": "One line there as everywhere; the name is never stacked or broken. Why (inferred, and accepted by the owner): a share image is wide and short, so a second line costs height the books need.",
         "section": "share image",
         "source": "2026-11-26: \"do you think we can put Cypherpunk Library in one line? no in two lines?\""
       },
@@ -544,10 +482,10 @@
       "Do keep every interface surface to one ground and one ink, with rules at 45% and secondary text at 78% of that ink.",
       "Do author a new binding as a full object: cloth, foil, page ground, page ink, spine manner, cover layout, weave, device, and check it against the floor (7:1 ink on ground, 4.5:1 muted, 4.5:1 foil on cloth).",
       "Do set running text in Junicode alone and separate its parts with space and position.",
-      "Do set a title (a shelf title, a page heading, an index entry) in --display, at 400, with tracking between -0.008em and -0.02em.",
-      "Do start everything on a page of running text from one left edge.",
+      "Do set a title (a shelf title, a page's name, an index entry) in --display, at 400, with no letter-spacing, and give every page's name the headline step.",
+      "Do start everything on a page of running text (a book's page, the index) from one left edge; only the landing's closing section and the footer line under it are centred.",
       "Do start a new surface with the thing and its name, and add only what the reader needs to act.",
-      "Do set controls plain in the mono label voice: words, a colon between a name and its value (LIGHT: BOOK), a comma between an author and a year (ERIC HUGHES, 1993), space between separate items.",
+      "Do set controls plain in the mono label voice: words, a comma between an author and a year (ERIC HUGHES, 1993), space between separate items.",
       "Do show a selected option as full ink with a 1px underline and an unselected one as muted, and underline at rest only the label that is the one way forward on its screen.",
       "Do make a link to read or browse roman, underlined at rest with a 1px line, thickening to 2px under the pointer.",
       "Do answer the pointer on text with an underline: a 1px underline appearing under a label, a 1px underline thickening to 2px under a text link.",
@@ -569,21 +507,25 @@
     "donts": [
       "Don't introduce a grey, an accent or a third hue on interface. Colour arrives with the book in hand.",
       "Don't put a shadow, a radius, a gradient or a texture on an interface element. Those belong to books.",
-      "Don't build cards, pills, chips, filled buttons or boxed inputs. Controls are text; fields are text on a rule.",
+      "Don't build cards, pills, chips, filled buttons or boxed inputs. Controls are text; a field is text on its own one line.",
+      "Don't add a second line or an outline box to a focused field, and don't run a rule under a row of controls.",
+      "Don't print a count, an introductory paragraph or a filter option the reader does not need under a page's name.",
       "Don't put a rule or a band of swapped colour between parts of running text, and don't use a dotted line anywhere.",
       "Don't set a Fragment Mono label beside or above running text, as a kicker, a caption or a row heading.",
       "Don't print a caption that repeats what the screen already shows.",
+      "Don't centre running text anywhere but the landing's closing section.",
       "Don't put a rule under a name, or a tagline, count or side label beside one, on the banner, a section or a share image.",
       "Don't add a block of facts to a book page, or any text about cloth, foil, devices, bindings or how the site was made.",
-      "Don't animate the wordmark or give it a hover effect.",
+      "Don't animate the wordmark, give it a hover effect, or break it onto two lines.",
       "Don't dim text on hover. Opacity is not a hover state in this system.",
       "Don't recolour one cover template for a new text. Every book is its own binding.",
       "Don't use Alpha Lyrae for anything but the wordmark, or add a fifth typeface.",
       "Don't set running text, a byline or anything on a book in Swarsh Daisy, and don't set a title in condensed Junicode.",
-      "Don't apply font-stretch or a weight other than 400 to Swarsh Daisy.",
+      "Don't apply font-stretch, letter-spacing or a weight other than 400 to Swarsh Daisy.",
+      "Don't add a type step within a pixel or two of an existing one.",
       "Don't reach for bold. Junicode stays between 400 and 500 and Swarsh Daisy at 400; change the size, or Junicode's width, instead.",
       "Don't use the muted strength for anything a reader must not miss.",
-      "Don't cast book shadows in the Night light.",
+      "Don't add a light, dark, day or night mode, or a switch for one. The book in hand is the only light.",
       "Don't use image files or WebGL for covers; they are SVG and CSS 3D with real text.",
       "Don't use bounce, spring overshoot or elastic easing.",
       "Don't animate a layout property (width, height, margin, padding, top, left).",

@@ -9,8 +9,11 @@ import styles from "./collection.module.css";
 
 // The index browser: search, a format filter, and two ways to look at the
 // result. "Covers" stands every book face-out on a ledge; "List" is the
-// catalogue, one line a book. All chrome is the small mono capitals; an option
-// that is on is inked and underlined, one that is off is muted.
+// catalogue, one line a book. The search field is text, so it is set in the
+// book face on a line of its own that inks in when the field is in use; the
+// options are the small mono capitals, inked and underlined when on, muted
+// when off. No count is shown: the options carry their numbers and the books
+// are in front of you. It is still spoken, for anyone who cannot see them.
 //
 // Entries arrive resolved from the server (CollectionView), each with its cover
 // already rendered, so this file holds no book data and no drawing code.
@@ -37,7 +40,9 @@ export type Entry = {
 
 type Layout = "covers" | "list";
 
-const KINDS: ReadingKind[] = ["Text", "PDF", "External"];
+// What the index can be filtered by. A book read on another site is not a
+// format of its own here: it is found under All.
+const KINDS: ReadingKind[] = ["Text", "PDF"];
 
 export default function CollectionBrowser({
   entries,
@@ -80,7 +85,6 @@ export default function CollectionBrowser({
     return kind ? base.filter((e) => e.kind === kind) : base;
   }, [query, fuse, entries, kind]);
 
-  const filtered = query.trim() !== "" || kind !== null;
   const clearAll = () => {
     setQuery("");
     setKind(null);
@@ -155,15 +159,8 @@ export default function CollectionBrowser({
         </div>
       </div>
 
-      <p className={`label ${styles.count}`} aria-live="polite">
-        <span>
-          {results.length} {results.length === 1 ? t.one : t.many}
-        </span>
-        {filtered && results.length > 0 && (
-          <button type="button" className={styles.clear} onClick={clearAll}>
-            {t.clear}
-          </button>
-        )}
+      <p className="srOnly" aria-live="polite">
+        {results.length} {results.length === 1 ? t.one : t.many}
       </p>
 
       {results.length === 0 ? (

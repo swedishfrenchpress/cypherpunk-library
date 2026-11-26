@@ -4,25 +4,15 @@ description: A shelf of 21 individually bound public-domain texts; the page wear
 colors:
   house-oxblood: "#4a141c"
   house-gold: "#f1d6a4"
-  day-paper: "#ffffe1"
-  day-ink: "#1c1b12"
-  night-black: "#060504"
-  night-ivory: "#f1ecd9"
   rule: "color-mix(in srgb, var(--fg) 45%, transparent)"
   muted: "color-mix(in srgb, var(--fg) 78%, transparent)"
 typography:
-  display:
-    fontFamily: "'Swarsh Daisy', Junicode, Georgia, serif"
-    fontSize: "clamp(56px, 9.6vw, 96px)"
-    fontWeight: 400
-    lineHeight: 0.98
-    letterSpacing: "-0.02em"
   headline:
     fontFamily: "'Swarsh Daisy', Junicode, Georgia, serif"
     fontSize: "clamp(40px, 4.6vw, 64px)"
     fontWeight: 400
     lineHeight: 1.04
-    letterSpacing: "-0.015em"
+    letterSpacing: "0em"
   title:
     fontFamily: "Junicode, Georgia, 'Times New Roman', serif"
     fontSize: "clamp(30px, 3.5vw, 50px)"
@@ -40,12 +30,6 @@ typography:
     fontSize: "clamp(19px, 1.5vw, 21.5px)"
     fontWeight: 400
     lineHeight: 1.6
-    fontFeature: "'onum' 1"
-  lead:
-    fontFamily: "Junicode, Georgia, 'Times New Roman', serif"
-    fontSize: "clamp(18px, 1.42vw, 20px)"
-    fontWeight: 400
-    lineHeight: 1.48
     fontFeature: "'onum' 1"
   body:
     fontFamily: "Junicode, Georgia, 'Times New Roman', serif"
@@ -70,7 +54,7 @@ typography:
     fontFamily: "'Alpha Lyrae', system-ui, sans-serif"
     fontSize: "22px"
     fontWeight: 500
-    lineHeight: 0.92
+    lineHeight: 1
     letterSpacing: "-0.01em"
     fontFeature: "'calt' 0"
   index-title:
@@ -78,13 +62,13 @@ typography:
     fontSize: "clamp(21px, 1.9vw, 26px)"
     fontWeight: 400
     lineHeight: 1.08
-    letterSpacing: "-0.008em"
+    letterSpacing: "0em"
   marquee:
     fontFamily: "'Swarsh Daisy', Junicode, Georgia, serif"
     fontSize: "clamp(38px, 3.96cqw, 64px)"
     fontWeight: 400
     lineHeight: 1.12
-    letterSpacing: "-0.012em"
+    letterSpacing: "0em"
 rounded:
   none: "0"
   book-spine: "0.1em"
@@ -94,7 +78,7 @@ spacing:
   target-pad: "12px"
   column-gutter: "clamp(24px, 4vw, 72px)"
   section-gap: "clamp(40px, 6vw, 88px)"
-  colophon-gap: "clamp(72px, 11vw, 168px)"
+  colophon-gap: "clamp(72px, 10vw, 152px)"
 components:
   label:
     textColor: "{colors.house-gold}"
@@ -114,8 +98,9 @@ components:
   search-input:
     backgroundColor: "transparent"
     textColor: "{colors.house-gold}"
+    typography: "{typography.reading}"
     rounded: "{rounded.none}"
-    padding: "6px 0 4px"
+    padding: "2px 0 9px"
   list-line:
     textColor: "{colors.house-gold}"
     padding: "11px 8px 12px"
@@ -124,7 +109,7 @@ components:
     textColor: "{colors.house-oxblood}"
   text-link:
     textColor: "{colors.house-gold}"
-    typography: "{typography.lead}"
+    typography: "{typography.reading}"
   footer-line:
     textColor: "{colors.muted}"
     typography: "{typography.note}"
@@ -141,7 +126,7 @@ The library is a shelf of 21 individually bound objects, and the page wears whic
 
 The interface itself is flat, square, two-coloured and quiet. Running text is one book face with space around it and nothing else: no rules, no labels, no marks. The few controls are plain mono capitals. Depth, texture, shadow and rounded corners exist only on the books, which are real 3D objects built in CSS with real text lettering and SVG line devices (no image files, no WebGL). A film of grain lies over everything so cloth and page share one material.
 
-Three lights are one click apart: **Book** (the page takes the book's own pair), **Day** (paper and ink) and **Night** (black, with the books lit and no wall to cast on). The system rejects the neon-terminal cypherpunk reflex, storefront clutter, SaaS feature cards and database chrome.
+There is one light, the book in hand: the page always wears that book's pair, and there is no light or dark mode beside it. The system rejects the neon-terminal cypherpunk reflex, storefront clutter, SaaS feature cards and database chrome.
 
 **Key Characteristics:**
 - Two interface colours per screen: one ground, one ink. Everything else on the interface is that ink at a lower strength.
@@ -160,12 +145,10 @@ One ground and one ink, supplied by the book in hand; the palette is the binding
 - **House Oxblood** (`house-oxblood`): the ground worn before any book is picked up, and the registered initial value of `--bg`. It is the first book's page ground (A Cypherpunk’s Manifesto).
 - **House Gold** (`house-gold`): the ink of that same pair and the initial value of `--fg`.
 
-The house pair is only the default. In the Book light, `--bg` and `--fg` resolve to `--book-bg` and `--book-fg`, written on `<html>` by the shelf or the route (`lib/surface.ts`) and set before first paint, so a reload never flashes the wrong cloth. The book in hand is remembered per tab; the light is remembered across visits.
+The house pair is only the default. `--bg` and `--fg` always resolve to `--book-bg` and `--book-fg`, written on `<html>` by the shelf or the route (`lib/surface.ts`) and set before first paint together with the browser's theme colour, so a reload never flashes the wrong cloth. The book in hand is remembered per tab.
 
 ### Neutral
-- **Day Paper** (`day-paper`) and **Day Ink** (`day-ink`): the Day light. A yellow-white paper and a warm near-black, not white and black.
-- **Night Black** (`night-black`) and **Night Ivory** (`night-ivory`): the Night light. Warm black, ivory ink.
-- **Rule** (`rule`, ink at 45%): the ledge a cover stands on in the index, the frame around an embedded PDF, a section break inside a text, the scrollbar thumb.
+- **Rule** (`rule`, ink at 45%): the line under the index's search field at rest, the ledge a cover stands on in the index, the frame around an embedded PDF, a section break inside a text, the scrollbar thumb.
 - **Muted** (`muted`, ink at 78%): secondary text only (the footer line, source and fallback notes, authors and years in index metadata, unselected options, the other language, placeholders, list markers).
 
 ### The bindings
@@ -206,15 +189,19 @@ These are deliberate and sit outside the two-colour pair. They belong to an obje
 - **White backing** (`#fff`): behind the Lightning QR code so it scans on any cloth, and behind the embedded PDF frame, which is someone else's page.
 - **Light on cloth** (white at 5 to 8%: `rgba(255, 255, 255, 0.05)`, `0.06`, `0.07`, `0.08`): the warp of the weave, the highlight down the round of the spine, the raking light across a board.
 - **Shade on cloth** (black at 7 to 30%: `rgba(0, 0, 0, 0.07)`, `0.12`, `0.13`, `0.2`, `0.26`, `0.3`, and a `#000` veil at up to 36%, 46% on the back board): the weft, the joints, the groove, boards seen edge-on.
-- **Cast shadow** (black at 20 to 36%; in Day `rgb(92 78 18 / 0.22)`): see Elevation & Depth.
+- **Cast shadow** (black at 26 to 36%): see Elevation & Depth.
 - **Grain** (black flecks at 24% alpha, white flecks at 13%, the layer at 50% opacity): the film over everything.
 - **The fallback foil** (`#eadfc4`): the cream ink of a book that has no binding of its own yet.
 
 ### Named Rules
 
+**There is one light: the book in hand.** The page always wears the book's cloth and foil; there is no day, night, light or dark mode and no switch for one.
+Why: "let's just keep book so it changes color depending on the book".
+<!-- 2026-11-26: "let's get rid of light/dark mode. let's just keep "book" so it changes color depending on the book" -->
+
 **The Two Colours Rule.** An interface surface is one ground and one ink. Rules and secondary text are that same ink at 45% and 78%. There are no greys, no accent, no third hue anywhere on the interface, the wordmark included. Books are objects standing on the surface and bring their own cloth and foil; they are the only other colour a screen carries.
 
-**The Contrast Floor Rule.** Every pair, in every light: ink on ground at least 7:1, the muted strength at least 4.5:1, foil on cloth at least 4.5:1. Measured across the 21 bindings plus Day and Night, the shipped minimums are 7.28:1, 4.78:1 and 4.68:1. A new binding is not finished until it clears all three.
+**The Contrast Floor Rule.** Every book's pair: ink on ground at least 7:1, the muted strength at least 4.5:1, foil on cloth at least 4.5:1. Measured across the 21 bindings, the shipped minimums are 7.28:1, 4.78:1 and 4.68:1. A new binding is not finished until it clears all three.
 
 **The Swap Rule.** Emphasis is made by swapping the two colours, never by adding one: the index line under the pointer and text selection take ink as ground and ground as ink. A swap is a response to the reader, never a standing band of the page.
 
@@ -233,23 +220,21 @@ Swarsh Daisy draws the curly apostrophe and quotation marks as slanted ticks tha
 
 ### Hierarchy
 
-Every font size on the interface is one of eight steps, declared once as custom properties (`--t-*`) and used by name. Width, weight and italic vary within a step; the size does not.
+Every font size on the interface is one of six steps, declared once as custom properties (`--t-*`) and used by name. Width, weight and italic vary within a step; the size does not.
 
-- **Display** (`--t-display`, `clamp(56px, 9.6vw, 96px)`; Swarsh Daisy 400, line-height 0.98, tracking -0.02em): the page heading of the index and of the missing page. One per page.
-- **Headline** (`--t-headline`, `clamp(40px, 4.6vw, 64px)`; Swarsh Daisy 400, 1.04, -0.015em, max 11em): the title of a book on its own page.
-- **Title** (`--t-title`, `clamp(30px, 3.5vw, 50px)`): the landing's statement, one sentence to a line (Junicode 400 at 84% width, 1.08, -0.022em), and the index's empty state (Swarsh Daisy italic, 1.1, -0.015em).
-- **Subhead** (`--t-subhead`, `clamp(21px, 1.9vw, 26px)`): the byline under a book's title (Junicode italic, 1.2), and titles in the index list (Swarsh Daisy 400, 1.08, -0.008em).
-- **Reading** (`--t-reading`, `clamp(19px, 1.5vw, 21.5px)`; 400, 1.6, max-width 29em, about 72 characters a line, hanging punctuation): the text of a book; also the landing's footnote and its link into the collection (1.45, max 46em) and the missing page's body. Headings inside a text are relative to it: h2 1.5em at 500 and width 84%; h3 1.16em italic 400; h4 0.82em in small caps tracked 0.08em. Code inside a text is Fragment Mono at 0.74em.
-- **Lead** (`--t-lead`, `clamp(18px, 1.42vw, 20px)`; 400, 1.48 to 1.5, max 31 to 34em): a book's blurb, the ways to read it, the long-PDF note and disclosure, the index's lead.
+- **Headline** (`--t-headline`, `clamp(40px, 4.6vw, 64px)`; Swarsh Daisy 400, 1.04, no tracking): a page's name, one role with one setting. The title of a book on its own page (max 11em), the index's heading, The collection, and the missing page's heading all take it. One per page.
+- **Title** (`--t-title`, `clamp(30px, 3.5vw, 50px)`): the landing's statement, one sentence to a line (Junicode 400 at 84% width, 1.08, -0.022em), and the index's empty state (Swarsh Daisy italic, 1.1, no tracking).
+- **Subhead** (`--t-subhead`, `clamp(21px, 1.9vw, 26px)`): the byline under a book's title (Junicode italic, 1.2), and titles in the index list (Swarsh Daisy 400, 1.08, no tracking).
+- **Reading** (`--t-reading`, `clamp(19px, 1.5vw, 21.5px)`; Junicode 400): everything that is read at length or beside it. The text of a book (1.6, max-width 29em, about 72 characters a line, hanging punctuation, paragraphs wrapped so none ends on one word alone); a book's blurb and the ways to read it, the PDF notes and the inline reader's disclosure (1.5), so a blurb is never smaller than the text under it; what is written in the index's search field (1.3, placeholder italic and muted); the landing's footnote and its link into the collection (1.45, max 30em, lines balanced); the missing page's body. Headings inside a text are relative to it: h2 1.5em at 500 and width 84%; h3 1.16em italic 400; h4 0.82em in small caps tracked 0.08em. Code inside a text is Fragment Mono at 0.74em.
 - **Body** (`--t-body`, 18px; 400, 1.5, oldstyle numerals): default text, and the author in the index list (italic).
-- **Note** (`--t-note`, 16px; 1.5): the footer line, the source credit, the PDF fallback note and the Lightning address (roman, the first three muted), and the search field (Fragment Mono, where 16px also keeps iOS from zooming on focus).
+- **Note** (`--t-note`, 16px; 1.5): the footer line, the source credit, the PDF fallback note and the Lightning address (roman, the first three muted).
 
 Outside the ramp, and fixed:
 
-- **Label** (Fragment Mono 400, 11px on a 15px line, tracking 0.02em, uppercase, lining tabular numerals): the banner's links and, where a page passes one, its line under the wordmark; the light and language switches, the shelf's three controls, the index's options, count, numbers and metadata, the missing page's way back.
-- **Wordmark** (Alpha Lyrae 500, 22px, 0.92, `"calt" 0`): the wordmark and nothing else. Two stacked lines in the banner; one line on a share image.
-- **Card title** (21px, the subhead's small end held fixed; Swarsh Daisy 400, 1.1, -0.008em): a book's name under its cover in the index, where the column is too narrow to scale.
-- **Marquee** (`clamp(38px, 3.96cqw, 64px)`, sized from the shelf's own width; `min(30px, 8.2cqw)` on a phone; Swarsh Daisy 400, 1.12, -0.012em): the shelf's titles and nothing beside them, the one in hand roman, its neighbours italic at 74% opacity. A book's year is not printed here; it is spoken in each book link's name and in the live region.
+- **Label** (Fragment Mono 400, 11px on a 15px line, tracking 0.02em, uppercase, lining tabular numerals): the banner's links and, where a page passes one, its line under the wordmark; the language switch, the shelf's three controls, the index's options, count, numbers and metadata, the missing page's way back.
+- **Wordmark** (Alpha Lyrae 500, 22px, line-height 1, `"calt" 0`, never wrapped): the wordmark and nothing else. One line, Cypherpunk Library, everywhere: in the banner and on a share image.
+- **Card title** (21px, the subhead's small end held fixed; Swarsh Daisy 400, 1.1, no tracking): a book's name under its cover in the index, where the column is too narrow to scale. Its metadata line (author, year) is balanced across its lines.
+- **Marquee** (`clamp(38px, 3.96cqw, 64px)`, sized from the shelf's own width; `min(30px, 8.2cqw)` on a phone; Swarsh Daisy 400, 1.12, no tracking): the shelf's titles and nothing beside them, the one in hand roman, its neighbours italic at 74% opacity. A book's year is not printed here; it is spoken in each book link's name and in the live region.
 - **On a book** every size is in book-ems and scales with the object, and all lettering (spines and covers) is Junicode or, in the two mono manners, Fragment Mono. Swarsh Daisy is never stamped on a book.
 
 ### Named Rules
@@ -262,15 +247,19 @@ Why: "less is more. let's keep it minimal".
 Why: lines and mixed fonts in the closing section read as "AI slop"; it should be "elegant and minimal".
 <!-- 2026-11-26: "this footer look like AI slop. we need to make this look more elegant and minimal. no need to the lines. no need for the different fonts" -->
 
-**The wordmark is static.** The two-line Alpha Lyrae "Cypherpunk Library" mark never animates: no glitch burst, no hover effect, no alternate glyph sets.
+**The wordmark is static.** The one-line Alpha Lyrae "Cypherpunk Library" mark never animates: no glitch burst, no hover effect, no alternate glyph sets.
 Why: none given.
 <!-- 2026-11-26: "let's remove the glitch then", reversing the same day's earlier choice to keep it -->
 
-**The One Ramp Rule.** A new piece of interface text takes one of the eight steps by name. No literal font size is written outside the ramp's declaration; the only fixed sizes are the 11px label, the 22px wordmark and the 21px card title.
+**The One Ramp Rule.** A new piece of interface text takes one of the six steps by name. Two steps that sit within a pixel or two of each other are one step: a blurb set a shade smaller than the text beneath it reads as a mistake. Every page's name is the headline step. No literal font size is written outside the ramp's declaration; the only fixed sizes are the 11px label, the 22px wordmark and the 21px card title.
 
 **The Four Faces Rule.** Four faces, one job each. Swarsh Daisy names things: the shelf's titles, each page's heading, the titles in the index. Junicode sets everything that is read (texts, blurbs, the colophon and its statement, bylines, headings inside a text) and all lettering on the books. Fragment Mono says how to operate the place. Alpha Lyrae signs it and never leaves the wordmark. Never add another family, and never give a face a second job.
 
-**The Width Is The Weight Rule.** Within Junicode, hierarchy comes from the width axis and size, not from boldness: 75 to 88% on a book's spine and cover, 84% for the colophon's statement and for headings inside a text, 100% for reading. Weight stays between 400 and 500. Titles are outside this rule: Swarsh Daisy has no width axis and one weight, 400, and its hierarchy is size alone, with tracking between -0.008em and -0.02em.
+**The Width Is The Weight Rule.** Within Junicode, hierarchy comes from the width axis and size, not from boldness: 75 to 88% on a book's spine and cover, 84% for the colophon's statement and for headings inside a text, 100% for reading. Weight stays between 400 and 500. Titles are outside this rule: Swarsh Daisy has no width axis and one weight, 400, and its hierarchy is size alone.
+
+**The No Tracking Rule.** Swarsh Daisy is never tracked. Any letter-spacing other than zero makes a browser turn off optional ligatures, and the face's ff, fi and fl ligatures are lost, so a title sets its letters loose. Junicode's tracking is unaffected.
+
+**The One Line Rule.** A field has exactly one line, and its states are that line changing, never a second line or a box added beside it. A page's name is the headline step on the left edge, and a row of controls sits on one baseline.
 
 **The Never Dim Rule.** A label is never dimmed. Under the pointer a label that is a link or a button takes a 1px underline in its own ink, 4px below the letters; a disabled button takes none. Type at 11px has no contrast to spare, so no hover or emphasis lowers the opacity of a live label. Only a disabled control is faded (the shelf's Previous and Next at either end of the row).
 
@@ -280,12 +269,12 @@ Why: none given.
 
 One page margin everywhere, `--pad`: 16px, growing to the left or right safe-area inset when that is larger, so it clears the notch of a phone held sideways. The page paints edge to edge (`viewport-fit=cover`), full-bleed inside the margin, with no max-width container. The footer adds the bottom safe-area inset to its bottom padding, and the shelf's strip, where it sits at the foot of the first screen (721px and wider), keeps at least that inset beneath it. Zoom is never disabled. Sections follow one another on the same ground and are separated by space, never by a line or a change of colour.
 
-- **The banner.** The wordmark at left and the label links at right (`COLLECTION`, `EN FR`), with the light switch beneath at the right. No rule under it and no tagline. A line under the wordmark appears only when a page passes one: the way back on a book page and on the index (`BACK TO THE SHELF`), the missing page's `ERROR 404`. The landing shows nothing there.
-- **The landing** is one screen of shelf (banner, marquee, stage, strip, filling `100svh`), then the colophon on the same ground: the statement, the footnote with its links, the way into the collection, set flush left with `clamp(72px, 11vw, 168px)` of space above. On a phone the first screen takes only the room it needs and the colophon follows directly.
+- **The banner.** The wordmark at left and the label links at right (`COLLECTION`, `EN FR`), on one baseline, and nothing else. The wordmark is one line and never wraps; on the narrowest phones the links drop under it. No rule under it and no tagline. A line under the wordmark appears only when a page passes one: the way back on a book page and on the index (`BACK TO THE SHELF`), the missing page's `ERROR 404`. The landing shows nothing there.
+- **The landing** is one screen of shelf (banner, marquee, stage, strip, filling `100svh`), then the colophon on the same ground, centred on the page's middle axis with `clamp(72px, 10vw, 152px)` of space above: the statement, the footnote with its links in a 30em measure, the way into the collection. The footer's line is centred under it. On a phone the first screen takes only the room it needs and the colophon follows directly.
 - **The book page** is two columns, 52fr and 48fr with a `clamp(24px, 4vw, 72px)` gutter. The object stands sticky in the first; beside it the second is set as a title page as tall as the book (`clamp(430px, 100svh - 132px, 760px)`): title and byline at its head, blurb and the ways to read at its foot, level with the foot of the book, and air between. The text then starts in the same second column, on the same left edge as the title. An embedded PDF spans both columns. One column at 900px, book first.
-- **The index** is a display heading with its lead, a control rule (search, format options, view options on one line over a full-strength rule), a count, then either covers on ledges (`repeat(auto-fill, minmax(min(168px, 42%), 1fr))`) or the list (number, title, author, format, year).
-- **The footer** is one line at the foot of every page with `clamp(40px, 6vw, 88px)` above it and no rule.
-- **Rhythm.** Space between sections is fluid, `clamp(40px, 6vw, 88px)` to `clamp(72px, 11vw, 168px)`. Inside the banner and controls it is tight and fixed (8 to 14px).
+- **The index** is its name alone at the headline step on the page's left edge, with no paragraph under it; then one row of controls on a single baseline with no rule under it (the search field, the format options All, Text and PDF, the view options Covers and List); then either covers on ledges (`repeat(auto-fill, minmax(min(168px, 42%), 1fr))`) or the list (number, title, author, format, year). No count is printed; it is spoken through a visually hidden live region. At 720px and below the search takes its own row and the two sets of options share the next, the format set at the left and the view set pushed to the right.
+- **The footer** is one line at the foot of every page with `clamp(40px, 6vw, 88px)` above it and no rule. It stands on the page's left edge, except under a centred closing section (the landing), where it is centred too.
+- **Rhythm.** Space between sections is fluid, `clamp(40px, 6vw, 88px)` to `clamp(72px, 10vw, 152px)`. Inside the banner and controls it is tight and fixed (8 to 14px).
 - **Targets.** Labels keep 11px letters but answer across a full-size band: about 39px in the banner (12px block padding cancelled by a -12px margin) and 45px on the shelf's Previous, Next and Read it (15px block padding). Links, buttons and disclosure lines take `touch-action: manipulation`, so a tap fires at once. Buttons and disclosure lines are not selectable and raise no long-press sheet; nor do the shelf's book links, because a book is a thing to drag. Read it stays an ordinary link.
 - **Breakpoints.** One phone breakpoint, 720px, shared by the shelf, the landing and the index; 900px for the book page.
 
@@ -299,7 +288,7 @@ All book geometry is in em. A full-height book is 31.25em tall, a cover is 0.66 
 Why: none given.
 <!-- 2026-11-26: "i don't think we need this too" (the number, title and author line at the shelf's bottom left) -->
 
-**The Same Edge Rule.** On a page of running text everything starts on one left edge: on the book page the title, the blurb, the ways to read and the first line of the text share the second column's edge; on the landing the statement, the footnote and the link share the page margin.
+**The Same Edge Rule.** On a page of running text everything starts on one left edge. On a book's page the title, the blurb, the ways to read and the first line of the text share the second column's edge; on the index the page's name, the controls and the books share the page margin. The landing's closing section is the one centred exception: the open cover above it is centred with its title over it, and the colophon carries that axis to the foot of the page, the way a book's title page or closing colophon is set. The footer's line follows it there and nowhere else.
 
 ## Elevation & Depth
 
@@ -311,19 +300,17 @@ The interface is flat: no shadows, no layered surfaces, no tonal elevation. Dept
 - **Ledge shadow** (`drop-shadow(0.5em 0.2em 0.5em rgba(0,0,0,0.26))`, fixed; it does not change when the cover lifts): covers in the index.
 - **Self-shading on the object**: the round of the spine (dark toward both joints, a soft light down the middle), the joint groove and a low raking light on the front board, and a black veil on boards seen edge-on that clears as the book turns (`opacity: (1 - k) * 0.36`).
 
-Lights change the shadow, not just the palette. In Day the wall shadow is the paper's own colour gone dark (`rgb(92 78 18 / 0.22)`) and the standing shadow drops to 0.2. In Night there is no wall: every book shadow is removed and the shelf is vignetted from the middle of the room instead.
+The shadows are the same on every book's ground: black, at the strengths above.
 
 ### Named Rules
 
-**The Shadows Belong To Books Rule.** A shadow means a physical book is casting it. No interface element (control, list line, field) has one. Focus on the search field is a 1px line on the rule it sits on, not a glow.
-
-**The No Wall At Night Rule.** In the Night light books cast nothing. Do not reintroduce shadows there with a lighter colour.
+**The Shadows Belong To Books Rule.** A shadow means a physical book is casting it. No interface element (control, list line, field) has one. Focus on the search field is its own one line drawn over in ink, not a glow and not a box.
 
 ## Shapes
 
 Interface is square: radius 0 on every control and field, and no filled containers other than the swap of the two colours on an index line under the pointer.
 
-Lines are few, solid, 1px, and each has a job. They remain in four places only: the rule the index's controls sit on (full ink); the ledge under a cover in the index, the frame around an embedded PDF, and a short section break inside a text (45%). Nothing on the site is dotted. Everything else is separated by space alone: the banner, the shelf's strip, the rows of the index list, the landing's colophon, the footer, a book's title page and the reading.
+Lines are few, solid, 1px, and each has a job. They remain in four places only: the line under the index's search field (45% at rest, full ink in use); the ledge under a cover in the index, the frame around an embedded PDF, and a short section break inside a text (45%). Nothing on the site is dotted. Everything else is separated by space alone: the banner, the shelf's strip, the index's row of controls, the rows of the index list, the landing's colophon, the footer, a book's title page and the reading.
 
 Books carry the only curves: 0.1em on the spine, 0.16em on the fore-edge corners of a board. Their surfaces carry the only texture: a weave of 1px hairlines in real pixels (linen at a 3px pitch, buckram coarser at 4px, paper-over-boards none; flat index covers carry none, since a weave that small would alias).
 
@@ -334,23 +321,24 @@ A film of grain covers the whole viewport, books included (two fractal-noise lay
 ## Components
 
 ### The label (control voice)
-Small mono capitals, set plain, with no surface. As a link or button it carries a transparent 1px underline, 4px below the letters, that takes the ink's colour under the pointer (180ms); it is never dimmed, and a disabled button does not respond. It has no background, border or radius. Keyboard focus is a 1px full-ink outline offset 3px, the same on every focusable thing. Items in one label line are joined by a comma (`ERIC HUGHES, 1993`), a colon (`LIGHT: BOOK`) or space; in the index a book with a French edition carries the word `FR`, and one that reads on another site the word `EXTERNAL`, set off by space after its metadata.
+Small mono capitals, set plain, with no surface. As a link or button it carries a transparent 1px underline, 4px below the letters, that takes the ink's colour under the pointer (180ms); it is never dimmed, and a disabled button does not respond. It has no background, border or radius. Keyboard focus is a 1px full-ink outline offset 3px, the same on every focusable thing. Items in one label line are joined by a comma (`ERIC HUGHES, 1993`) or space; in the index a book with a French edition carries the word `FR`, and one that reads on another site the word `EXTERNAL`, set off by space after its metadata.
 
 ### Options (ink and underline as state)
 - **Style:** a row of labels with 20px between them. Counts ride inside the label (`PDF 9`).
 - **State:** off is muted text; on (`aria-pressed="true"`) is full ink with a 1px underline. Nothing shifts between the two.
-- Used for the format filter and the Covers and List view switch. The language switch is the two-slot variant: `EN FR` with a 12px gap and no separator, the current locale inked, the other a muted link. The light switch is the single-control variant: name, colon, value (`LIGHT: BOOK`; French sets a space before the colon), stepping to the next light. Clear, which resets the search and filter, is inked and underlined at rest because it is an action.
+- Used for the format filter and the Covers and List view switch. The language switch is the two-slot variant: `EN FR` with a 12px gap and no separator, the current locale inked, the other a muted link. The format filter is All, Text and PDF; a book read on another site is not a filter option, only a word after its metadata. Clear search and filter, the one action of the index's empty state, is inked and underlined at rest.
 
 ### Search field
-- **Style:** bare mono text at the note step (16px) on the control rule, no box, no background, radius 0; placeholder in muted.
-- **Focus:** the rule under the field thickens by a 1px line of full ink; the caret is the ink.
-- **On a phone:** it asks for a Search return key and leaves names alone (no capitalising, no correcting); at 16px the page does not zoom into it.
+- **Style:** a line to write on. What is written is text, so it is Junicode at the reading step; the placeholder is italic and muted. No box, no background, radius 0.
+- **One line, never two:** a 1px hairline at the rule strength at rest. When the field is in use (the caret is in it, or it holds a query) the same line is drawn over in full ink from the left, where the writing starts: a `clip-path` wipe over 240ms on `--ease-out`, leaving in 160ms. Under reduced motion the ink fades in over 160ms without travelling.
+- **Focus:** the line is the focus mark. Focus never adds a second line, and there is no outline box; the caret is the ink.
+- **On a phone:** it asks for a Search return key and leaves names alone (no capitalising, no correcting); at 19px and up the page does not zoom into it.
 
 ### Text links
-Every link in running text is the ink, roman, with a 1px underline set 0.2em below at rest; under the pointer the underline thickens to 2px and nothing else changes. This covers the ways to read a book (Open the PDF, Download the PDF, Read it inline, Read it below, Read at another site), set side by side at the lead step with 1.6em between them; the long-PDF disclosure, a plain underlined summary line; Browse the collection on the landing; and links inside the footnote, notes and the text. Nothing follows the words. The footer's address is the quiet exception: its underline appears only under the pointer.
+Every link in running text is the ink, roman, with a 1px underline set 0.2em below at rest; under the pointer the underline thickens to 2px and nothing else changes. This covers the ways to read a book (Open the PDF, Download the PDF, Read it inline, Read it below, Read at another site), set side by side at the reading step with 1.6em between them; the long-PDF disclosure, a plain underlined summary line; Browse the collection on the landing; and links inside the footnote, notes and the text. Nothing follows the words. The footer's address is the quiet exception: its underline appears only under the pointer.
 
 ### The colophon
-The landing's close, on the page's own ground: the statement at the title step with each sentence on its own line, then the footnote and the link into the collection at the reading step. One face, two sizes, flush left.
+The landing's close, on the page's own ground and on its middle axis: the statement at the title step with each sentence on its own line, then the footnote in a 30em measure with its lines evened out, then the link into the collection, both at the reading step. One face, two sizes, centred. The section marks itself as a centred close, and the footer's line centres under it.
 
 ### The title page
 A book's page beside its standing object: the title in Swarsh Daisy at the headline step with an italic Junicode byline (by Author, year) at the head of the column; the blurb and the ways to read at its foot; for a living author, a white-backed Lightning QR code with the address beside it at the note step. Nothing else.
@@ -362,7 +350,7 @@ One book a line: number (label, muted), title (Swarsh Daisy), author (Junicode i
 A flat front board standing on a 1px rule at 45%, its title beneath in Swarsh Daisy at 21px and a muted label for author and year. No card surface. Under a real pointer the cover lifts 0.5em and grows 2.2% in 160ms, by transform alone; its shadow does not animate.
 
 ### Navigation
-The banner (see Layout) is the wordmark, the links and the light switch, with nothing under the name. The wordmark is a static two-line link home. A back link is words only (`BACK TO THE SHELF`), set under the wordmark by the pages that have somewhere to go back to; on the missing page a second one is underlined at rest as the one way on. The footer is one line, the librarian's address, in Junicode at the note step and the muted strength, the same on every page and in both languages. Page titles join with a vertical bar (`Title | The Cypherpunk Library`).
+The banner (see Layout) is the wordmark and its links, with nothing under the name. The wordmark is a static one-line link home, on one baseline with the links; on the narrowest phones the links drop under the name and the name is never broken. A back link is words only (`BACK TO THE SHELF`), set under the wordmark by the pages that have somewhere to go back to; on the missing page a second one is underlined at rest as the one way on. The footer is one line, the librarian's address, in Junicode at the note step and the muted strength, the same words on every page and in both languages; on the left edge everywhere except the landing, where it is centred under the colophon. Page titles join with a vertical bar (`Title | The Cypherpunk Library`).
 
 ### The book (signature)
 A bound hardback in CSS 3D: spine toward the viewer, front board hinged off its right edge, back board, and a page block seen only when turned. One number, `--k`, turns it: 0 is spine-on, 1 is cover-forward, hinged on the spine's near-left edge so an open book sits in its own slot. All lettering is real text, typeset at the data source with real apostrophes and single quotes (titles, authors and blurbs alike), so every surface sets the same characters. Spine lettering runs top to bottom with every letter lying on its side, punctuation included (`text-orientation: sideways`), so an apostrophe stays with its word.
@@ -392,7 +380,7 @@ A butted row of upright spines with one book turned cover-forward, a marquee of 
 ### Motion
 Motion exists to answer the hand, and it is small. Three curves, declared once: `--ease-out` (`cubic-bezier(0.23, 1, 0.32, 1)`) for anything answering the hand; `--ease-drawer` (`cubic-bezier(0.32, 0.72, 0, 1)`) for a large thing travelling across the screen, which on this site is the shelf's row and its marquee; plain `ease` for colour and opacity. Nothing bounces.
 
-- **Durations.** 160ms for hover lifts and press feedback; 160 to 200ms for colour and underline changes; 200ms for the title's face swap, on a phone as on a wide screen; 300ms for a turn and for the page's colour change; 500ms for the row's slide and for the shelf's one entrance. From the keyboard a turn is 180ms and a slide 200ms; a held key is instant.
+- **Durations.** 160ms for hover lifts and press feedback; 160 to 200ms for colour and underline changes; 200ms for the title's face swap, on a phone as on a wide screen; 240ms for the search line's ink arriving and 160ms for it leaving; 300ms for a turn and for the page's colour change; 500ms for the row's slide and for the shelf's one entrance. From the keyboard a turn is 180ms and a slide 200ms; a held key is instant.
 - **Press.** Every control answers a press itself, on any input, through `:active`. A label gains its underline at once (no transition in, its own 180ms out). An underlined text link thickens to 2px. Previous, Next, Read it and the index options scale to 0.97 over 160ms on `--ease-out`. An index cover on touch sets back to `scale(0.98)`; under a real pointer it keeps its hover lift and only gives back the growth (`translateY(-0.5em) scale(1)`), one change and not two. An index line on touch takes a wash of the ink at 12%. The wordmark has no pressed state: it is still. The browser's grey tap flash is switched off once, on the root, which is why each control carries its own answer.
 - **Hover.** Every hover style on the site sits inside `(hover: hover) and (pointer: fine)`: the label's underline, the thicker underline on a text link, the footer link, a closed spine's lift, an index cover's lift, an index line's colour swap. On touch a tap would leave hover stuck on.
 - **Still things.** The wordmark, the standing book on a book page and the perspective do not move.
@@ -424,7 +412,7 @@ The picture a link to the site unfurls with: `app/opengraph-image.png` and `app/
 Why (inferred, and accepted by the owner): it shows the library instead of describing it.
 <!-- 2026-11-26: "i think the first one is the best" (of five drafts: the shelf, a cover, a stack of spines, a statement, a single book). On the reason: "idk whatever you think is probably right" -->
 
-**On a share image the wordmark is one line, `Cypherpunk Library`.** Never the stacked two-line form there; that form is for the banner.
+**On a share image the wordmark is one line, `Cypherpunk Library`.** One line there as everywhere; the name is never stacked or broken.
 Why (inferred, and accepted by the owner): a share image is wide and short, so a second line costs height the books need.
 <!-- 2026-11-26: "do you think we can put Cypherpunk Library in one line? no in two lines?" -->
 
@@ -458,10 +446,10 @@ The same check holds Fragment Mono to an allow-list of the places named in the T
 - **Do** keep every interface surface to one ground and one ink, with rules at 45% and secondary text at 78% of that ink.
 - **Do** author a new binding as a full object: cloth, foil, page ground, page ink, spine manner, cover layout, weave, device, and check it against the floor (7:1 ink on ground, 4.5:1 muted, 4.5:1 foil on cloth).
 - **Do** set running text in Junicode alone and separate its parts with space and position.
-- **Do** set a title (a shelf title, a page heading, an index entry) in `--display`, at 400, with tracking between -0.008em and -0.02em.
-- **Do** start everything on a page of running text from one left edge.
+- **Do** set a title (a shelf title, a page's name, an index entry) in `--display`, at 400, with no letter-spacing, and give every page's name the headline step.
+- **Do** start everything on a page of running text (a book's page, the index) from one left edge; only the landing's closing section and the footer line under it are centred.
 - **Do** start a new surface with the thing and its name, and add only what the reader needs to act.
-- **Do** set controls plain in the mono label voice: words, a colon between a name and its value (`LIGHT: BOOK`), a comma between an author and a year (`ERIC HUGHES, 1993`), space between separate items.
+- **Do** set controls plain in the mono label voice: words, a comma between an author and a year (`ERIC HUGHES, 1993`), space between separate items.
 - **Do** show a selected option as full ink with a 1px underline and an unselected one as muted, and underline at rest only the label that is the one way forward on its screen.
 - **Do** make a link to read or browse roman, underlined at rest with a 1px line, thickening to 2px under the pointer.
 - **Do** answer the pointer on text with an underline: a 1px underline appearing under a label, a 1px underline thickening to 2px under a text link.
@@ -483,21 +471,25 @@ The same check holds Fragment Mono to an allow-list of the places named in the T
 ### Don't:
 - **Don't** introduce a grey, an accent or a third hue on interface. Colour arrives with the book in hand.
 - **Don't** put a shadow, a radius, a gradient or a texture on an interface element. Those belong to books.
-- **Don't** build cards, pills, chips, filled buttons or boxed inputs. Controls are text; fields are text on a rule.
+- **Don't** build cards, pills, chips, filled buttons or boxed inputs. Controls are text; a field is text on its own one line.
+- **Don't** add a second line or an outline box to a focused field, and don't run a rule under a row of controls.
+- **Don't** print a count, an introductory paragraph or a filter option the reader does not need under a page's name.
 - **Don't** put a rule or a band of swapped colour between parts of running text, and don't use a dotted line anywhere.
 - **Don't** set a Fragment Mono label beside or above running text, as a kicker, a caption or a row heading.
 - **Don't** print a caption that repeats what the screen already shows.
+- **Don't** centre running text anywhere but the landing's closing section.
 - **Don't** put a rule under a name, or a tagline, count or side label beside one, on the banner, a section or a share image.
 - **Don't** add a block of facts to a book page, or any text about cloth, foil, devices, bindings or how the site was made.
-- **Don't** animate the wordmark or give it a hover effect.
+- **Don't** animate the wordmark, give it a hover effect, or break it onto two lines.
 - **Don't** dim text on hover. Opacity is not a hover state in this system.
 - **Don't** recolour one cover template for a new text. Every book is its own binding.
 - **Don't** use Alpha Lyrae for anything but the wordmark, or add a fifth typeface.
 - **Don't** set running text, a byline or anything on a book in Swarsh Daisy, and don't set a title in condensed Junicode.
-- **Don't** apply `font-stretch` or a weight other than 400 to Swarsh Daisy.
+- **Don't** apply `font-stretch`, letter-spacing or a weight other than 400 to Swarsh Daisy.
+- **Don't** add a type step within a pixel or two of an existing one.
 - **Don't** reach for bold. Junicode stays between 400 and 500 and Swarsh Daisy at 400; change the size, or Junicode's width, instead.
 - **Don't** use the muted strength for anything a reader must not miss.
-- **Don't** cast book shadows in the Night light.
+- **Don't** add a light, dark, day or night mode, or a switch for one. The book in hand is the only light.
 - **Don't** use image files or WebGL for covers; they are SVG and CSS 3D with real text.
 - **Don't** use bounce, spring overshoot or elastic easing.
 - **Don't** animate a layout property (width, height, margin, padding, top, left).

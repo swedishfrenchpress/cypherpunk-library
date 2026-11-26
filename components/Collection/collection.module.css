@@ -1,44 +1,86 @@
 /* The index browser. See CollectionBrowser.tsx. */
 
-/* ---- controls: search, then the two sets of options, on one rule ---- */
+/* ---- controls: the search field, then the two sets of options, all on one
+   baseline. No rule runs under the row: the only line here is the field's. ---- */
 .controls {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px 32px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--fg);
+  align-items: baseline;
+  gap: 10px 40px;
 }
+
+/* The search field is a line to write on. At rest the line is faint; when the
+   field is in use (the caret is in it, or it holds a query) the same line is
+   drawn over in full ink, from the left, where the writing starts. One line,
+   never two. */
 .search {
+  position: relative;
   flex: 1 1 260px;
   min-width: 0;
+}
+.search::before,
+.search::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+}
+.search::before {
+  background: var(--rule);
+}
+.search::after {
+  background: var(--fg);
+  /* wiped away to the left: quicker going than coming */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 160ms var(--ease-out);
+}
+.search:focus-within::after,
+.search:has(.searchInput:not(:placeholder-shown))::after {
+  clip-path: inset(0);
+  transition-duration: 240ms;
+}
+/* reduced motion: the ink arrives without travelling */
+@media (prefers-reduced-motion: reduce) {
+  .search::after {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+  .search:focus-within::after,
+  .search:has(.searchInput:not(:placeholder-shown))::after {
+    opacity: 1;
+  }
 }
 .searchInput {
   display: block;
   width: 100%;
-  padding: 6px 0 4px;
+  padding: 2px 0 9px;
   border: 0;
   border-radius: 0;
   background: transparent;
   color: var(--fg);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  /* the note step; 16px also keeps iOS from zooming the page on focus */
-  font-size: var(--t-note);
-  line-height: 24px;
-  letter-spacing: -0.01em;
+  /* what is written here is text, so it is set in the book face, at the lead
+     step (18px and up, which also keeps a phone from zooming in on focus) */
+  font-family: inherit;
+  font-size: var(--t-reading);
+  line-height: 1.3;
   appearance: none;
   -webkit-appearance: none;
 }
 .searchInput::placeholder {
   color: var(--muted);
+  font-style: italic;
   opacity: 1;
 }
+/* the line is the focus mark: no box around bare text */
 .searchInput:focus {
   outline: none;
 }
-/* focus shows on the rule the field sits on, not as a box around bare text */
-.search:focus-within {
-  box-shadow: 0 11px 0 -10px var(--fg);
+.searchInput::-webkit-search-decoration {
+  -webkit-appearance: none;
 }
 .searchInput::-webkit-search-cancel-button {
   -webkit-appearance: none;
@@ -79,21 +121,10 @@
   text-decoration-color: currentColor;
 }
 
-.count {
-  display: flex;
-  gap: 18px;
-  padding: 10px 0 0;
-  color: var(--muted);
-}
 /* "Clear" is an action, so it is inked and underlined at rest */
 .clear {
   color: var(--fg);
   text-decoration-color: currentColor;
-}
-.count .clear {
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
 }
 /* a small mark after a book's line: it has a French edition */
 .flag {
@@ -107,9 +138,9 @@
   padding: clamp(48px, 8vw, 104px) 0;
   font-size: var(--t-title);
   font-family: var(--display);
+  /* no tracking: any letter-spacing turns off the face’s ligatures (its ff, fi, fl) */
   font-style: italic;
   line-height: 1.1;
-  letter-spacing: -0.015em;
 }
 
 /* ---- covers: every book face-out, standing on a ledge ---- */
@@ -142,9 +173,6 @@
   transition: transform 160ms var(--ease-out);
   filter: drop-shadow(0.5em 0.2em 0.5em rgba(0, 0, 0, 0.26));
 }
-:root[data-light="night"] .ledge > * {
-  filter: none;
-}
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card:hover .ledge > * {
     transform: translateY(-0.5em) scale(1.022);
@@ -169,13 +197,14 @@
   font-size: 21px;
   font-weight: 400;
   font-family: var(--display);
+  /* no tracking: any letter-spacing turns off the face’s ligatures (its ff, fi, fl) */
   line-height: 1.1;
-  letter-spacing: -0.008em;
   text-wrap: balance;
 }
 .cardMeta {
   margin-top: 5px;
   color: var(--muted);
+  text-wrap: balance;
 }
 
 /* ---- list: the catalogue, one line a book ---- */
@@ -204,8 +233,8 @@
   font-size: var(--t-subhead);
   font-weight: 400;
   font-family: var(--display);
+  /* no tracking: any letter-spacing turns off the face’s ligatures (its ff, fi, fl) */
   line-height: 1.08;
-  letter-spacing: -0.008em;
 }
 .lineAuthor {
   font-size: var(--t-body);
@@ -243,6 +272,11 @@
   }
   .search {
     flex-basis: 100%;
+  }
+  /* the two sets of options share a row here: what to show at the left, how to
+     show it at the right, so they do not read as one list */
+  .set:last-child {
+    margin-left: auto;
   }
   .line {
     grid-template-columns: 2.6em minmax(0, 1fr) auto;

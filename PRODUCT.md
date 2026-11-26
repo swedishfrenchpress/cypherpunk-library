@@ -20,12 +20,12 @@ Quiet, literary, calm. A hushed private library, not a marketing push. Voice is 
 
 - **Corporate SaaS landing** — gradient hero, feature-grid cards, hero-metric template, "Trusted by" logo walls. This is a library, not a product launch.
 - **Amazon / e-commerce bookstore** — dense product grids, star ratings, buy buttons, price tags, conversion clutter. Nothing here is for sale.
-- **Crypto neon-on-black** — the obvious "cypherpunk" cliché: dark hacker terminal, neon-green-on-black, matrix rain. The aesthetic is bookcloth and foil (with paper as the Day light), deliberately the opposite of the category reflex.
+- **Crypto neon-on-black** — the obvious "cypherpunk" cliché: dark hacker terminal, neon-green-on-black, matrix rain. The aesthetic is bookcloth and foil, deliberately the opposite of the category reflex.
 - **Generic library catalog** — sterile database UI: tables, filter dropdowns, pagination, admin chrome. This is a curated shelf, not a search index.
 
 ## Design Principles
 
-- **Cloth, not the terminal.** Reject the neon-terminal cypherpunk cliché. The page wears the book in hand: its cloth as the ground, its foil as the ink, two colours and no more. Paper and ink remain as the Day light, black as Night. The conviction shows through material and craft, never through hacker theatrics. (Decided 2026-11-26, replacing the earlier paper-only "Daylight" principle.)
+- **Cloth, not the terminal.** Reject the neon-terminal cypherpunk cliché. The page wears the book in hand: its cloth as the ground, its foil as the ink, two colours and no more. There is no other light: no day or night mode. The conviction shows through material and craft, never through hacker theatrics. (Decided 2026-11-26, replacing the earlier paper-only "Daylight" principle.)
 - **The shelf is the argument.** The shelf and the books themselves carry the page, and every text is bound as its own object. Let the collection speak; resist explaining it with marketing copy.
 - **Restraint as taste.** Quiet hierarchy, generous space, one considered accent. Sophistication reads as confidence, not as decoration.
 - **Free to read, free to keep.** The freedom-of-information ethos is a felt promise, not a slogan. Honor it in tone and in the absence of anything transactional.
@@ -33,4 +33,4 @@ Quiet, literary, calm. A hushed private library, not a marketing push. Voice is 
 
 ## Accessibility & Inclusion
 
-Target WCAG AA. Body and UI text maintain at least 7:1 against the ground in every book's colour pair and in the Day and Night lights; the muted strength (the ink at 78%) stays above 4.5:1 and is reserved for secondary text. All motion (the turn of a book, the colour change, the title marquee, the lean of the perspective) is fully disabled under `prefers-reduced-motion: reduce`, which the codebase honors globally. Interactive affordances do not rely on color alone. The collection must remain navigable and readable with motion off and at increased zoom.
+Target WCAG AA. Body and UI text maintain at least 7:1 against the ground in every book's colour pair; the muted strength (the ink at 78%) stays above 4.5:1 and is reserved for secondary text. All motion (the turn of a book, the colour change, the title marquee, the lean of the perspective) is fully disabled under `prefers-reduced-motion: reduce`, which the codebase honors globally. Interactive affordances do not rely on color alone. The collection must remain navigable and readable with motion off and at increased zoom.

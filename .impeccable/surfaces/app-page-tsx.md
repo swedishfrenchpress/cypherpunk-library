@@ -9,7 +9,7 @@ related_targets: ["app/collection/page.tsx","app/book/[slug]/page.tsx"]
 
 Scope: whole-site replacement world. Modes: landing = Experience; /collection = Operate; /book/[slug] = Read.
 Audience and job: privacy-minded readers finding one text worth reading and trusting it is free to read and keep. Nothing is for sale.
-Constraints confirmed by the user (2026-11-26): the surface opens book-tinted, with paper Day and black Night one click away; the Alpha Lyrae wordmark stays (its glitch was later removed, see below); all 21 covers are authored in SVG and CSS 3D, no WebGL, no image files. Build path: code-led (no image generation in this session).
+Constraints confirmed by the user (2026-11-26): the surface wears the book in hand (paper Day and black Night lights were offered at first, then removed at the owner's request on 2026-11-26: "let's just keep book so it changes color depending on the book"); the Alpha Lyrae wordmark stays (its glitch was later removed, see below); all 21 covers are authored in SVG and CSS 3D, no WebGL, no image files. Build path: code-led (no image generation in this session).
 
 ## Direction contract
 

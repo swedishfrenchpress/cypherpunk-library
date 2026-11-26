@@ -14,10 +14,10 @@
 }
 .title {
   font-family: var(--display);
-  font-size: var(--t-display);
+  /* no tracking: any letter-spacing turns off the face’s ligatures (its ff, fi, fl) */
+  font-size: var(--t-headline);
   font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
+  line-height: 1.04;
 }
 .body {
   max-width: 30em;
