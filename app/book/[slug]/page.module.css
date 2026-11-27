@@ -7,7 +7,7 @@
      column's left edge. */
   --cols: minmax(0, 52fr) minmax(0, 48fr);
   --gutter: clamp(24px, 4vw, 72px);
-  /* how tall the book stands, and so how tall the title page beside it is */
+  /* how tall the book stands */
   --stand: clamp(430px, 100svh - 132px, 760px);
   padding: 0 var(--pad) clamp(40px, 6vw, 88px);
 }
@@ -44,16 +44,15 @@
   transform-style: preserve-3d;
 }
 
-/* The title page: the title at the head of the column, the blurb and the ways
-   to read at its foot, level with the foot of the book, and air between. */
+/* The title page: the title and byline, one section gap, then the blurb and
+   the ways to read. It stacks from the head of the column and is not stretched
+   to the book's height: a short blurb at the book's foot left a hole. */
 .titlePage {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: clamp(40px, 6vw, 88px);
   min-width: 0;
-  min-height: var(--stand);
-  padding: clamp(8px, 2.2vw, 36px) 0 clamp(8px, 3.2vw, 52px);
+  padding-top: clamp(8px, 2.2vw, 36px);
 }
 .title {
   max-width: 11em;
@@ -265,7 +264,6 @@
     font-size: min(1.9svh, 3.4vw);
   }
   .titlePage {
-    min-height: 0;
     gap: clamp(28px, 6vw, 44px);
     padding: 0;
   }
