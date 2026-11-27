@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import BookView from "@/components/BookView";
 import { getBookBySlug } from "@/lib/books";
 import { ui, frBooks } from "@/lib/i18n";
-import { OG_IMAGE, TWITTER_IMAGE } from "@/lib/og";
+import { bookCards } from "@/lib/og";
 import { texts } from "@/content/texts";
 import { frTexts } from "@/content/texts/fr";
 
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   // images, since defining openGraph here replaces the root's wholesale.
   const url = `/fr/book/${slug}`;
   const ogTitle = `${title} | The Cypherpunk Library`;
+  const cards = bookCards(slug, `${book.title} by ${book.author}`);
   return {
     title,
     description,
@@ -39,13 +40,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       siteName: "The Cypherpunk Library",
       locale: "fr_FR",
       authors: book.author ? [book.author] : undefined,
-      images: [OG_IMAGE],
+      images: [cards.og],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description,
-      images: [TWITTER_IMAGE],
+      images: [cards.twitter],
     },
   };
 }

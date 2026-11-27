@@ -1,0 +1,341 @@
+/* The share-card bench (see page.tsx). Every card is 1200 x 630, fixed. */
+.bench {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+}
+.card {
+  position: relative;
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* ---- shared furniture ---- */
+.wordmark {
+  display: inline-block;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 500;
+  font-feature-settings: "calt" 0;
+  font-size: 40px;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.wordmark span {
+  display: block;
+}
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-variant-numeric: lining-nums;
+}
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0 40px;
+  padding: 34px 0 18px;
+  border-bottom: 2px solid var(--fg);
+}
+.foot {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 2px dotted color-mix(in srgb, var(--fg) 55%, transparent);
+}
+
+/* ---- A. shelf ---- */
+/* the name alone above the row */
+.name {
+  margin: 0 40px;
+  padding: 30px 0 0;
+}
+.name > span {
+  font-size: 44px;
+}
+.shelfWrap {
+  position: absolute;
+  /* under the one line of the name */
+  inset: 92px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+}
+.shelfWrap > div {
+  /* the bench is not a full viewport: give the row its own height to hang in */
+  /* the line the banner gave back goes to the books */
+  --bh: 427px;
+  animation: none;
+}
+
+/* ---- B. cover ---- */
+.cloth {
+  background-color: var(--cloth);
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.22) 0,
+      rgba(0, 0, 0, 0) 18px,
+      rgba(0, 0, 0, 0) 34px,
+      rgba(0, 0, 0, 0.22) 44px,
+      rgba(255, 255, 255, 0.07) 56px,
+      rgba(255, 255, 255, 0) 84px
+    ),
+    linear-gradient(100deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px);
+}
+.coverText {
+  position: absolute;
+  left: 104px;
+  top: 76px;
+  width: 560px;
+}
+.coverTitle {
+  font-size: 104px;
+  font-weight: 500;
+  font-stretch: 75%;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+.coverRule {
+  display: block;
+  width: 44px;
+  margin: 34px 0 26px;
+  border-top: 2px solid currentColor;
+}
+.coverLine {
+  max-width: 400px;
+  font-size: 31px;
+  line-height: 1.18;
+}
+.coverFoot {
+  position: absolute;
+  left: 104px;
+  bottom: 62px;
+  font-size: 31px;
+  font-style: italic;
+  line-height: 1;
+}
+.coverDevice {
+  position: absolute;
+  right: 92px;
+  top: 50%;
+  width: 400px;
+  height: auto;
+  transform: translateY(-50%);
+}
+.coverMark {
+  position: absolute;
+  right: 44px;
+  bottom: 42px;
+  width: 34px;
+  height: 34px;
+}
+
+/* ---- C. stack ---- */
+.stack {
+  position: absolute;
+  inset: 104px 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.head:has(+ .stack) {
+  padding: 22px 0 14px;
+  border-bottom: 0;
+}
+.band {
+  flex: none;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 24px;
+  padding: 0 40px;
+  background-color: var(--cloth);
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.3) 0,
+      rgba(0, 0, 0, 0) 24%,
+      rgba(255, 255, 255, 0.08) 48%,
+      rgba(0, 0, 0, 0) 74%,
+      rgba(0, 0, 0, 0.28) 100%
+    ),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px);
+  line-height: 1;
+  white-space: nowrap;
+}
+.bandAuthor {
+  font-size: 0.78em;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bandTitle {
+  font-size: 1.08em;
+  font-weight: 500;
+  font-stretch: 75%;
+  letter-spacing: -0.012em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bandMark {
+  width: 0.9em;
+  height: 0.9em;
+}
+.band[data-spine="italic"] .bandTitle {
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: 84%;
+}
+.band[data-spine="italic"] .bandAuthor {
+  font-style: normal;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+}
+.band[data-spine="caps"] .bandTitle {
+  text-transform: uppercase;
+  font-stretch: 88%;
+  font-size: 0.76em;
+  letter-spacing: 0.15em;
+}
+.band[data-spine="caps"] .bandAuthor {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 0.56em;
+  letter-spacing: 0.16em;
+}
+.band[data-spine="mono"] .bandTitle,
+.band[data-spine="monoLower"] .bandTitle,
+.band[data-spine="mono"] .bandAuthor,
+.band[data-spine="monoLower"] .bandAuthor {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: 0;
+}
+.band[data-spine="mono"] .bandTitle {
+  text-transform: uppercase;
+  font-size: 0.66em;
+  letter-spacing: 0.05em;
+}
+.band[data-spine="mono"] .bandAuthor {
+  text-transform: uppercase;
+  font-size: 0.52em;
+  letter-spacing: 0.05em;
+}
+.band[data-spine="monoLower"] .bandTitle {
+  font-size: 0.72em;
+}
+.band[data-spine="monoLower"] .bandAuthor {
+  font-size: 0.56em;
+}
+
+/* ---- D. statement ---- */
+.statement {
+  margin: 58px 40px 0;
+  max-width: 1010px;
+  font-size: 84px;
+  font-stretch: 84%;
+  line-height: 1.03;
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+
+/* ---- E. one book ---- */
+.bookRow {
+  position: absolute;
+  inset: 128px 40px 86px 40px;
+  display: grid;
+  grid-template-columns: 430px minmax(0, 1fr);
+  column-gap: 44px;
+  align-items: center;
+}
+.stand {
+  --k: 0.64;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font-size: 11.6px;
+  perspective: 2600px;
+  filter: drop-shadow(1.7em 2.3em 1.5em rgba(0, 0, 0, 0.36));
+}
+.pose {
+  display: flex;
+  align-items: flex-end;
+  width: 19.4em;
+  height: 31.25em;
+  transform-style: preserve-3d;
+}
+.bookText {
+  min-width: 0;
+}
+.bookTitle {
+  font-weight: 500;
+  font-stretch: 75%;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.bookBy {
+  margin-top: 22px;
+  font-size: 36px;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+/* ---- F. the book alone ---- */
+.oneCentre {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+.card > .oneCentre {
+  position: absolute;
+  inset: 0;
+}
+.oneLift {
+  box-shadow:
+    0 0.06em 0.12em rgba(0, 0, 0, 0.22),
+    0 1.2em 2.4em rgba(0, 0, 0, 0.3);
+}
+.oneStand {
+  position: absolute;
+  inset: 92px 0 0 0;
+  display: grid;
+  place-items: center;
+  perspective: 2600px;
+  filter: drop-shadow(0.5em 0.8em 1.1em rgba(0, 0, 0, 0.16));
+}
+.oneStand > span {
+  /* hinge from the spine's left edge: put the turned book's middle in the middle */
+  translate: calc(var(--k) * var(--h) * -0.33) 0;
+}
+.oneRow {
+  position: absolute;
+  inset: 0 72px 0 56px;
+  display: grid;
+  grid-template-columns: 470px minmax(0, 1fr);
+  column-gap: 56px;
+  align-items: center;
+}
+.oneRow > .oneStand {
+  position: relative;
+  inset: auto;
+  height: 100%;
+}
+.oneText {
+  min-width: 0;
+}

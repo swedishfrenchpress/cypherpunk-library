@@ -1,3 +1,5 @@
+import drawn from "./share-cards.json";
+
 // Social-card images for pages that set their own `openGraph` / `twitter`.
 //
 // The site-wide cards live as file routes (app/opengraph-image.png,
@@ -20,3 +22,14 @@ export const TWITTER_IMAGE = {
   height: 630,
   type: "image/png",
 };
+
+// One card per book, drawn by scripts/share-cards.mjs (the book turned half to
+// you, its title beside it). The script writes the list of books it has drawn,
+// so a book added since falls back to the site card instead of a missing image.
+const hasCard = new Set<string>(drawn);
+
+export function bookCards(slug: string, alt: string) {
+  if (!hasCard.has(slug)) return { og: OG_IMAGE, twitter: TWITTER_IMAGE };
+  const card = { url: `/og/book/${slug}.jpg`, width: 1200, height: 630, type: "image/jpeg", alt };
+  return { og: card, twitter: card };
+}
