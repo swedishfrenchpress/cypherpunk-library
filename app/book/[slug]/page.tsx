@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import BookView from "@/components/BookView";
 import { getBookBySlug } from "@/lib/books";
 import { ui } from "@/lib/i18n";
-import { OG_IMAGE, TWITTER_IMAGE } from "@/lib/og";
+import { bookCards } from "@/lib/og";
 import { texts } from "@/content/texts";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -15,12 +15,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   // Child pages don't inherit the root openGraph field by field: defining our own
   // replaces it wholesale (Next merges metadata shallowly), which also drops the
-  // inherited file-based card image — so we re-attach OG_IMAGE/TWITTER_IMAGE here.
+  // inherited file-based card image — so we attach the book's own card here (lib/og.ts).
   // Without this, a shared book link would show the generic site title and no art.
   // og:title gets the full name spelled out, since the title template only touches
   // <title>, not openGraph.
   const url = `/book/${slug}`;
   const ogTitle = `${book.title} | The Cypherpunk Library`;
+  const cards = bookCards(slug, `${book.title} by ${book.author}`);
   return {
     title: book.title,
     description: book.description,
@@ -37,13 +38,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       type: "article",
       siteName: "The Cypherpunk Library",
       authors: book.author ? [book.author] : undefined,
-      images: [OG_IMAGE],
+      images: [cards.og],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description: book.description,
-      images: [TWITTER_IMAGE],
+      images: [cards.twitter],
     },
   };
 }
